@@ -54,6 +54,7 @@ export default function Login({navigation}) {
         </Text>
         <InputFileds
           lable={'Email ID'}
+          placeholder="Enter Email ID"
           icon={
             <MaterialIcons
               name="alternate-email"
@@ -61,6 +62,8 @@ export default function Login({navigation}) {
               color="#666"
               style={{marginRight: 5}}></MaterialIcons>
           }
+          labelTextStyle={{color:'#666'}}
+          textColor='#666'
           keybordType="email-address"
           value={email}
           onChangeText={text => setEmail(text)}></InputFileds>

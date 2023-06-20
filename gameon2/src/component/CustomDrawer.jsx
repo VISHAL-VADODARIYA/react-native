@@ -35,7 +35,7 @@ export default function CustomDrawer(props) {
             }}></Image>
           <Text
             style={{color: '#fff', fontSize: 18, fontFamily: 'Roboto-Medium'}}>
-            Mayank
+            Vishal
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text
