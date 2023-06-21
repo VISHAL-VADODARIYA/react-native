@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.apidata"
+    namespace "com.examproduct"
     defaultConfig {
-        applicationId "com.apidata"
+        applicationId "com.examproduct"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

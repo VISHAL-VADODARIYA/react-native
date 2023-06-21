@@ -1,12 +1,13 @@
 import React from 'react'
 import {Text , Touchable, Button, View} from 'react-native'
 
-const Favourite = () =>{
-return (
+const Dummy2 = ()=>{
+return(
     <View style={{alignItems:'center'}}>
-        <Text style={{fontSize:25 , color:'#757748'}}> Favourite page</Text>
+        <Text style={{fontSize:25 , color:'#757748'}}> Favorite Dummy2 page</Text>
+    
     </View>
 )
 }
 
-export default Favourite;
+    export default Dummy2;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 
 const Home = () => {
 
@@ -10,7 +10,6 @@ const Home = () => {
             if (res.status === 200) {
                 result = await res.json();
                 setData(result);
-                console.warn(data)
             } else {
                 console.log("error while fetching")
             } 
@@ -30,9 +29,7 @@ const Home = () => {
             }}>
                 <Text style={{ color: 'black', fontSize: 30, fontWeight: 'bold', backgroundColor: '#fff', borderBottomWidth: 3, borderBottomColor: 'red', textAlign: 'center', paddingVertical: 10, borderRadius: 50, margin: 10 }}>Api Data Call</Text>
             </View>
-            
             <ScrollView style={{ backgroundColor: '#fff' }}>
-
                 {data.length ?
                     data.map((item, index) => (
                         <View key={'item' + index} style={{ margin: 10, borderWidth: 1, borderBottomColor: 'orange', borderRadius: 10, overflow: 'hidden' }}>
