@@ -2,8 +2,9 @@ import React from 'react';
 import {Text} from 'react-native';
 
 const Favorite = ({temp}) => {
-  return (
-    temp.map((temp)=>{ return <View
+  return temp.map(temp => {
+    return (
+      <View
         key={temp.id}
         style={{
           marginHorizontal: 5,
@@ -64,13 +65,11 @@ const Favorite = ({temp}) => {
               }}>
               $ {temp.price}
             </Text>
-            
           </View>
         </View>
-      </View>})
-      
-    
-  );
+      </View>
+    );
+  });
 };
 
 export default Favorite;

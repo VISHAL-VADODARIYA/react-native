@@ -6,7 +6,7 @@ const ProductDetailScreen = ({route, navigation,setTemp}) => {
     <View style={{margin: 10, justifyContent: 'center'}}>
       <View>
         <Text style={{fontSize: 30, color: '#666'}}>{title1}</Text>
-        <Text style={{fontSize: 20, color: '#666'}}>description</Text>
+        {/* <Text style={{fontSize: 20, color: '#666'}}>description</Text> */}
         <View
           style={{
             marginTop: 10,
@@ -26,7 +26,7 @@ const ProductDetailScreen = ({route, navigation,setTemp}) => {
             }}
           />
         </View>
-        <Text style={{color: '#666', fontSize: 18, marginVertical: 4}}>
+        <Text style={{color: '#666', fontSize: 25, marginVertical: 4 ,color:'#e91e63',fontWeight:'bold'}}>
           $ {price}
         </Text>
         <Text style={{color: '#666', fontSize: 18, marginVertical: 4}}>

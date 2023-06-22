@@ -9,11 +9,13 @@ import {
   Text,
   View,
 } from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 function ProductTab({navigation,route}) {
 
     console.log(navigation.setTemp)
   const [data, setData] = useState();
+  const [isLoading,setIsLoading] = useState(true)
 
   const getApiData = async () => {
     const url = 'https://dummyjson.com/products';
@@ -24,12 +26,15 @@ function ProductTab({navigation,route}) {
 
           setData(result);
           console.log(result);
+          setIsLoading(false)
         } else {
           console.log('error while data fetching');
+          setIsLoading(false)
         }
       })
       .catch(err => {
         console.log('Err :: ' + err);
+        setIsLoading(false)
       });
   };
   useEffect(() => {
@@ -39,7 +44,7 @@ function ProductTab({navigation,route}) {
 
   return (
     <SafeAreaView>
-      <View>
+     {isLoading ? <View style={{justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:30, color:'#666'}}>Loading...</Text></View>: <View>
         <ScrollView>
           {data
             ? data.products.map((res, index) => {
@@ -111,12 +116,15 @@ function ProductTab({navigation,route}) {
                           <Text
                             style={{
                               marginHorizontal: 5,
-                              fontSize: 15,
+                              fontSize: 18,
                               color: '#e91e63',
                             }}>
                             $ {res.price}
                           </Text>
-                          <Button
+                          <MaterialIcon
+                          name='favorite'
+                          style={{fontSize:25}}
+                         
                             color="#e91e63"
                             title="Add to Favorite"
                             key={'item' + res.id}
@@ -137,7 +145,7 @@ function ProductTab({navigation,route}) {
               })
             : null}
         </ScrollView>
-      </View>
+      </View>}
     </SafeAreaView>
   );
 }
