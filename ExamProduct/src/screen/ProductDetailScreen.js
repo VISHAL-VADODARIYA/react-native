@@ -2,6 +2,8 @@ import React from 'react';
 import {Button, Image, Text, View} from 'react-native';
 const ProductDetailScreen = ({route, navigation,setTemp}) => {
   const {title1, id, description, thumbnail, price, rating} = route.params;
+
+  
   return (
     <View style={{margin: 10, justifyContent: 'center'}}>
       <View>
@@ -53,6 +55,7 @@ const ProductDetailScreen = ({route, navigation,setTemp}) => {
             );
           }}
         />
+        
       </View>
     </View>
   );

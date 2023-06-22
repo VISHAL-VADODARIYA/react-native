@@ -10,44 +10,54 @@ import {
   View,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {useDispatch, useSelector} from 'react-redux';
+import {addToFav} from '../redux/favoriteSlice';
+import {getProduct} from '../redux/productSlice';
 
-function ProductTab({navigation,route}) {
+function ProductTab({navigation, route}) {
+  // const [data, setData] = useState();
+  const data = useSelector(state => state.data);
+  // const [isLoading, setIsLoading] = useState(true);
 
-    console.log(navigation.setTemp)
-  const [data, setData] = useState();
-  const [isLoading,setIsLoading] = useState(true)
+  // const getApiData = async () => {
+  //   const url = 'https://dummyjson.com/products';
+  //   let result = await fetch(url)
+  //     .then(async res => {
+  //       if (res.status === 200) {
+  //         result = await res.json();
 
-  const getApiData = async () => {
-    const url = 'https://dummyjson.com/products';
-    let result = await fetch(url)
-      .then(async res => {
-        if (res.status === 200) {
-          result = await res.json();
-
-          setData(result);
-          console.log(result);
-          setIsLoading(false)
-        } else {
-          console.log('error while data fetching');
-          setIsLoading(false)
-        }
-      })
-      .catch(err => {
-        console.log('Err :: ' + err);
-        setIsLoading(false)
-      });
-  };
+  //         setData(result);
+  //         console.log(result);
+  //         setIsLoading(false);
+  //       } else {
+  //         console.log('error while data fetching');
+  //         setIsLoading(false);
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log('Err :: ' + err);
+  //       setIsLoading(false);
+  //     });
+  // };
   useEffect(() => {
-    getApiData();
+    dispatch(getProduct());
   }, []);
+  console.log(data)
 
-
+  const dispatch = useDispatch();
+  const addToFavorite = product => {
+    dispatch(addToFav(product));
+  };
   return (
     <SafeAreaView>
-     {isLoading ? <View style={{justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:30, color:'#666'}}>Loading...</Text></View>: <View>
+      {/* {isLoading ? (
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 30, color: '#666'}}>Loading...</Text>
+        </View>
+      ) : ( */}
+      <View>
         <ScrollView>
-          {data
-            ? data.products.map((res, index) => {
+          {data.products.map((res, index) => {
                 return (
                   <TouchableOpacity
                     onPress={() => {
@@ -122,19 +132,26 @@ function ProductTab({navigation,route}) {
                             $ {res.price}
                           </Text>
                           <MaterialIcon
-                          name='favorite'
-                          style={{fontSize:25}}
-                         
+                            name="favorite"
+                            style={{fontSize: 25}}
                             color="#e91e63"
                             title="Add to Favorite"
                             key={'item' + res.id}
                             onPress={() => {
-                                route.param.setTemp(a=>[
+                              route.param.setTemp(a => [
                                 ...a,
-                                ...(data.products.filter(d => {
+                                ...data.products.filter(d => {
                                   return d.id == res.id;
-                                })),
+                                }),
                               ]);
+                            }}
+                          />
+                          <Button
+                            id={res.id}
+                            color="#e91e63"
+                            title="Mark As Favorite"
+                            onPress={() => {
+                              addToFavorite(res);
                             }}
                           />
                         </View>
@@ -142,10 +159,11 @@ function ProductTab({navigation,route}) {
                     </View>
                   </TouchableOpacity>
                 );
-              })
-            : null}
+              })}
+          
         </ScrollView>
-      </View>}
+      </View>
+      {/* )} */}
     </SafeAreaView>
   );
 }
