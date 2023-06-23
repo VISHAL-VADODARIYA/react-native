@@ -55,9 +55,10 @@ function ProductTab({navigation, route}) {
           <Text style={{fontSize: 30, color: '#666'}}>Loading...</Text>
         </View>
       ) : ( */}
+
       <View>
         <ScrollView>
-          {data.products.map((res, index) => {
+          {data.products.map((res , index ) => {
                 return (
                   <TouchableOpacity
                     onPress={() => {
