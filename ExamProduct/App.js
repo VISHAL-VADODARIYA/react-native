@@ -33,21 +33,35 @@ const MyStack = () => {
       <Stack.Screen name="ProductTab" component={ProductTab} />
       <Stack.Screen
         name="ProductDetailScreen"
-        component={ProductDetailScreen}
+        component={ProductDetailScreen} 
       />
     </Stack.Navigator>
   );
 };
 
 function App() {
-  const [temp, setTemp] = useState([]);
 
-  const storeData = async temp => {
+
+  const setData = async temp => {
     try {
       const jsonValue = JSON.stringify(temp);
-      await AsyncStorage.setItem('my-key', jsonValue);
+      await AsyncStorage.setItem('local-data', jsonValue);
     } catch (e) {
-      // saving error
+      console.log(e)
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('local-data');
+      if (value !== null) {
+        const localdata = JSON.parse(value)
+        favorite = localdata 
+        
+        
+      }
+    } catch (error) {
+      // Error retrieving data
     }
   };
   return (
@@ -63,10 +77,11 @@ function App() {
           headerTitleAlign: 'center',
         }}>
         <Tab.Screen
-          name="ProductTab"
-          component={() => <MyStack setTemp={setTemp} />}
+          name="Home"
+          component={MyStack}
           options={{
             headerShown: false,
+            tabBarShowLabel:false,
             tabBarIcon: ({color, size}) => (
               <MaterialIcon name="home" color={color} size={size} />
             ),
@@ -77,9 +92,9 @@ function App() {
         <Tab.Screen
           name="FavoriteTab"
           
-          component={() => <Favorite temp={temp} setTemp={setTemp} />}
+          component={Favorite}
           options={{
-            
+            tabBarShowLabel:false,
             tabBarIcon: ({color, size}) => (
               <MaterialIcon name="favorite" color={color} size={size} />
             ),

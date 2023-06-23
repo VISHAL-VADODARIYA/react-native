@@ -8,164 +8,159 @@ import {
   TouchableOpacity,
   Text,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import {addToFav} from '../redux/favoriteSlice';
-import {getProduct} from '../redux/productSlice';
+import {addToFav, removeToFav, setFavorite} from '../redux/favoriteSlice';
+import {fetchData} from '../redux/productSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function ProductTab({navigation, route}) {
-  // const [data, setData] = useState();
-  const data = useSelector(state => state.data);
-  // const [isLoading, setIsLoading] = useState(true);
+  const data = useSelector(state => state.product.data);
+  const favoriteData = useSelector(state => state.favorite);
 
-  // const getApiData = async () => {
-  //   const url = 'https://dummyjson.com/products';
-  //   let result = await fetch(url)
-  //     .then(async res => {
-  //       if (res.status === 200) {
-  //         result = await res.json();
-
-  //         setData(result);
-  //         console.log(result);
-  //         setIsLoading(false);
-  //       } else {
-  //         console.log('error while data fetching');
-  //         setIsLoading(false);
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log('Err :: ' + err);
-  //       setIsLoading(false);
-  //     });
-  // };
-  useEffect(() => {
-    dispatch(getProduct());
-  }, []);
-  console.log(data)
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    const loading = async () => {
+      setIsLoading(true);
+      try {
+        const value = await AsyncStorage.getItem('fav');
+        console.log(value);
+        if (value !== null) {
+          dispatch(setFavorite(JSON.parse(value)));
+        } else {
+          console.log('null');
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      const url = 'https://dummyjson.com/products';
+      let result = await fetch(url)
+        .then(async res => {
+          if (res.status === 200) {
+            result = await res.json();
+            // console.log(result.products)
+            dispatch(fetchData(result.products));
+          } else {
+            console.log('error while data fetching');
+          }
+        })
+        .catch(err => {
+          console.log('Err :: ' + err);
+        });
+
+      setIsLoading(false);
+    };
+    loading();
+  }, []);
+
   const addToFavorite = product => {
     dispatch(addToFav(product));
   };
-  return (
-    <SafeAreaView>
-      {/* {isLoading ? (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 30, color: '#666'}}>Loading...</Text>
-        </View>
-      ) : ( */}
-
-      <View>
-        <ScrollView>
-          {data.products.map((res , index ) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('ProductDetailScreen', {
-                        title1: res.title,
-                        id: res.id,
-                        description: res.description,
-                        thumbnail: res.thumbnail,
-                        price: res.price,
-                        rating: res.rating,
-                      });
-                    }}>
-                    <View
-                      key={res.id}
-                      style={{
-                        marginHorizontal: 5,
-                        marginVertical: 5,
-                        padding: 5,
-                        flexDirection: 'row',
-                        borderBottomColor: '#666',
-                        borderBottomWidth: 1,
-                      }}>
-                      <View>
-                        <Image
-                          style={{
-                            width: 100,
-                            height: 100,
-                            borderColor: 'black',
-                            border: 1,
-                            borderRadius: 5,
-                          }}
-                          source={{
-                            uri: res.thumbnail,
-                          }}
-                        />
-                      </View>
-                      <View
-                        style={{
-                          width: 240,
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                        }}>
-                        <Text
-                          style={{
-                            marginHorizontal: 5,
-                            fontSize: 20,
-                            color: '#666',
-                          }}>
-                          {res.title}
-                        </Text>
-                        <Text
-                          style={{
-                            marginHorizontal: 5,
-                            fontSize: 12,
-                            color: '#666',
-                          }}>
-                          {res.description}
-                        </Text>
-
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'baseline',
-                          }}>
-                          <Text
-                            style={{
-                              marginHorizontal: 5,
-                              fontSize: 18,
-                              color: '#e91e63',
-                            }}>
-                            $ {res.price}
-                          </Text>
-                          <MaterialIcon
-                            name="favorite"
-                            style={{fontSize: 25}}
-                            color="#e91e63"
-                            title="Add to Favorite"
-                            key={'item' + res.id}
-                            onPress={() => {
-                              route.param.setTemp(a => [
-                                ...a,
-                                ...data.products.filter(d => {
-                                  return d.id == res.id;
-                                }),
-                              ]);
-                            }}
-                          />
-                          <Button
-                            id={res.id}
-                            color="#e91e63"
-                            title="Mark As Favorite"
-                            onPress={() => {
-                              addToFavorite(res);
-                            }}
-                          />
-                        </View>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-          
-        </ScrollView>
+  const removeToFavorite = id => {
+    dispatch(removeToFav(id));
+  };
+  if (isLoading) {
+    return (
+      <View style={{justifyContent: 'center', flex: 1, alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
       </View>
-      {/* )} */}
-    </SafeAreaView>
+    );
+  }
+  return (
+    <ScrollView>
+      {data.map((res, index) => {
+        return (
+          <TouchableOpacity
+            key={res.id}
+            onPress={() => {
+              navigation.navigate('ProductDetailScreen', {
+                res: res,
+              });
+            }}>
+            <View
+              style={{
+                marginHorizontal: 5,
+                marginVertical: 5,
+                padding: 5,
+                flexDirection: 'row',
+              }}>
+              <View>
+                <Image
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderColor: 'black',
+                    borderRadius: 5,
+                  }}
+                  source={{
+                    uri: res.thumbnail,
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  width: 240,
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    marginHorizontal: 5,
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color: '#1f3f72',
+                  }}>
+                  {res.title}
+                </Text>
+                <Text
+                  style={{
+                    marginHorizontal: 5,
+                    fontSize: 12,
+                    color: '#666',
+                  }}>
+                  {res.description}
+                </Text>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                  }}>
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      fontSize: 18,
+                      color: '#e91e63',
+                    }}>
+                    $ {res.price}
+                  </Text>
+                  {favoriteData.includes(res) ? (
+                    <MaterialIcon
+                      name="favorite"
+                      style={{fontSize: 25}}
+                      color="#e91e63"
+                      key={'item' + res.id}
+                    />
+                  ) : (
+                    <MaterialIcon
+                      name="favorite-outline"
+                      style={{fontSize: 25}}
+                      color="#e91e63"
+                      key={'item' + res.id}
+                    />
+                  )}
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+    </ScrollView>
   );
 }
 

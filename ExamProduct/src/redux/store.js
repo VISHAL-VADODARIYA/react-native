@@ -4,8 +4,8 @@ import productSlice from "./productSlice";
 
 const store = configureStore({
     reducer:{
-        favorite: favoriteSlice,
-        data: productSlice
+        favorite : favoriteSlice,
+        product : productSlice
     }
 })
 export default store; 
