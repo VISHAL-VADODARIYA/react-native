@@ -38,7 +38,7 @@ function App() {
 
     <View style={styles.container}>
 
-      <Text style={styles.welcome}>Context Api React-Native</Text>
+      <Text style={styles.welcome}>Context Api In React-Native </Text>
 
       <Context.Provider value={data}>
 
