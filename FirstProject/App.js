@@ -35,18 +35,12 @@ function App() {
 
 
   return (
-
     <View style={styles.container}>
-
       <Text style={styles.welcome}>Context Api In React-Native </Text>
-
       <Context.Provider value={data}>
-
         <Child />
       </Context.Provider>
-
     </View>
-
   );
 }
 
@@ -54,14 +48,14 @@ function Child() {
   return (
     <View style={styles.container}>
       <Context.Consumer>
-        {data ?<View>
+        {data ? <View>
           <Text style={styles.child}> id: {data.id} </Text>
           <Text style={styles.child}> userId: {data.userId} </Text>
           <Text style={styles.child}> title: {data.title} </Text>
           <Text style={styles.child}> body: {data.body} </Text>
-        </View> :null
-        
-      }
+        </View> : null
+
+        }
       </Context.Consumer>
     </View>
   )
