@@ -22,7 +22,7 @@ function App(){
   
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <View>
         <Text>
           Screen
