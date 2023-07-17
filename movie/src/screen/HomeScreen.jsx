@@ -21,7 +21,11 @@ const Movie = () => {
         name="Movie"
         component={MovieTab}
       />
-      <Stack.Screen name="MovieSub" options={{headerShown: false, backgroundColor:'#B3C6D6'}} component={SubMovieScreen} />
+      <Stack.Screen
+        name="MovieSub"
+        options={{headerShown: false, backgroundColor: '#B3C6D6'}}
+        component={SubMovieScreen}
+      />
     </Stack.Navigator>
   );
 };
@@ -29,15 +33,31 @@ const Movie = () => {
 const HomeScreen = () => {
   const Drawer = createDrawerNavigator();
   return (
-    <Drawer.Navigator drawerContent={props=><CustomDrawer {...props} />} screenOptions={{headerShown: false}}>
-      <Drawer.Screen options={{drawerIcon:({color}) => <Icon name="home" size={24} color={color} />}} name="Main" component={MainScreen} />
-      <Drawer.Screen options={{drawerIcon:({color}) => <Icon name="info-with-circle" size={24} color={color} />}} name="About" component={AboutScreen} />
+    <Drawer.Navigator
+      drawerContent={props => <CustomDrawer {...props} />}
+      screenOptions={{headerShown: false}}>
+      <Drawer.Screen
+        options={{
+          drawerIcon: ({color}) => <Icon name="home" size={24} color={color} />,
+        }}
+        name="Main"
+        component={MainScreen}
+      />
+      <Drawer.Screen
+        options={{
+          drawerIcon: ({color}) => (
+            <Icon name="info-with-circle" size={24} color={color} />
+          ),
+        }}
+        name="About"
+        component={AboutScreen}
+      />
     </Drawer.Navigator>
   );
 };
 const MainScreen = () => {
   const Tab = createBottomTabNavigator();
-const color = '#E8EFF7'
+  const color = '#E8EFF7';
   return (
     <Tab.Navigator
       screenOptions={{
@@ -46,7 +66,7 @@ const color = '#E8EFF7'
           backgroundColor: '#215F8E',
         },
         tabBarActiveTintColor: '#FFBF13',
-        tabBarInactiveTintColor:'#E8EFF7'
+        tabBarInactiveTintColor: '#E8EFF7',
       }}>
       <Tab.Screen
         options={{

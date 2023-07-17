@@ -1,6 +1,12 @@
 //import liraries
 import React from 'react';
-import {View, Text, ImageBackground, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -10,11 +16,26 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const CustomDrawer = props => {
   return (
-    <View>
+    <View style={{flex:1}}>
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+      <View>
+        <Text>Custom text</Text>
+      </View>
+    </View>
+  );
+};
+
+export default CustomDrawer;
+
+{
+  /* <View>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#8200d6'}}>
-        <ImageBackground
+        // contentContainerStyle={{backgroundColor: '#8200d6'}}
+        >
+        {/* <ImageBackground
           source={require('../assets/images/header-bg.jpeg')}
           style={{padding: 20}}>
           <Image
@@ -36,13 +57,19 @@ const CustomDrawer = props => {
           </Text>
           <FontAwesome5 name='coins' size={14} color='#fff' />
           </View>
-        </ImageBackground>
-        <View style={{flex:1,backgroundColor:'#fff',paddingTop:10}} > 
-        <DrawerItemList {...props} />
-        </View>
+        </ImageBackground> */
+}
+{
+  /* <View style={{flex:1,backgroundColor:'#fff',paddingTop:10}} >  */
+}
+// <DrawerItemList {...props} />
+{
+  /* </View> */
+}
 
-      </DrawerContentScrollView>
-      <View style={{padding:20,borderTopWidth:1,borderTopColor:'#ccc'}}>
+// </DrawerContentScrollView>
+{
+  /* <View style={{padding:20,borderTopWidth:1,borderTopColor:'#ccc'}}>
         <TouchableOpacity onPress={()=>{}} style={{paddingVertical:15}}>
             <View style={{flexDirection:'row', alignItems:'center'}}>
             <Ionicons name='share-social-outline' sixe ={22} />
@@ -55,11 +82,6 @@ const CustomDrawer = props => {
         <Text style={{fontSize:15,fontFamily:'Roboto-Medium',marginLeft:5}}>Sign Out</Text>
             </View>
         </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
-
-export default CustomDrawer;
-
-
+      </View> */
+}
+// </View> */}
