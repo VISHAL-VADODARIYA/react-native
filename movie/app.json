@@ -1,0 +1,11 @@
+{
+  "name": "movie",
+  "displayName": "movie",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "bea433a9-ce7d-4e72-b737-31da0dde4325"
+      }
+    }
+  }
+}
