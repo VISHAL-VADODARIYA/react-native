@@ -1,5 +1,5 @@
-import movieSlice from "./movieSlice";
 import userSlice from "./userSlice";
+import dataSlice from "./dataSlice";
 
 const { configureStore } = require("@reduxjs/toolkit");
 
@@ -7,7 +7,8 @@ const { configureStore } = require("@reduxjs/toolkit");
 const store = configureStore({
     reducer:{
         user:userSlice,
-        movie:movieSlice
+        data:dataSlice,
+        
     }
 })
 

@@ -10,23 +10,42 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {userAction} from '../store/userSlice';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+
 
 const ProfileTab = ({navigation}) => {
-  const loggedIn = useSelector(state => state.user.flag);
-  const activeUser = useSelector(state => state.user.activeUser);
-  const dispatch = useDispatch();
 
-  const logoutHandler = () => {
-    dispatch(userAction.logout());
-    // navigation.navigate('Login');
-  };
+  const activeUser = useSelector(state => state.user.activeUser);
+
+
   return (
     <SafeAreaView>
       {/* {loggedIn && ( */}
-      <View style={styles.titleText}>
-        <Text style={{fontWeight: 900, fontSize: 18,color:'#215F8E', textAlign: 'center'}}>
-          Profile
-        </Text>
+      <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+      <TouchableOpacity
+          style={{alignSelf: 'center', paddingLeft: 20}}
+          onPress={() => {
+            navigation.openDrawer();
+          }}>
+          <Icon name="menu" size={24} color="#215F8E" />
+        </TouchableOpacity>
+        <View
+          style={{
+            padding: 15,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            shadowRadius: 2,
+          }}>
+          <Text
+            style={{
+              fontWeight: 900,
+              fontSize: 18,
+              color: '#215F8E',
+              textAlign: 'center',
+            }}>
+            Profile
+          </Text>
+        </View>
       </View>
       <View style={styles.main}>
         <View style={styles.userView}>
@@ -44,14 +63,14 @@ const ProfileTab = ({navigation}) => {
           <Text style={styles.userData}>Email : {activeUser.email}</Text>
         </View>
 
-        <View style={styles.button}>
+        {/* <View style={styles.button}>
           <TouchableOpacity
             onPress={() => {
               logoutHandler();
             }}>
             <Text style={{color: '#fff', fontSize: 18}}>Log out</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         {/* )} */}
       </View>
     </SafeAreaView>

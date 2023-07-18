@@ -1,23 +1,23 @@
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import {movieAction} from '../store/movieSlice';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import { windowWidth } from '../utils/Dimensions';
+
+import {dataAction} from '../store/dataSlice';
+import ListTab from '../components/ListTab';
 
 const MovieTab = ({navigation}) => {
   const dispatch = useDispatch();
-  const movieData = useSelector(state => state.movie.data);
-
+  const movieData = useSelector(state => state.data.movie);
+  const flag = 1;
   const fetchData = async () => {
     var myHeaders = new Headers();
     myHeaders.append(
@@ -37,27 +37,15 @@ const MovieTab = ({navigation}) => {
     );
     response = await response.json();
 
-    dispatch(movieAction.fetchData(response.results));
+    dispatch(dataAction.fetchMovieData(response.results));
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-  // console.log(movieData);
+
   return (
     <SafeAreaView>
-      {/* <View style={styles.main}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: '#215F8E',
-            fontSize: 20,
-            textAlign: 'center',
-          }}>
-          Movie List
-        </Text>
-        
-      </View> */}
       <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
@@ -81,11 +69,10 @@ const MovieTab = ({navigation}) => {
               color: '#215F8E',
               textAlign: 'center',
             }}>
-            Movie List
+            Movie
           </Text>
         </View>
       </View>
-
       <ScrollView showsVerticalScrollIndicator={false}>
         {movieData ? (
           movieData.map(res => {
@@ -93,31 +80,9 @@ const MovieTab = ({navigation}) => {
               <TouchableOpacity
                 key={res.id}
                 onPress={() => {
-                  navigation.navigate('MovieSub', {res: res});
+                  navigation.navigate('SubScreen', {res: res, movie: true});
                 }}>
-                <View style={styles.list}>
-                  <View style={{width:windowWidth-60}}>
-                    <Text style={{fontSize: 18, color: '#215F8E'}}>
-                      {res.original_title}
-                    </Text>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <Text style={{fontSize: 13}}>
-                        {' '}
-                        Release Date : {res.release_date}
-                      </Text>
-                      <Text style={{fontSize: 13}}>
-                        Votes : {res.vote_count}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={{alignItems: 'center'}}>
-                    <Icon name="arrow-forward-ios" size={20} color="#215F8E" />
-                  </View>
-                </View>
+                <ListTab res={res} movie={true} />
               </TouchableOpacity>
             );
           })
@@ -126,24 +91,87 @@ const MovieTab = ({navigation}) => {
         )}
       </ScrollView>
     </SafeAreaView>
+    // <SafeAreaView>
+    //   {/* <View style={styles.main}>
+    //     <Text
+    //       style={{
+    //         fontWeight: 'bold',
+    //         color: '#215F8E',
+    //         fontSize: 20,
+    //         textAlign: 'center',
+    //       }}>
+    //       Movie List
+    //     </Text>
+
+    //   </View> */}
+    //   <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+    //     <TouchableOpacity
+    //       style={{alignSelf: 'center', paddingLeft: 20}}
+    //       onPress={() => {
+    //         navigation.openDrawer();
+    //       }}>
+    //       <Icon name="menu" size={24} color="#215F8E" />
+    //     </TouchableOpacity>
+    //     <View
+    //       style={{
+    //         padding: 15,
+    //         flexDirection: 'row',
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         shadowRadius: 2,
+    //       }}>
+    //       <Text
+    //         style={{
+    //           fontWeight: 900,
+    //           fontSize: 18,
+    //           color: '#215F8E',
+    //           textAlign: 'center',
+    //         }}>
+    //         Movie
+    //       </Text>
+    //     </View>
+    //   </View>
+
+    //   <ScrollView showsVerticalScrollIndicator={false}>
+    //     {movieData ? (
+    //       movieData.map(res => {
+    //         return (
+    //           <TouchableOpacity
+    //             key={res.id}
+    //             onPress={() => {
+    //               navigation.navigate('SubScreen', {res: res ,movie:true});
+    //             }}>
+    //             <View style={styles.list}>
+    //               <View style={{width:windowWidth-60}}>
+    //                 <Text style={{fontSize: 18, color: '#215F8E'}}>
+    //                   {res.original_title}
+    //                 </Text>
+    //                 <View
+    //                   style={{
+    //                     flexDirection: 'row',
+    //                     justifyContent: 'space-between',
+    //                   }}>
+    //                   <Text style={{fontSize: 13}}>
+    //                     Release Date : {res.release_date}
+    //                   </Text>
+    //                   <Text style={{fontSize: 13}}>
+    //                     Votes : {res.vote_count}
+    //                   </Text>
+    //                 </View>
+    //               </View>
+    //               <View style={{alignItems: 'center',opacity:0.5}}>
+    //                 <Icon name="arrow-forward-ios" size={20} color="#215F8E" />
+    //               </View>
+    //             </View>
+    //           </TouchableOpacity>
+    //         );
+    //       })
+    //     ) : (
+    //       <ActivityIndicator size="small" color="#215F8E" />
+    //     )}
+    //   </ScrollView>
+    // </SafeAreaView>
   );
 };
-const styles = StyleSheet.create({
-  main: {
-    padding: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    shadowRadius: 2,
-    backgroundColor: '#B3C6D6',
-  },
-  list: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderColor: '#202020',
-    margin: 5,
-    padding: 5,
-    borderRadius: 5,
-  },
-});
+
 export default MovieTab;

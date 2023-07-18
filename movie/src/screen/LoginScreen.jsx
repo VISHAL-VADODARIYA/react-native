@@ -8,7 +8,7 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {userAction} from '../store/userSlice';
 import Icon from 'react-native-vector-icons/dist/Entypo';
@@ -24,6 +24,7 @@ const LoginScreen = ({navigation}) => {
 
   // const [message, setMessage] = useState();
   const dispatch = useDispatch();
+  var activeUser ;
   const LoginHandler = () => {
     // const ky = Object.keys(user);
     console.log('called');
@@ -32,6 +33,8 @@ const LoginScreen = ({navigation}) => {
       if (i.email === userData.email && i.password === userData.password) {
         flag = false;
         dispatch(userAction.login(i));
+        console.log(i);
+        activeUser = i;
       }
     }
     if (flag) {
@@ -41,11 +44,11 @@ const LoginScreen = ({navigation}) => {
       // setMessage('');
       setUserData({email: '', password: ''});
     }
-    AsyncStorage.setItem(
-      'login',
-      JSON.stringify({id: a.id, isLoggedIn: isLoggedIn}),
-    );
   };
+  
+  console.log(a.id)
+  const activeUser2 = useSelector(state => state.user.activeUser);
+  console.log(activeUser2);
 
   return (
     <SafeAreaView style={{flex: 1}}>

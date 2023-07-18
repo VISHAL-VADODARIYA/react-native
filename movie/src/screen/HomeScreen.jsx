@@ -1,47 +1,43 @@
-import {View, Text, Button} from 'react-native';
+
 import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MovieTab from './MovieTab';
 import ProfileTab from './ProfileTab';
-import {createStackNavigator} from '@react-navigation/stack';
-import SubMovieScreen from './SubMovieScreen';
 import Icon from 'react-native-vector-icons/dist/Entypo';
+import FaIcon from 'react-native-vector-icons/dist/FontAwesome5';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import AboutScreen from './AboutScreen';
 import CustomDrawer from '../components/CustomDrawer';
+import TvTab from './TvTab';
 
-const Movie = () => {
-  const Stack = createStackNavigator();
-
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        options={{headerShown: false}}
-        name="Movie"
-        component={MovieTab}
-      />
-      <Stack.Screen
-        name="MovieSub"
-        options={{headerShown: false, backgroundColor: '#B3C6D6'}}
-        component={SubMovieScreen}
-      />
-    </Stack.Navigator>
-  );
-};
 
 const HomeScreen = () => {
   const Drawer = createDrawerNavigator();
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} />}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{
+        headerShown: false,
+        drawerActiveBackgroundColor: '#215F8E',
+        drawerActiveTintColor: '#fff',
+        drawerLabelStyle: {marginLeft: -25},
+      }}>
       <Drawer.Screen
         options={{
           drawerIcon: ({color}) => <Icon name="home" size={24} color={color} />,
         }}
         name="Main"
         component={MainScreen}
+      />
+      <Drawer.Screen
+        options={{
+          drawerIcon: ({color}) => (
+            <Icon name="user" size={24} color={color} />
+          ),
+        }}
+        name="Profile"
+        component={ProfileTab}
       />
       <Drawer.Screen
         options={{
@@ -70,21 +66,21 @@ const MainScreen = () => {
       }}>
       <Tab.Screen
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Movie',
           tabBarShowLabel: false,
-          tabBarIcon: ({color}) => <Icon name="list" size={24} color={color} />,
+          tabBarIcon: ({color}) => <FaIcon name="film" size={24} color={color} />,
         }}
-        name="Movie List"
-        component={Movie}
+        name="Movie"
+        component={MovieTab}
       />
       <Tab.Screen
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'TV',
           tabBarShowLabel: false,
-          tabBarIcon: ({color}) => <Icon name="user" size={24} color={color} />,
+          tabBarIcon: ({color}) => <FaIcon name="tv" size={24} color={color} />,
         }}
-        name="Profile"
-        component={ProfileTab}
+        name="TV"
+        component={TvTab}
       />
     </Tab.Navigator>
   );

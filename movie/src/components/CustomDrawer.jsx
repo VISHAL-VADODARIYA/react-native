@@ -13,15 +13,75 @@ import {
 } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useDispatch, useSelector} from 'react-redux';
+import {userAction} from '../store/userSlice';
+import ProfileTab from '../screen/ProfileTab';
 
 const CustomDrawer = props => {
+  const dispatch = useDispatch();
+  const activeUser = useSelector(state => state.user.activeUser);
+  const logoutHandler = () => {
+    dispatch(userAction.logout());
+    // navigation.navigate('Login');
+  };
+
   return (
-    <View style={{flex:1}}>
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
+    <View style={{flex: 1}}>
+      <DrawerContentScrollView
+        {...props}
+        contentContainerStyle={{backgroundColor: '#fff'}}>
+        <TouchableOpacity onPress={() => {}}>
+          <ImageBackground
+            source={{
+              uri: 'https://img.tineye.com/flickr-images/?filepath=labs-flickr-public/images/08/2592647075_08304c12c7_m.jpg&size=73',
+            }}
+            style={{padding: 20}}>
+            <Image
+              source={{
+                uri: 'https://img.freepik.com/free-icon/man_318-157617.jpg?w=2000',
+              }}
+              style={{
+                height: 80,
+                width: 80,
+                borderRadius: 40,
+                marginBottom: 10,
+              }}
+            />
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 18,
+                fontFamily: 'Roboto-Medium',
+                marginBottom: 5,
+              }}>
+              {activeUser.name}
+            </Text>
+          </ImageBackground>
+        </TouchableOpacity>
+
+        <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
+          <DrawerItemList {...props} />
+        </View>
       </DrawerContentScrollView>
-      <View>
-        <Text>Custom text</Text>
+      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#215f8e'}}>
+        <TouchableOpacity
+          onPress={() => {
+            logoutHandler();
+          }}
+          style={{paddingVertical: 15}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Ionicons name="exit-outline" size={24} color={'#215f8e'} />
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 5,
+                fontWeight: 'bold',
+                color: '#215f8e',
+              }}>
+              Log out
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
