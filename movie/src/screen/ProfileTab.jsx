@@ -10,24 +10,23 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {userAction} from '../store/userSlice';
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon from 'react-native-vector-icons/dist/FontAwesome5';
+import {useNavigation} from '@react-navigation/native';
 
-
-const ProfileTab = ({navigation}) => {
-
+const ProfileTab = () => {
+  const navigation = useNavigation();
   const activeUser = useSelector(state => state.user.activeUser);
-
 
   return (
     <SafeAreaView>
       {/* {loggedIn && ( */}
       <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
-      <TouchableOpacity
+        <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
-            navigation.openDrawer();
+            navigation.navigate('Home');
           }}>
-          <Icon name="menu" size={24} color="#215F8E" />
+          <Icon name="arrow-left" size={24} color="#215F8E" />
         </TouchableOpacity>
         <View
           style={{
@@ -57,7 +56,7 @@ const ProfileTab = ({navigation}) => {
           />
         </View>
         <View>
-          <Text style={styles.userData}>Name : {activeUser.name} hello</Text>
+          <Text style={styles.userData}>Name : {activeUser.name}</Text>
         </View>
         <View>
           <Text style={styles.userData}>Email : {activeUser.email}</Text>

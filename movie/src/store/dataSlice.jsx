@@ -11,9 +11,11 @@ const dataSlice = createSlice({
   reducers: {
     fetchMovieData(state, action) {
       state.movie.push(...action.payload)
+      state.movie.reverse()
     },
     fetchTvData(state, action) {
       state.tv.push(...action.payload)
+      state.tv.reverse()
     }
     
   },

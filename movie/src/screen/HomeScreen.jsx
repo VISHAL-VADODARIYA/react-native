@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -10,7 +9,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import AboutScreen from './AboutScreen';
 import CustomDrawer from '../components/CustomDrawer';
 import TvTab from './TvTab';
-
+import SearchScreen from './ForYou';
 
 const HomeScreen = () => {
   const Drawer = createDrawerNavigator();
@@ -18,6 +17,7 @@ const HomeScreen = () => {
     <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
+        drawerType: 'slide',
         headerShown: false,
         drawerActiveBackgroundColor: '#215F8E',
         drawerActiveTintColor: '#fff',
@@ -30,7 +30,7 @@ const HomeScreen = () => {
         name="Main"
         component={MainScreen}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         options={{
           drawerIcon: ({color}) => (
             <Icon name="user" size={24} color={color} />
@@ -38,7 +38,7 @@ const HomeScreen = () => {
         }}
         name="Profile"
         component={ProfileTab}
-      />
+      /> */}
       <Drawer.Screen
         options={{
           drawerIcon: ({color}) => (
@@ -68,16 +68,29 @@ const MainScreen = () => {
         options={{
           tabBarLabel: 'Movie',
           tabBarShowLabel: false,
-          tabBarIcon: ({color}) => <FaIcon name="film" size={24} color={color} />,
+          tabBarIcon: ({color}) => (
+            <FaIcon name="film" size={24} color={color} />
+          ),
         }}
         name="Movie"
         component={MovieTab}
       />
+      {/* <Tab.Screen
+        options={{
+          tabBarLabel: 'Search',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => (
+            <FaIcon name="search" size={24} color={color} />
+          ),
+        }}
+        name="For You"
+        component={SearchScreen}
+      /> */}
       <Tab.Screen
         options={{
           tabBarLabel: 'TV',
           tabBarShowLabel: false,
-          tabBarIcon: ({color}) => <FaIcon name="tv" size={24} color={color} />,
+          tabBarIcon: ({color}) => <FaIcon name="tv" size={21} color={color} />,
         }}
         name="TV"
         component={TvTab}

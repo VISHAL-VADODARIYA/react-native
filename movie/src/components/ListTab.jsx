@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     borderRadius: 5,
+    
   },
 });
 export default ListTab;

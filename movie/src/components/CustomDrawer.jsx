@@ -16,9 +16,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useDispatch, useSelector} from 'react-redux';
 import {userAction} from '../store/userSlice';
 import ProfileTab from '../screen/ProfileTab';
+import {useNavigation} from '@react-navigation/native';
 
 const CustomDrawer = props => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const activeUser = useSelector(state => state.user.activeUser);
   const logoutHandler = () => {
     dispatch(userAction.logout());
@@ -29,13 +31,17 @@ const CustomDrawer = props => {
     <View style={{flex: 1}}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#fff'}}>
-        <TouchableOpacity onPress={() => {}}>
-          <ImageBackground
-            source={{
-              uri: 'https://img.tineye.com/flickr-images/?filepath=labs-flickr-public/images/08/2592647075_08304c12c7_m.jpg&size=73',
-            }}
-            style={{padding: 20}}>
+        contentContainerStyle={{backgroundColor: '#133a59'}}>
+        <ImageBackground
+          source={{
+            uri: 'https://img.tineye.com/flickr-images/?filepath=labs-flickr-public/images/08/2592647075_08304c12c7_m.jpg&size=73',
+          }}
+          style={{padding: 20}}>
+          <TouchableOpacity
+            style={{height: 80, width: 80, borderRadius: 40, marginBottom: 10}}
+            onPress={() => {
+              navigation.navigate('Profile');
+            }}>
             <Image
               source={{
                 uri: 'https://img.freepik.com/free-icon/man_318-157617.jpg?w=2000',
@@ -47,17 +53,17 @@ const CustomDrawer = props => {
                 marginBottom: 10,
               }}
             />
-            <Text
-              style={{
-                color: '#fff',
-                fontSize: 18,
-                fontFamily: 'Roboto-Medium',
-                marginBottom: 5,
-              }}>
-              {activeUser.name}
-            </Text>
-          </ImageBackground>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          <Text
+            style={{
+              color: '#fff',
+              fontSize: 18,
+              fontFamily: 'Roboto-Medium',
+              marginBottom: 5,
+            }}>
+            {activeUser.name}
+          </Text>
+        </ImageBackground>
 
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />

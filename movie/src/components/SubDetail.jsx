@@ -11,11 +11,15 @@ import {
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import {windowWidth} from '../utils/Dimensions';
+// import {SliderBox} from 'react-native-image-slider-box';
 
 const SubDetail = ({route, navigation}) => {
   const {res, movie} = route.params;
 
   const [data, setData] = useState();
+  // const [imageData, setImageData] = useState();
+  // const [image, setImage] = useState();
+
   const dataFetch = async () => {
     var myHeaders = new Headers();
     myHeaders.append(
@@ -34,6 +38,30 @@ const SubDetail = ({route, navigation}) => {
       requestOptions,
     ).catch(e => console.log(e));
     setData(await response.json());
+
+
+    // IMAGE SLIDER //
+    // const options = {
+    //   method: 'GET',
+    //   headers: {
+    //     accept: 'application/json',
+    //     Authorization:
+    //       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MDdhM2YzNTQ4N2IxYTdjY2U5MTE2ZDE3ZGFlMjE4MSIsInN1YiI6IjY0OGFhN2Q3NTU5ZDIyMDBlMjA0N2ZkYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bw50vVBFpg0ML9x64owYF_wnyHLtT1TpTBr8gfaY70E',
+    //   },
+    // };
+
+    // await fetch(`https://api.themoviedb.org/3/movie/${res.id}/images`, options)
+    //   .then(responseImage => responseImage.json())
+    //   .then(response => {setImageData(response)})
+    //   .catch(err => console.error(err));
+    // let imageArr = []
+    // imageData?.backdrops.map(e => {
+    //   imageArr.push(`https://image.tmdb.org/t/p/original${e.file_path}`)
+    // });
+    // // imageArr = imageArr.splice(5,imageArr.length)
+
+    // setImage(imageArr)
+    // console.log(image.length);
   };
 
   useEffect(() => {
@@ -53,8 +81,9 @@ const SubDetail = ({route, navigation}) => {
           style={{
             padding: 15,
             flexDirection: 'row',
-            justifyContent: 'center',
             shadowRadius: 2,
+            width: windowWidth - 50,
+            overflow: 'hidden',
           }}>
           <Text
             style={{
@@ -74,11 +103,14 @@ const SubDetail = ({route, navigation}) => {
           justifyContent: 'center',
         }}>
         {data ? (
-          <ScrollView showsVerticalScrollIndicator={false} key={data.id}>
+          <ScrollView showsVerticalScrollIndicator={false} key={`1${data.id}`}>
             <View>
+              {/* <SliderBox images={image} /> */}
               <Image
                 source={{
-                  uri: `https://image.tmdb.org/t/p/original/${data.backdrop_path}`,
+                  uri: `https://image.tmdb.org/t/p/original/${
+                    data.backdrop_path ? data.backdrop_path : data.poster_path
+                  }`,
                 }}
                 style={{
                   marginTop: 20,
@@ -88,7 +120,7 @@ const SubDetail = ({route, navigation}) => {
                   alignSelf: 'center',
                   width: 400,
                   height: 240,
-                  resizeMode: 'stretch',
+                  resizeMode: `${data.backdrop_path ? 'stretch' : 'contain'}`,
                 }}
               />
               {data.tagline && (
@@ -130,7 +162,7 @@ const SubDetail = ({route, navigation}) => {
                   marginVertical: 4,
                 }}>
                 <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
-                {data.vote_average}/10{' '}
+                {data.vote_average.toFixed(1)}/10{' '}
                 <Text
                   style={{color: '#215f8e', fontSize: 20, alignSelf: 'center'}}>
                   ★
@@ -148,9 +180,7 @@ const SubDetail = ({route, navigation}) => {
                     margin: 5,
                     fontSize: 15,
                     marginVertical: 4,
-
                     fontWeight: 900,
-                    fontSize: 15,
                   }}>
                   See More
                 </Text>
@@ -255,12 +285,11 @@ const SubDetail = ({route, navigation}) => {
                   flexWrap: 'wrap',
                   flexBasis: 'auto',
                   marginHorizontal: 18,
-                  marginBottom: 10,
                 }}>
                 {data.production_companies.map(e => {
                   return (
                     <Text
-                      key={e.id}
+                      key={`pc${e.id}`}
                       style={{
                         color: '#fff',
                         backgroundColor: '#215f8e',
@@ -278,53 +307,147 @@ const SubDetail = ({route, navigation}) => {
                 })}
               </View>
             </View>
-
             {data.original_name && (
-              <View style={{marginBottom: 20}}>
-                <Text
+              <>
+                <View >
+                  <Text
+                    style={{
+                      color: '#666',
+                      fontWeight: 900,
+                      margin: 5,
+                      fontSize: 15,
+                      marginVertical: 4,
+                    }}>
+                    Type :{' '}
+                  </Text>
+                  <View
+                    style={{
+                      width: windowWidth - 40,
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      flexBasis: 'auto',
+                      marginHorizontal: 18,
+                      marginBottom: 10,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#fff',
+                        backgroundColor: '#215f8e',
+                        paddingVertical: 2,
+                        paddingHorizontal: 5,
+                        borderRadius: 5,
+                        overflow: 'hidden',
+                        margin: 2,
+                        fontSize: 15,
+                        marginVertical: 4,
+                      }}>
+                      {data.type}
+                    </Text>
+                  </View>
+                </View>
+
+                <View
                   style={{
-                    color: '#666',
-                    fontWeight: 900,
-                    margin: 5,
-                    fontSize: 15,
-                    marginVertical: 4,
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    width: windowWidth - 25,
                   }}>
-                  Seasons : {data.seasons.length}
-                </Text>
-                <ScrollView
-                  horizontal={true}
-                  style={{marginHorizontal: 20}}
-                  showsHorizontalScrollIndicator={false}>
-                  {data.seasons.map(e => (
-                    <View key={e.id} style={{marginRight: 10}}>
-                      <Image
-                        source={{
-                          uri: `https://image.tmdb.org/t/p/original/${e.poster_path}`,
-                        }}
-                        style={{
-                          marginTop: 5,
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          borderRadius: 5,
-                          alignSelf: 'center',
-                          width: 90,
-                          height: 130,
-                        }}
-                      />
-                      <Text
-                        style={{
-                          color: '#777',
-                          margin: 5,
-                          fontSize: 15,
-                          marginVertical: 4,
-                          textAlign: 'center',
-                        }}>
-                        {e.name}
-                      </Text>
-                    </View>
-                  ))}
-                </ScrollView>
-              </View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('Episode', {
+                        data: data.last_episode_to_air,
+                        image: data.backdrop_path
+                          ? data.backdrop_path
+                          : data.poster_path,
+                      });
+                    }}>
+                    <Text
+                      style={{
+                        color: '#215f8e',
+                        margin: 5,
+                        fontSize: 15,
+                        marginVertical: 4,
+                        alignSelf: 'center',
+                        fontWeight: 900,
+                      }}>
+                      Latest Episode
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('Episode', {
+                        data: data.next_episode_to_air,
+                        image: data.backdrop_path
+                          ? data.backdrop_path
+                          : data.poster_path,
+                      });
+                    }}>
+                    <Text
+                      style={{
+                        color: '#215f8e',
+                        margin: 5,
+                        fontSize: 15,
+                        marginVertical: 4,
+                        alignSelf: 'center',
+                        fontWeight: 900,
+                      }}>
+                      Coming Soon Episode
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{marginBottom: 20}}>
+                  <Text
+                    style={{
+                      color: '#666',
+                      fontWeight: 900,
+                      margin: 5,
+                      fontSize: 15,
+                      marginVertical: 4,
+                    }}>
+                    Seasons : {data.seasons.length}
+                  </Text>
+                  <ScrollView
+                    horizontal={true}
+                    style={{marginHorizontal: 20}}
+                    showsHorizontalScrollIndicator={false}>
+                    {data.seasons.map(e => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('SeasonsScreen', {e: e})
+                        }>
+                        <View key={`sub${e.id}`} style={{marginRight: 10}}>
+                          <Image
+                            source={{
+                              uri: `https://image.tmdb.org/t/p/original/${e.poster_path}`,
+                            }}
+                            style={{
+                              marginTop: 5,
+                              flexDirection: 'row',
+                              justifyContent: 'center',
+                              borderRadius: 5,
+                              alignSelf: 'center',
+                              width: 90,
+                              height: 130,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              color: '#777',
+                              margin: 5,
+                              fontSize: 15,
+                              marginVertical: 4,
+                              textAlign: 'center',
+                            }}>
+                            {e.name}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                </View>
+              </>
             )}
           </ScrollView>
         ) : (
@@ -334,8 +457,8 @@ const SubDetail = ({route, navigation}) => {
               justifyContent: 'center',
               alignSelf: 'center',
             }}>
-            <Text>
-              <ActivityIndicator size="large" />
+            <Text style={{textAlign: 'center'}}>
+              <ActivityIndicator size="large" color={'#215f8e'} />
             </Text>
           </View>
         )}

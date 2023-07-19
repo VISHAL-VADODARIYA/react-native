@@ -3,9 +3,10 @@ import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {userAction} from '../store/userSlice';
-import {ActivityIndicator, View} from 'react-native';
+import {ImageBackground, Text, View} from 'react-native';
 import AppStack from '../navigation/AppStack';
 import AuthStack from '../navigation/AuthStack';
+import {windowHeight, windowWidth} from '../utils/Dimensions';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -38,8 +39,41 @@ const Main = () => {
 
   if (isloding) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItem: 'center'}}>
-        <ActivityIndicator size={'large'}></ActivityIndicator>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        {/* <ActivityIndicator size={'large'}></ActivityIndicator> */}
+
+        <ImageBackground
+          // source={require('../assets/images/output-onlinepngtools.png')}
+          source={{
+            uri: 'https://www.internationalshowtimes.com/img/International_Showtimes_API_Movie_Guide_Data_Grid.jpg',
+          }}
+          style={{
+            height: windowHeight,
+            width: windowWidth,
+          }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}>
+            <View
+              style={{
+                opacity: 0.8,
+                backgroundColor: '#215f8e',
+                paddingVertical: 60,
+              }}>
+              <Text style={{color: '#fff', fontSize: 40, textAlign: 'center'}}>
+                Hello
+              </Text>
+            </View>
+          </View>
+        </ImageBackground>
       </View>
     );
   }
