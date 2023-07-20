@@ -101,7 +101,7 @@ const MovieTab = ({navigation}) => {
         }}
       /> */}
       <ScrollView
-       style={{marginBottom:50}}
+        style={{marginBottom: 50}}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl

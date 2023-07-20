@@ -15,7 +15,7 @@ import {dataAction} from '../store/dataSlice';
 import ListTab from '../components/ListTab';
 
 const TvTab = ({navigation}) => {
-  const [page,setPage] =useState(1)
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const tvData = useSelector(state => state.data.tv);
 
@@ -40,7 +40,7 @@ const TvTab = ({navigation}) => {
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
-      setPage(page+1);
+      setPage(page + 1);
       setRefreshing(false);
     }, 2000);
   };
@@ -79,9 +79,14 @@ const TvTab = ({navigation}) => {
         </View>
       </View>
       <ScrollView
+        style={{marginBottom: 50}}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl tintColor="#215f8e" refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl
+            tintColor="#215f8e"
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         }>
         {tvData ? (
           tvData.map(res => {

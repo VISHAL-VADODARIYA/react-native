@@ -39,7 +39,6 @@ const SubDetail = ({route, navigation}) => {
     ).catch(e => console.log(e));
     setData(await response.json());
 
-
     // IMAGE SLIDER //
     // const options = {
     //   method: 'GET',
@@ -103,7 +102,7 @@ const SubDetail = ({route, navigation}) => {
           justifyContent: 'center',
         }}>
         {data ? (
-          <ScrollView showsVerticalScrollIndicator={false} key={`1${data.id}`}>
+          <ScrollView showsVerticalScrollIndicator={false} >
             <View>
               {/* <SliderBox images={image} /> */}
               <Image
@@ -162,7 +161,7 @@ const SubDetail = ({route, navigation}) => {
                   marginVertical: 4,
                 }}>
                 <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
-                {data.vote_average.toFixed(1)}/10{' '}
+                {data.vote_average.toFixed(1)}/10
                 <Text
                   style={{color: '#215f8e', fontSize: 20, alignSelf: 'center'}}>
                   ★
@@ -236,7 +235,7 @@ const SubDetail = ({route, navigation}) => {
                   fontSize: 15,
                   marginVertical: 4,
                 }}>
-                Language :{' '}
+                Language :
               </Text>
               <View
                 style={{
@@ -276,7 +275,7 @@ const SubDetail = ({route, navigation}) => {
                   fontSize: 15,
                   marginVertical: 4,
                 }}>
-                Production Company :{' '}
+                Production Company :
               </Text>
               <View
                 style={{
@@ -289,7 +288,7 @@ const SubDetail = ({route, navigation}) => {
                 {data.production_companies.map(e => {
                   return (
                     <Text
-                      key={`pc${e.id}`}
+                      key={e.id}
                       style={{
                         color: '#fff',
                         backgroundColor: '#215f8e',
@@ -309,7 +308,7 @@ const SubDetail = ({route, navigation}) => {
             </View>
             {data.original_name && (
               <>
-                <View >
+                <View>
                   <Text
                     style={{
                       color: '#666',
@@ -417,7 +416,7 @@ const SubDetail = ({route, navigation}) => {
                         onPress={() =>
                           navigation.navigate('SeasonsScreen', {e: e})
                         }>
-                        <View key={`sub${e.id}`} style={{marginRight: 10}}>
+                        <View key={e.id} style={{marginRight: 10}}>
                           <Image
                             source={{
                               uri: `https://image.tmdb.org/t/p/original/${e.poster_path}`,

@@ -16,7 +16,7 @@ import {windowWidth} from '../utils/Dimensions';
 
 const ListTab = ({res, movie}) => {
   return (
-    <View key={res.id} style={styles.list}>
+    <View style={styles.list}>
       <Image
         source={{
           uri: `https://image.tmdb.org/t/p/original/${res.poster_path}`,
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderColor: '#202020',
+    borderRightWidth:1,
+    borderColor: '#215f8e',
     margin: 5,
     padding: 5,
     borderRadius: 5,
