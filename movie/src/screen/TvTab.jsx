@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   RefreshControl,
+  useColorScheme,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
@@ -18,6 +19,8 @@ const TvTab = ({navigation}) => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const tvData = useSelector(state => state.data.tv);
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
 
   const fetchData = () => {
     const options = {
@@ -51,13 +54,13 @@ const TvTab = ({navigation}) => {
 
   return (
     <SafeAreaView>
-      <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row',backgroundColor:isDarkTheme ?'#333' :'white'}}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.openDrawer();
           }}>
-          <Icon name="menu" size={24} color="#215F8E" />
+          <Icon name="menu" size={24} color={isDarkTheme ? '#fff':"#215F8E"} />
         </TouchableOpacity>
         <View
           style={{
@@ -71,7 +74,7 @@ const TvTab = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: '#215F8E',
+              color: isDarkTheme ?'#fff':'#215F8E',
               textAlign: 'center',
             }}>
             Tv
@@ -79,7 +82,10 @@ const TvTab = ({navigation}) => {
         </View>
       </View>
       <ScrollView
-        style={{marginBottom: 50}}
+        style={[
+          {marginBottom: 50},
+          isDarkTheme ? {backgroundColor: '#333'} : {backgroundColor: 'white'},
+        ]}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl

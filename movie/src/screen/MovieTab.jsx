@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   RefreshControl,
+  useColorScheme,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
@@ -20,6 +21,8 @@ const MovieTab = ({navigation}) => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const movieData = useSelector(state => state.data.movie);
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
 
   const fetchData = async () => {
     var myHeaders = new Headers();
@@ -59,13 +62,13 @@ const MovieTab = ({navigation}) => {
 
   return (
     <SafeAreaView>
-      <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', backgroundColor: isDarkTheme ?'#333' :'white'}}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.openDrawer();
           }}>
-          <Icon name="menu" size={24} color="#215F8E" />
+          <Icon name="menu" size={24} color={isDarkTheme ? '#fff':"#215F8E"} />
         </TouchableOpacity>
         <View
           style={{
@@ -79,7 +82,7 @@ const MovieTab = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: '#215F8E',
+              color: isDarkTheme ?'#fff':'#215F8E',
               textAlign: 'center',
             }}>
             Movie
@@ -101,7 +104,9 @@ const MovieTab = ({navigation}) => {
         }}
       /> */}
       <ScrollView
-        style={{marginBottom: 50}}
+        style={
+          isDarkTheme ? {backgroundColor: '#333'} : {backgroundColor: 'white'}
+        }
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl

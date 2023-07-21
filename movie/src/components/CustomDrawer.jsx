@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  useColorScheme,
 } from 'react-native';
 import {
   DrawerContentScrollView,
@@ -26,6 +27,8 @@ const CustomDrawer = props => {
     dispatch(userAction.logout());
     // navigation.navigate('Login');
   };
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
 
   return (
     <View style={{flex: 1}}>
@@ -65,24 +68,24 @@ const CustomDrawer = props => {
           </Text>
         </ImageBackground>
 
-        <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
+        <View style={{flex: 1, backgroundColor: isDarkTheme ? '#333':'#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
-      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#215f8e'}}>
+      <View style={{padding: 20, borderTopWidth: 1, borderTopColor:isDarkTheme? '#fff': '#215f8e'}}>
         <TouchableOpacity
           onPress={() => {
             logoutHandler();
           }}
           style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Ionicons name="exit-outline" size={24} color={'#215f8e'} />
+            <Ionicons name="exit-outline" size={24} color={isDarkTheme? '#fff':'#215f8e'} />
             <Text
               style={{
                 fontSize: 15,
                 marginLeft: 5,
                 fontWeight: 'bold',
-                color: '#215f8e',
+                color:isDarkTheme? '#fff': '#215f8e',
               }}>
               Log out
             </Text>

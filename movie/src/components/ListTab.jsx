@@ -8,15 +8,18 @@ import {
   ActivityIndicator,
   Image,
   ImageBackground,
+  useColorScheme,
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {windowWidth} from '../utils/Dimensions';
 
-
 const ListTab = ({res, movie}) => {
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
   return (
-    <View style={styles.list}>
+    <View
+      style={[styles.list, {borderColor: isDarkTheme ? '#fff' : '#215f8e'}]}>
       <Image
         source={{
           uri: `https://image.tmdb.org/t/p/original/${res.poster_path}`,
@@ -37,7 +40,7 @@ const ListTab = ({res, movie}) => {
           marginLeft: 10,
           marginTop: 2,
         }}>
-        <Text style={{fontSize: 18, color: '#215F8E'}}>
+        <Text style={{fontSize: 18, color: isDarkTheme ? '#fff' : '#215F8E'}}>
           {movie ? res.title : res.name}
         </Text>
         <View style={{marginVertical: 10}}>
@@ -47,8 +50,12 @@ const ListTab = ({res, movie}) => {
           <Text style={{fontSize: 13}}>Votes : {res.vote_count}</Text>
         </View>
       </View>
-      <View style={{alignSelf: 'center', opacity: 0.5}}>
-        <Icon name="arrow-forward-ios" size={20} color="#215F8E" />
+      <View style={{alignSelf: 'center', opacity: 0.8}}>
+        <Icon
+          name="arrow-forward-ios"
+          size={20}
+          color={isDarkTheme ? '#fff' : '#215F8E'}
+        />
       </View>
     </View>
   );
@@ -64,13 +71,12 @@ const styles = StyleSheet.create({
   list: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderRightWidth:1,
-    borderColor: '#215f8e',
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+
     margin: 5,
     padding: 5,
     borderRadius: 5,
-    
   },
 });
 export default ListTab;

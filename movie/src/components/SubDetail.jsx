@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Linking,
+  useColorScheme,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
@@ -15,8 +16,9 @@ import {windowWidth} from '../utils/Dimensions';
 
 const SubDetail = ({route, navigation}) => {
   const {res, movie} = route.params;
-
   const [data, setData] = useState();
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
   // const [imageData, setImageData] = useState();
   // const [image, setImage] = useState();
 
@@ -67,14 +69,14 @@ const SubDetail = ({route, navigation}) => {
     dataFetch();
   }, []);
   return (
-    <SafeAreaView>
-      <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+    <SafeAreaView style={{flex:1,paddingBottom:10,backgroundColor:isDarkTheme? '#555': '#B3C6D6'}}>
+      <View style={{backgroundColor:isDarkTheme? '#333': '#B3C6D6', flexDirection: 'row'}}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.goBack();
           }}>
-          <Icon name="arrow-left" size={20} color="#215F8E" />
+          <Icon name="arrow-left" size={20} color={isDarkTheme?'#fff':"#215F8E"} />
         </TouchableOpacity>
         <View
           style={{
@@ -88,7 +90,7 @@ const SubDetail = ({route, navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: '#215F8E',
+              color:isDarkTheme?'#fff': '#215F8E',
               textAlign: 'center',
             }}>
             {data ? (movie ? data.title : data.name) : ''}
@@ -98,7 +100,6 @@ const SubDetail = ({route, navigation}) => {
       <View
         style={{
           marginHorizontal: 10,
-          marginBottom: 96,
           justifyContent: 'center',
         }}>
         {data ? (
@@ -126,7 +127,7 @@ const SubDetail = ({route, navigation}) => {
                 <Text
                   style={{
                     textAlign: 'center',
-                    color: '#215f8e',
+                    color: isDarkTheme?'#ededed':'#215f8e',
                     marginVertical: 10,
                     fontWeight: 'bold',
                   }}>
@@ -137,7 +138,7 @@ const SubDetail = ({route, navigation}) => {
 
             <Text
               style={{
-                color: '#777',
+                color: isDarkTheme?'#ededed':'#777',
                 margin: 5,
                 fontSize: 15,
                 marginVertical: 4,
@@ -155,7 +156,7 @@ const SubDetail = ({route, navigation}) => {
               }}>
               <Text
                 style={{
-                  color: '#777',
+                  color: isDarkTheme?'#ededed':'#777',
                   margin: 5,
                   fontSize: 15,
                   marginVertical: 4,
@@ -163,7 +164,7 @@ const SubDetail = ({route, navigation}) => {
                 <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
                 {data.vote_average.toFixed(1)}/10
                 <Text
-                  style={{color: '#215f8e', fontSize: 20, alignSelf: 'center'}}>
+                  style={{color: isDarkTheme?'#ededed':'#215f8e', fontSize: 20, alignSelf: 'center'}}>
                   ★
                 </Text>
               </Text>
@@ -175,7 +176,7 @@ const SubDetail = ({route, navigation}) => {
                 }>
                 <Text
                   style={{
-                    color: '#215f8e',
+                    color: isDarkTheme?'#ededed':'#215f8e',
                     margin: 5,
                     fontSize: 15,
                     marginVertical: 4,
@@ -189,7 +190,7 @@ const SubDetail = ({route, navigation}) => {
             <View>
               <Text
                 style={{
-                  color: '#666',
+                  color: isDarkTheme?'#ededed':'#666',
                   fontWeight: 900,
                   margin: 5,
                   fontSize: 15,
@@ -210,8 +211,8 @@ const SubDetail = ({route, navigation}) => {
                     <Text
                       key={e.id}
                       style={{
-                        color: '#fff',
-                        backgroundColor: '#215f8e',
+                        color: isDarkTheme?'#215f8e':'#fff',
+                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -229,7 +230,7 @@ const SubDetail = ({route, navigation}) => {
             <View>
               <Text
                 style={{
-                  color: '#666',
+                  color: isDarkTheme?'#ededed':'#666',
                   fontWeight: 900,
                   margin: 5,
                   fontSize: 15,
@@ -250,8 +251,8 @@ const SubDetail = ({route, navigation}) => {
                     <Text
                       key={e.iso_639_1}
                       style={{
-                        color: '#fff',
-                        backgroundColor: '#215f8e',
+                        color: isDarkTheme?'#215f8e':'#fff',
+                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -269,7 +270,7 @@ const SubDetail = ({route, navigation}) => {
             <View>
               <Text
                 style={{
-                  color: '#666',
+                  color: isDarkTheme?'#fff':'#666',
                   fontWeight: 900,
                   margin: 5,
                   fontSize: 15,
@@ -290,8 +291,8 @@ const SubDetail = ({route, navigation}) => {
                     <Text
                       key={e.id}
                       style={{
-                        color: '#fff',
-                        backgroundColor: '#215f8e',
+                        color: isDarkTheme?'#215f8e':'#fff',
+                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -311,7 +312,7 @@ const SubDetail = ({route, navigation}) => {
                 <View>
                   <Text
                     style={{
-                      color: '#666',
+                      color: isDarkTheme ?'#fff':'#666',
                       fontWeight: 900,
                       margin: 5,
                       fontSize: 15,
@@ -330,8 +331,8 @@ const SubDetail = ({route, navigation}) => {
                     }}>
                     <Text
                       style={{
-                        color: '#fff',
-                        backgroundColor: '#215f8e',
+                        color: isDarkTheme?'#215f8e':'#fff',
+                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -363,7 +364,7 @@ const SubDetail = ({route, navigation}) => {
                     }}>
                     <Text
                       style={{
-                        color: '#215f8e',
+                        color: isDarkTheme?'#fff': '#215f8e',
                         margin: 5,
                         fontSize: 15,
                         marginVertical: 4,
@@ -384,7 +385,7 @@ const SubDetail = ({route, navigation}) => {
                     }}>
                     <Text
                       style={{
-                        color: '#215f8e',
+                        color: isDarkTheme?'#fff': '#215f8e',
                         margin: 5,
                         fontSize: 15,
                         marginVertical: 4,
@@ -399,7 +400,7 @@ const SubDetail = ({route, navigation}) => {
                 <View style={{marginBottom: 20}}>
                   <Text
                     style={{
-                      color: '#666',
+                      color: isDarkTheme?'#fff':'#666',
                       fontWeight: 900,
                       margin: 5,
                       fontSize: 15,
@@ -433,7 +434,7 @@ const SubDetail = ({route, navigation}) => {
                           />
                           <Text
                             style={{
-                              color: '#777',
+                              color: isDarkTheme?'#fff':'#777',
                               margin: 5,
                               fontSize: 15,
                               marginVertical: 4,
@@ -457,7 +458,7 @@ const SubDetail = ({route, navigation}) => {
               alignSelf: 'center',
             }}>
             <Text style={{textAlign: 'center'}}>
-              <ActivityIndicator size="large" color={'#215f8e'} />
+              <ActivityIndicator size="large" color={isDarkTheme?'#fff':'#215f8e'} />
             </Text>
           </View>
         )}
