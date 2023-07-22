@@ -1,19 +1,36 @@
-import {View, Text, TouchableOpacity, SafeAreaView} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  useColorScheme,
+} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import {StyleSheet} from 'react-native';
 
 const AboutScreen = ({navigation}) => {
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{flex: 1, backgroundColor: isDarkTheme ? '#555' : '#fff'}}>
       {/* <View style={styles.shadow}> */}
-      <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+      <View
+        style={{
+          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
+          flexDirection: 'row',
+        }}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.openDrawer();
           }}>
-          <Icon name="menu" size={24} color="#215F8E" />
+          <Icon
+            name="menu"
+            size={24}
+            color={isDarkTheme ? '#fff' : '#215F8E'}
+          />
         </TouchableOpacity>
         <View
           style={{
@@ -27,7 +44,7 @@ const AboutScreen = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215F8E',
               textAlign: 'center',
             }}>
             About Us
@@ -36,13 +53,15 @@ const AboutScreen = ({navigation}) => {
       </View>
       {/* </View> */}
       <View
-        style={{margin: 10, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>
+        style={{margin: 10, justifyContent: 'space-between', alignItems: 'center'}}>
+        <Text style={{color: isDarkTheme ? '#fff' : '#777'}}>
           this is movie listing with authentication which is shows movie data.
           which if fetch from api and show here in list formate.
         </Text>
         <Text></Text>
-        <Text>created by vishal Vadodariya</Text>
+        <Text style={{color: isDarkTheme ? '#fff' : '#777'}}>
+          created by vishal Vadodariya
+        </Text>
       </View>
     </SafeAreaView>
   );

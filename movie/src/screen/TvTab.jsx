@@ -84,7 +84,7 @@ const TvTab = ({navigation}) => {
       <ScrollView
         style={[
           {marginBottom: 50},
-          isDarkTheme ? {backgroundColor: '#333'} : {backgroundColor: 'white'},
+          isDarkTheme ? {backgroundColor: '#555'} : {backgroundColor: 'white'},
         ]}
         showsVerticalScrollIndicator={false}
         refreshControl={

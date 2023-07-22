@@ -19,14 +19,23 @@ const Episode = ({route, navigation}) => {
   const isDarkTheme = theme === 'dark';
 
   return (
-    <SafeAreaView style={{backgroundColor:isDarkTheme?'#555':'#fff'}}>
-      <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+    <SafeAreaView
+      style={{flex: 1, backgroundColor: isDarkTheme ? '#555' : '#fff'}}>
+      <View
+        style={{
+          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
+          flexDirection: 'row',
+        }}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.goBack();
           }}>
-          <Icon name="arrow-left" size={20} color="#215F8E" />
+          <Icon
+            name="arrow-left"
+            size={20}
+            color={isDarkTheme ? '#fff' : '#215F8E'}
+          />
         </TouchableOpacity>
         <View
           style={{
@@ -39,10 +48,10 @@ const Episode = ({route, navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215F8E',
               textAlign: 'center',
             }}>
-            {data.name}
+            {data && data.name}
           </Text>
         </View>
       </View>
@@ -74,7 +83,7 @@ const Episode = ({route, navigation}) => {
 
             <Text
               style={{
-                color: '#777',
+                color: isDarkTheme ? '#fff' : '#777',
                 margin: 5,
                 fontSize: 15,
                 marginVertical: 4,
@@ -94,7 +103,7 @@ const Episode = ({route, navigation}) => {
               }}>
               <Text
                 style={{
-                  color: '#777',
+                  color: isDarkTheme ? '#fff' : '#777',
                   margin: 5,
                   fontSize: 15,
                   marginVertical: 4,
@@ -112,7 +121,7 @@ const Episode = ({route, navigation}) => {
               }}>
               <Text
                 style={{
-                  color: '#777',
+                  color: isDarkTheme ? '#fff' : '#777',
                   margin: 5,
                   fontSize: 15,
                   marginVertical: 4,
@@ -120,7 +129,11 @@ const Episode = ({route, navigation}) => {
                 <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
                 {data.vote_average}/10
                 <Text
-                  style={{color: '#215f8e', fontSize: 20, alignSelf: 'center'}}>
+                  style={{
+                    color: isDarkTheme ? '#fff' : '#215f8e',
+                    fontSize: 20,
+                    alignSelf: 'center',
+                  }}>
                   ★
                 </Text>
               </Text>
@@ -134,7 +147,7 @@ const Episode = ({route, navigation}) => {
               }}>
               <Text
                 style={{
-                  color: '#777',
+                  color: isDarkTheme ? '#fff' : '#777',
                   margin: 5,
                   fontSize: 15,
                   marginVertical: 4,

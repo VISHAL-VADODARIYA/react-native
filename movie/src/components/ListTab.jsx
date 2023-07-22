@@ -44,10 +44,12 @@ const ListTab = ({res, movie}) => {
           {movie ? res.title : res.name}
         </Text>
         <View style={{marginVertical: 10}}>
-          <Text style={{fontSize: 13}}>
+          <Text style={{fontSize: 13, color: isDarkTheme ? '#eaeaea' : '#777'}}>
             Release Date : {movie ? res.release_date : res.first_air_date}
           </Text>
-          <Text style={{fontSize: 13}}>Votes : {res.vote_count}</Text>
+          <Text style={{fontSize: 13, color: isDarkTheme ? '#eaeaea' : '#777'}}>
+            Votes : {res.vote_count}
+          </Text>
         </View>
       </View>
       <View style={{alignSelf: 'center', opacity: 0.8}}>

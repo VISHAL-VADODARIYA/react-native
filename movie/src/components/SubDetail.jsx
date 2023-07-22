@@ -8,10 +8,11 @@ import {
   SafeAreaView,
   Linking,
   useColorScheme,
+  StyleSheet,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
-import {windowWidth} from '../utils/Dimensions';
+import {windowHeight, windowWidth} from '../utils/Dimensions';
 // import {SliderBox} from 'react-native-image-slider-box';
 
 const SubDetail = ({route, navigation}) => {
@@ -69,14 +70,27 @@ const SubDetail = ({route, navigation}) => {
     dataFetch();
   }, []);
   return (
-    <SafeAreaView style={{flex:1,paddingBottom:10,backgroundColor:isDarkTheme? '#555': '#B3C6D6'}}>
-      <View style={{backgroundColor:isDarkTheme? '#333': '#B3C6D6', flexDirection: 'row'}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingBottom: 10,
+        backgroundColor: isDarkTheme ? '#555' : '#fff',
+      }}>
+      <View
+        style={{
+          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
+          flexDirection: 'row',
+        }}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.goBack();
           }}>
-          <Icon name="arrow-left" size={20} color={isDarkTheme?'#fff':"#215F8E"} />
+          <Icon
+            name="arrow-left"
+            size={20}
+            color={isDarkTheme ? '#fff' : '#215F8E'}
+          />
         </TouchableOpacity>
         <View
           style={{
@@ -90,7 +104,7 @@ const SubDetail = ({route, navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color:isDarkTheme?'#fff': '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215F8E',
               textAlign: 'center',
             }}>
             {data ? (movie ? data.title : data.name) : ''}
@@ -103,7 +117,7 @@ const SubDetail = ({route, navigation}) => {
           justifyContent: 'center',
         }}>
         {data ? (
-          <ScrollView showsVerticalScrollIndicator={false} >
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               {/* <SliderBox images={image} /> */}
               <Image
@@ -127,7 +141,7 @@ const SubDetail = ({route, navigation}) => {
                 <Text
                   style={{
                     textAlign: 'center',
-                    color: isDarkTheme?'#ededed':'#215f8e',
+                    color: isDarkTheme ? '#fff' : '#215f8e',
                     marginVertical: 10,
                     fontWeight: 'bold',
                   }}>
@@ -137,13 +151,12 @@ const SubDetail = ({route, navigation}) => {
             </View>
 
             <Text
-              style={{
-                color: isDarkTheme?'#ededed':'#777',
-                margin: 5,
-                fontSize: 15,
-                marginVertical: 4,
-                textAlign: 'justify',
-              }}>
+              style={[
+                {
+                  color: isDarkTheme ? '#fff' : '#666',
+                },
+                styles.listTitle,
+              ]}>
               <Text style={{fontWeight: 900, fontSize: 15}}>Overview : </Text>
               {data.overview}
             </Text>
@@ -155,16 +168,20 @@ const SubDetail = ({route, navigation}) => {
                 width: windowWidth - 25,
               }}>
               <Text
-                style={{
-                  color: isDarkTheme?'#ededed':'#777',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
+                style={[
+                  {
+                    color: isDarkTheme ? '#fff' : '#666',
+                  },
+                  styles.listTitle,
+                ]}>
                 <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
                 {data.vote_average.toFixed(1)}/10
                 <Text
-                  style={{color: isDarkTheme?'#ededed':'#215f8e', fontSize: 20, alignSelf: 'center'}}>
+                  style={{
+                    color: isDarkTheme ? '#fff' : '#215f8e',
+                    fontSize: 20,
+                    alignSelf: 'center',
+                  }}>
                   ★
                 </Text>
               </Text>
@@ -176,7 +193,7 @@ const SubDetail = ({route, navigation}) => {
                 }>
                 <Text
                   style={{
-                    color: isDarkTheme?'#ededed':'#215f8e',
+                    color: isDarkTheme ? '#fff' : '#215f8e',
                     margin: 5,
                     fontSize: 15,
                     marginVertical: 4,
@@ -189,13 +206,12 @@ const SubDetail = ({route, navigation}) => {
 
             <View>
               <Text
-                style={{
-                  color: isDarkTheme?'#ededed':'#666',
-                  fontWeight: 900,
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
+                style={[
+                  {
+                    color: isDarkTheme ? '#fff' : '#666',
+                  },
+                  styles.listTitle,
+                ]}>
                 Genres :
               </Text>
               <View
@@ -211,8 +227,8 @@ const SubDetail = ({route, navigation}) => {
                     <Text
                       key={e.id}
                       style={{
-                        color: isDarkTheme?'#215f8e':'#fff',
-                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
+                        color: isDarkTheme ? '#215f8e' : '#fff',
+                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -229,13 +245,12 @@ const SubDetail = ({route, navigation}) => {
             </View>
             <View>
               <Text
-                style={{
-                  color: isDarkTheme?'#ededed':'#666',
-                  fontWeight: 900,
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
+                style={[
+                  {
+                    color: isDarkTheme ? '#fff' : '#666',
+                  },
+                  styles.listTitle,
+                ]}>
                 Language :
               </Text>
               <View
@@ -251,8 +266,8 @@ const SubDetail = ({route, navigation}) => {
                     <Text
                       key={e.iso_639_1}
                       style={{
-                        color: isDarkTheme?'#215f8e':'#fff',
-                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
+                        color: isDarkTheme ? '#215f8e' : '#fff',
+                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -269,13 +284,12 @@ const SubDetail = ({route, navigation}) => {
             </View>
             <View>
               <Text
-                style={{
-                  color: isDarkTheme?'#fff':'#666',
-                  fontWeight: 900,
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
+                style={[
+                  {
+                    color: isDarkTheme ? '#fff' : '#666',
+                  },
+                  styles.listTitle,
+                ]}>
                 Production Company :
               </Text>
               <View
@@ -291,8 +305,8 @@ const SubDetail = ({route, navigation}) => {
                     <Text
                       key={e.id}
                       style={{
-                        color: isDarkTheme?'#215f8e':'#fff',
-                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
+                        color: isDarkTheme ? '#215f8e' : '#fff',
+                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -311,13 +325,12 @@ const SubDetail = ({route, navigation}) => {
               <>
                 <View>
                   <Text
-                    style={{
-                      color: isDarkTheme ?'#fff':'#666',
-                      fontWeight: 900,
-                      margin: 5,
-                      fontSize: 15,
-                      marginVertical: 4,
-                    }}>
+                    style={[
+                      {
+                        color: isDarkTheme ? '#fff' : '#666',
+                      },
+                      styles.listTitle,
+                    ]}>
                     Type :{' '}
                   </Text>
                   <View
@@ -331,8 +344,8 @@ const SubDetail = ({route, navigation}) => {
                     }}>
                     <Text
                       style={{
-                        color: isDarkTheme?'#215f8e':'#fff',
-                        backgroundColor: isDarkTheme?'#fff':'#215f8e',
+                        color: isDarkTheme ? '#215f8e' : '#fff',
+                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
                         paddingVertical: 2,
                         paddingHorizontal: 5,
                         borderRadius: 5,
@@ -364,7 +377,7 @@ const SubDetail = ({route, navigation}) => {
                     }}>
                     <Text
                       style={{
-                        color: isDarkTheme?'#fff': '#215f8e',
+                        color: isDarkTheme ? '#fff' : '#215f8e',
                         margin: 5,
                         fontSize: 15,
                         marginVertical: 4,
@@ -385,7 +398,7 @@ const SubDetail = ({route, navigation}) => {
                     }}>
                     <Text
                       style={{
-                        color: isDarkTheme?'#fff': '#215f8e',
+                        color: isDarkTheme ? '#fff' : '#215f8e',
                         margin: 5,
                         fontSize: 15,
                         marginVertical: 4,
@@ -399,13 +412,12 @@ const SubDetail = ({route, navigation}) => {
 
                 <View style={{marginBottom: 20}}>
                   <Text
-                    style={{
-                      color: isDarkTheme?'#fff':'#666',
-                      fontWeight: 900,
-                      margin: 5,
-                      fontSize: 15,
-                      marginVertical: 4,
-                    }}>
+                    style={[
+                      {
+                        color: isDarkTheme ? '#fff' : '#666',
+                      },
+                      styles.listTitle,
+                    ]}>
                     Seasons : {data.seasons.length}
                   </Text>
                   <ScrollView
@@ -414,10 +426,11 @@ const SubDetail = ({route, navigation}) => {
                     showsHorizontalScrollIndicator={false}>
                     {data.seasons.map(e => (
                       <TouchableOpacity
+                        key={e.id}
                         onPress={() =>
                           navigation.navigate('SeasonsScreen', {e: e})
                         }>
-                        <View key={e.id} style={{marginRight: 10}}>
+                        <View style={{marginRight: 10, marginBottom: 40}}>
                           <Image
                             source={{
                               uri: `https://image.tmdb.org/t/p/original/${e.poster_path}`,
@@ -431,10 +444,10 @@ const SubDetail = ({route, navigation}) => {
                               width: 90,
                               height: 130,
                             }}
-                          />
+                          /> 
                           <Text
                             style={{
-                              color: isDarkTheme?'#fff':'#777',
+                              color: isDarkTheme ? '#fff' : '#777',
                               margin: 5,
                               fontSize: 15,
                               marginVertical: 4,
@@ -453,12 +466,15 @@ const SubDetail = ({route, navigation}) => {
         ) : (
           <View
             style={{
-              flexDirection: 'column',
+              paddingTop: windowHeight / 2.2,
               justifyContent: 'center',
               alignSelf: 'center',
             }}>
             <Text style={{textAlign: 'center'}}>
-              <ActivityIndicator size="large" color={isDarkTheme?'#fff':'#215f8e'} />
+              <ActivityIndicator
+                size="large"
+                color={isDarkTheme ? '#fff' : '#215f8e'}
+              />
             </Text>
           </View>
         )}
@@ -466,5 +482,14 @@ const SubDetail = ({route, navigation}) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  listTitle: {
+    fontWeight: 900,
+    margin: 5,
+    fontSize: 15,
+    marginVertical: 4,
+  },
+});
 
 export default SubDetail;

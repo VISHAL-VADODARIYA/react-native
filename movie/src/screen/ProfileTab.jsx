@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
+  useColorScheme,
 } from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
@@ -16,17 +17,28 @@ import {useNavigation} from '@react-navigation/native';
 const ProfileTab = () => {
   const navigation = useNavigation();
   const activeUser = useSelector(state => state.user.activeUser);
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
 
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{flex: 1, backgroundColor: isDarkTheme ? '#555' : '#fff'}}>
       {/* {loggedIn && ( */}
-      <View style={{backgroundColor: '#B3C6D6', flexDirection: 'row'}}>
+      <View
+        style={{
+          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
+          flexDirection: 'row',
+        }}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.navigate('Home');
           }}>
-          <Icon name="arrow-left" size={24} color="#215F8E" />
+          <Icon
+            name="arrow-left"
+            size={24}
+            color={isDarkTheme ? '#fff' : '#215F8E'}
+          />
         </TouchableOpacity>
         <View
           style={{
@@ -39,7 +51,7 @@ const ProfileTab = () => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215F8E',
               textAlign: 'center',
             }}>
             Profile
@@ -49,17 +61,34 @@ const ProfileTab = () => {
       <View style={styles.main}>
         <View style={styles.userView}>
           <Image
-            style={styles.user}
+            style={[
+              styles.user,
+              {
+                borderColor: isDarkTheme?'#fff':'#215F8E',
+              },
+            ]}
             source={{
               uri: 'https://img.freepik.com/free-icon/man_318-157617.jpg?w=2000',
             }}
           />
         </View>
         <View>
-          <Text style={styles.userData}>Name : {activeUser.name}</Text>
+          <Text
+            style={[
+              styles.userData,
+              {color: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            Name : {activeUser.name}
+          </Text>
         </View>
         <View>
-          <Text style={styles.userData}>Email : {activeUser.email}</Text>
+          <Text
+            style={[
+              styles.userData,
+              {color: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            Email : {activeUser.email}
+          </Text>
         </View>
 
         {/* <View style={styles.button}>
@@ -89,17 +118,14 @@ const styles = StyleSheet.create({
   },
   userData: {
     margin: 5,
-    color: '#215F8E',
     fontSize: 20,
   },
   user: {
     height: 150,
     width: 150,
-    backgroundColor: '#555',
     alignSelf: 'center',
     borderRadius: 100,
     borderWidth: 3,
-    borderColor: '#215F8E',
     marginVertical: 20,
   },
   userView: {
