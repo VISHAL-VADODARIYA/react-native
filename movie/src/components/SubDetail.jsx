@@ -154,8 +154,10 @@ const SubDetail = ({route, navigation}) => {
               style={[
                 {
                   color: isDarkTheme ? '#fff' : '#666',
+                  margin: 5,
+                  fontSize: 15,
+                  marginVertical: 4,
                 },
-                styles.listTitle,
               ]}>
               <Text style={{fontWeight: 900, fontSize: 15}}>Overview : </Text>
               {data.overview}
@@ -444,7 +446,7 @@ const SubDetail = ({route, navigation}) => {
                               width: 90,
                               height: 130,
                             }}
-                          /> 
+                          />
                           <Text
                             style={{
                               color: isDarkTheme ? '#fff' : '#777',
