@@ -64,7 +64,7 @@ const ProfileTab = () => {
             style={[
               styles.user,
               {
-                borderColor: isDarkTheme?'#fff':'#215F8E',
+                borderColor: isDarkTheme ? '#fff' : '#215F8E',
               },
             ]}
             source={{

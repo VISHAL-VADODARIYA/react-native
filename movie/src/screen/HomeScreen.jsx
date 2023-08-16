@@ -23,13 +23,13 @@ const HomeScreen = () => {
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
         drawerType: 'slide',
-        headerShown:false,
-        drawerStyle:isDarkTheme
-        ? {backgroundColor: '#333'}
-        : {backgroundColor: '#fff'},
-        drawerActiveBackgroundColor: isDarkTheme ?'#fff' :'#215F8E',
-        drawerActiveTintColor: isDarkTheme ?'#215F8E' : '#fff',
-        drawerInactiveTintColor:isDarkTheme?'#fff':'#333',
+        headerShown: false,
+        drawerStyle: isDarkTheme
+          ? {backgroundColor: '#333'}
+          : {backgroundColor: '#fff'},
+        drawerActiveBackgroundColor: isDarkTheme ? '#fff' : '#215F8E',
+        drawerActiveTintColor: isDarkTheme ? '#215F8E' : '#fff',
+        drawerInactiveTintColor: isDarkTheme ? '#fff' : '#333',
         drawerLabelStyle: {marginLeft: -25},
       }}>
       <Drawer.Screen

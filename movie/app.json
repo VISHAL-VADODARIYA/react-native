@@ -1,6 +1,6 @@
 {
   "name": "movie",
-  "displayName": "movie",
+  "displayName": "Movies",
   "expo": {
     "extra": {
       "eas": {

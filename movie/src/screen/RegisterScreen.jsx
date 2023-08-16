@@ -48,97 +48,95 @@ const RegisterScreen = ({navigation}) => {
   };
   // const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
   return (
-    
-      <SafeAreaView style={{flex: 1}}>
-        <ImageBackground
-          source={{
-            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqy5ytbJuBCv9t55-A_ZxR22_FufHk9dI8fw&usqp=CAU',
-          }}
-          resizeMode="cover"
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-          }}>
-          <View style={styles.main}>
+    <SafeAreaView style={{flex: 1}}>
+      <ImageBackground
+        source={{
+          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqy5ytbJuBCv9t55-A_ZxR22_FufHk9dI8fw&usqp=CAU',
+        }}
+        resizeMode="cover"
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+        }}>
+        <View style={styles.main}>
+          <View>
+            <Text style={styles.text}>Register</Text>
+          </View>
+          <View style={styles.inputField}>
+            <Icon name="user" size={20} color="#215F8E" />
+
+            <TextInput
+              style={{flex: 1, flexDirection: 'row'}}
+              placeholder="Name"
+              onChangeText={text =>
+                setUserData({...userData, name: text})
+              }></TextInput>
+          </View>
+          <View style={styles.inputField}>
+            <Icon name="email" size={20} color="#215F8E" />
+
+            <TextInput
+              style={{flex: 1, flexDirection: 'row'}}
+              placeholder="Email ID"
+              onChangeText={text =>
+                setUserData({...userData, email: text})
+              }></TextInput>
+          </View>
+          <View style={styles.inputField}>
+            <Icon name="lock" size={20} color="#215F8E" />
+
+            <TextInput
+              style={{flex: 1, flexDirection: 'row'}}
+              placeholder="Password"
+              secureTextEntry={true}
+              onChangeText={text =>
+                setUserData({...userData, password: text})
+              }></TextInput>
+          </View>
+          <View style={styles.inputField}>
+            <Icon name="lock" size={20} color="#215F8E" />
+
+            <TextInput
+              style={{flex: 1, flexDirection: 'row'}}
+              placeholder="Confirm Password"
+              secureTextEntry={true}
+              onChangeText={text => {
+                confirmPasswordHandler(text);
+              }}></TextInput>
+          </View>
+          {CPHMessage && (
             <View>
-              <Text style={styles.text}>Register</Text>
+              <Text style={{marginVertical: 5, marginLeft: 5, color: '#666'}}>
+                {CPHMessage}
+              </Text>
             </View>
-            <View style={styles.inputField}>
-              <Icon name="user" size={20} color="#215F8E" />
-
-              <TextInput
-                style={{flex: 1, flexDirection: 'row'}}
-                placeholder="Name"
-                onChangeText={text =>
-                  setUserData({...userData, name: text})
-                }></TextInput>
-            </View>
-            <View style={styles.inputField}>
-              <Icon name="email" size={20} color="#215F8E" />
-
-              <TextInput
-                style={{flex: 1, flexDirection: 'row'}}
-                placeholder="Email ID"
-                onChangeText={text =>
-                  setUserData({...userData, email: text})
-                }></TextInput>
-            </View>
-            <View style={styles.inputField}>
-              <Icon name="lock" size={20} color="#215F8E" />
-
-              <TextInput
-                style={{flex: 1, flexDirection: 'row'}}
-                placeholder="Password"
-                secureTextEntry={true}
-                onChangeText={text =>
-                  setUserData({...userData, password: text})
-                }></TextInput>
-            </View>
-            <View style={styles.inputField}>
-              <Icon name="lock" size={20} color="#215F8E" />
-
-              <TextInput
-                style={{flex: 1, flexDirection: 'row'}}
-                placeholder="Confirm Password"
-                secureTextEntry={true}
-                onChangeText={text => {
-                  confirmPasswordHandler(text);
-                }}></TextInput>
-            </View>
-            {CPHMessage && (
-              <View>
-                <Text style={{marginVertical: 5, marginLeft: 5, color: '#666'}}>
-                  {CPHMessage}
-                </Text>
-              </View>
-            )}
-            <View style={styles.button}>
-              <TouchableOpacity onPress={() => {}}>
-                <Text
-                  style={{color: '#fff', textAlign: 'center'}}
-                  onPress={registerHandler}>
-                  Register
-                </Text>
-              </TouchableOpacity>
-            </View>
-            {/* <View style={{marginVertical: 10}}>
+          )}
+          <View style={styles.button}>
+            <TouchableOpacity onPress={() => {}}>
+              <Text
+                style={{color: '#fff', textAlign: 'center'}}
+                onPress={registerHandler}>
+                Register
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/* <View style={{marginVertical: 10}}>
         <Text style={{alignItems: 'center'}}>{message}</Text>
       </View> */}
-            <View style={styles.signup}>
-              <Text style={{fontSize: 15}}>Already You have Account? </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('Login');
-                }}>
-                <Text style={{fontSize: 15, color: '#215F8E', fontWeight: 800}}>
-                  Login
-                </Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.signup}>
+            <Text style={{fontSize: 15}}>Already You have Account? </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+              <Text style={{fontSize: 15, color: '#215F8E', fontWeight: 800}}>
+                Login
+              </Text>
+            </TouchableOpacity>
           </View>
-        </ImageBackground>
-      </SafeAreaView>
-    
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

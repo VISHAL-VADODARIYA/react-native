@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Linking,
   useColorScheme,
+  StyleSheet,
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
@@ -20,14 +21,17 @@ const Episode = ({route, navigation}) => {
 
   return (
     <SafeAreaView
-      style={{flex: 1, backgroundColor: isDarkTheme ? '#555' : '#fff'}}>
+      style={[
+        styles.mainView,
+        {backgroundColor: isDarkTheme ? '#555' : '#fff'},
+      ]}>
       <View
-        style={{
-          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
-          flexDirection: 'row',
-        }}>
+        style={[
+          styles.viewHeader,
+          {backgroundColor: isDarkTheme ? '#333' : '#B3C6D6'},
+        ]}>
         <TouchableOpacity
-          style={{alignSelf: 'center', paddingLeft: 20}}
+          style={styles.viewHeaderTouchableOpacity}
           onPress={() => {
             navigation.goBack();
           }}>
@@ -37,30 +41,17 @@ const Episode = ({route, navigation}) => {
             color={isDarkTheme ? '#fff' : '#215F8E'}
           />
         </TouchableOpacity>
-        <View
-          style={{
-            padding: 15,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            shadowRadius: 2,
-          }}>
+        <View style={styles.viewHeaderTextView}>
           <Text
-            style={{
-              fontWeight: 900,
-              fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
-              textAlign: 'center',
-            }}>
+            style={[
+              styles.viewHeaderText,
+              {color: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
             {data && data.name}
           </Text>
         </View>
       </View>
-      <View
-        style={{
-          marginHorizontal: 10,
-          marginBottom: 96,
-          justifyContent: 'center',
-        }}>
+      <View style={styles.episodeDataView}>
         {data ? (
           <ScrollView showsVerticalScrollIndicator={false} key={`2${data.id}`}>
             <View>
@@ -68,104 +59,66 @@ const Episode = ({route, navigation}) => {
                 source={{
                   uri: `https://image.tmdb.org/t/p/original/${image}`,
                 }}
-                style={{
-                  marginTop: 20,
-                  marginBottom: 5,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  width: 400,
-                  height: 240,
-                  resizeMode: 'center',
-                }}
+                style={styles.episodeImage}
               />
             </View>
 
             <Text
-              style={{
-                color: isDarkTheme ? '#fff' : '#777',
-                margin: 5,
-                fontSize: 15,
-                marginVertical: 4,
-                textAlign: 'justify',
-              }}>
-              <Text style={{fontWeight: 900, fontSize: 15}}>
-                Release Date :{' '}
-              </Text>
+              style={[
+                styles.text,
+                {
+                  color: isDarkTheme ? '#fff' : '#777',
+                },
+              ]}>
+              <Text style={styles.titleText}>Release Date : </Text>
               {data.air_date}
             </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: windowWidth - 25,
-              }}>
+            <View style={styles.textView}>
               <Text
-                style={{
-                  color: isDarkTheme ? '#fff' : '#777',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
-                <Text style={{fontWeight: 900, fontSize: 15}}>Seasons : </Text>
+                style={[
+                  styles.text,
+                  {
+                    color: isDarkTheme ? '#fff' : '#777',
+                  },
+                ]}>
+                <Text style={styles.titleText}>Seasons : </Text>
                 {data.season_number}
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: windowWidth - 25,
-              }}>
+            <View style={styles.textView}>
               <Text
-                style={{
-                  color: isDarkTheme ? '#fff' : '#777',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
-                <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
+                style={[
+                  styles.text,
+                  {
+                    color: isDarkTheme ? '#fff' : '#777',
+                  },
+                ]}>
+                <Text style={styles.titleText}>Rating : </Text>
                 {data.vote_average}/10
                 <Text
-                  style={{
-                    color: isDarkTheme ? '#fff' : '#215f8e',
-                    fontSize: 20,
-                    alignSelf: 'center',
-                  }}>
+                  style={[
+                    styles.starText,
+                    {color: isDarkTheme ? '#fff' : '#215f8e'},
+                  ]}>
                   ★
                 </Text>
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: windowWidth - 25,
-              }}>
+            <View style={styles.textView}>
               <Text
-                style={{
-                  color: isDarkTheme ? '#fff' : '#777',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
-                <Text style={{fontWeight: 900, fontSize: 15}}>
-                  Total Episode :{' '}
-                </Text>
+                style={[
+                  styles.text,
+                  {
+                    color: isDarkTheme ? '#fff' : '#777',
+                  },
+                ]}>
+                <Text style={styles.titleText}>Total Episode : </Text>
                 {data.episode_number}
               </Text>
             </View>
           </ScrollView>
         ) : (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignSelf: 'center',
-            }}>
+          <View style={styles.activityIndicator}>
             <Text>
               <ActivityIndicator size="large" />
             </Text>
@@ -175,5 +128,58 @@ const Episode = ({route, navigation}) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  mainView: {flex: 1},
+  viewHeader: {flexDirection: 'row'},
+  viewHeaderTouchableOpacity: {alignSelf: 'center', paddingLeft: 20},
+  viewHeaderTextView: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    shadowRadius: 2,
+  },
+  viewHeaderText: {
+    fontWeight: 900,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  episodeDataView: {
+    marginHorizontal: 10,
+    marginBottom: 96,
+    justifyContent: 'center',
+  },
+  episodeImage: {
+    marginTop: 20,
+    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 400,
+    height: 240,
+    resizeMode: 'center',
+  },
+  text: {
+    margin: 5,
+    fontSize: 15,
+    marginVertical: 4,
+  },
+  titleText: {fontWeight: 'bold', fontSize: 15},
+  textView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: windowWidth - 25,
+  },
+  starText: {
+    fontSize: 20,
+    alignSelf: 'center',
+  },
+  activityIndicator: {
+    // flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+});
 
 export default Episode;

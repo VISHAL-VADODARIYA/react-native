@@ -12,12 +12,12 @@ const Main = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.user.flag);
   const activeUser = useSelector(state => state.user.activeUser);
-  console.log(activeUser);
-  const [isloding, setisloding] = useState(false);
+  // console.log(activeUser);
+  const [isLoading, setisLoading] = useState(false);
   useEffect(() => {
     async function getData() {
       try {
-        setisloding(true);
+        setisLoading(true);
         const allUser = await AsyncStorage.getItem('register');
         if (allUser !== null) {
           dispatch(userAction.setUsers(JSON.parse(allUser)));
@@ -26,7 +26,7 @@ const Main = () => {
         if (active !== null) {
           dispatch(userAction.setActiveUser(JSON.parse(active)));
         }
-        setisloding(false);
+        setisLoading(false);
       } catch (e) {
         console.log(e);
       }
@@ -37,7 +37,7 @@ const Main = () => {
 
   console.log(login);
 
-  if (isloding) {
+  if (isLoading) {
     return (
       <View
         style={{
@@ -68,8 +68,8 @@ const Main = () => {
                 backgroundColor: '#215f8e',
                 paddingVertical: 60,
               }}>
-              <Text style={{color: '#fff', fontSize: 40, textAlign: 'center'}}>
-                Hello
+              <Text style={{color: '#fff', fontSize: 50, textAlign: 'center'}}>
+                Movies
               </Text>
             </View>
           </View>

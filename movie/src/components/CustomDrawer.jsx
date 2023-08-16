@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   useColorScheme,
+  StyleSheet,
 } from 'react-native';
 import {
   DrawerContentScrollView,
@@ -39,9 +40,9 @@ const CustomDrawer = props => {
           source={{
             uri: 'https://img.tineye.com/flickr-images/?filepath=labs-flickr-public/images/08/2592647075_08304c12c7_m.jpg&size=73',
           }}
-          style={{padding: 20}}>
+          style={styles.backgroundImage}>
           <TouchableOpacity
-            style={{height: 80, width: 80, borderRadius: 40, marginBottom: 10}}
+            style={styles.profileImageTouchableOpacity}
             onPress={() => {
               navigation.navigate('Profile');
             }}>
@@ -49,44 +50,41 @@ const CustomDrawer = props => {
               source={{
                 uri: 'https://img.freepik.com/free-icon/man_318-157617.jpg?w=2000',
               }}
-              style={{
-                height: 80,
-                width: 80,
-                borderRadius: 40,
-                marginBottom: 10,
-              }}
+              style={styles.profileImage}
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              color: '#fff',
-              fontSize: 18,
-              fontFamily: 'Roboto-Medium',
-              marginBottom: 5,
-            }}>
-            {activeUser.name}
-          </Text>
+          <Text style={styles.userName}>{activeUser.name}</Text>
         </ImageBackground>
 
-        <View style={{flex: 1, backgroundColor: isDarkTheme ? '#333':'#fff', paddingTop: 10}}>
+        <View
+          style={[
+            styles.drawerItemList,
+            {backgroundColor: isDarkTheme ? '#333' : '#fff'},
+          ]}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
-      <View style={{padding: 20, borderTopWidth: 1, borderTopColor:isDarkTheme? '#fff': '#215f8e'}}>
+      <View
+        style={[
+          styles.logoutView,
+          {borderTopColor: isDarkTheme ? '#fff' : '#215f8e'},
+        ]}>
         <TouchableOpacity
           onPress={() => {
             logoutHandler();
           }}
-          style={{paddingVertical: 15}}>
+          style={styles.logoutTouchabaleOpacity}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Ionicons name="exit-outline" size={24} color={isDarkTheme? '#fff':'#215f8e'} />
+            <Ionicons
+              name="exit-outline"
+              size={24}
+              color={isDarkTheme ? '#fff' : '#215f8e'}
+            />
             <Text
-              style={{
-                fontSize: 15,
-                marginLeft: 5,
-                fontWeight: 'bold',
-                color:isDarkTheme? '#fff': '#215f8e',
-              }}>
+              style={[
+                styles.logoutText,
+                {color: isDarkTheme ? '#fff' : '#215f8e'},
+              ]}>
               Log out
             </Text>
           </View>
@@ -95,6 +93,42 @@ const CustomDrawer = props => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  backgroundImage: {padding: 20},
+  profileImageTouchableOpacity: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    marginBottom: 10,
+  },
+  profileImage: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    marginBottom: 10,
+  },
+  userName: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: 'Roboto-Medium',
+    marginBottom: 5,
+  },
+  drawerItemList: {
+    flex: 1,
+    paddingTop: 10,
+  },
+  logoutView: {
+    padding: 20,
+    borderTopWidth: 1,
+  },
+  logoutTouchabaleOpacity: {paddingVertical: 15},
+  logoutText: {
+    fontSize: 15,
+    marginLeft: 5,
+    fontWeight: 'bold',
+  },
+});
 
 export default CustomDrawer;
 

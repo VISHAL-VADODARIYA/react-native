@@ -8,7 +8,7 @@ const userSlice = createSlice({
     user: [
       {
         id: 'hjsaidhuvid',
-        name: 'vishal vadodariya',
+        name: 'Vishal Vadodariya',
         email: 'vishal@gmail.com',
         password: 'vishal',
       },
