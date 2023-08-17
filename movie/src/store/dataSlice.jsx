@@ -2,7 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   movie: [],
-  tv:[]
+  tv:[],
+  person:[],
 };
 
 const dataSlice = createSlice({
@@ -16,6 +17,10 @@ const dataSlice = createSlice({
     fetchTvData(state, action) {
       state.tv.push(...action.payload)
       state.tv.reverse()
+    },
+    fetchPersonData(state, action) {
+      state.person.push(...action.payload)
+      state.person.reverse()
     }
     
   },

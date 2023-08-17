@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   RefreshControl,
   useColorScheme,
+  FlatList,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
@@ -15,7 +16,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 import {dataAction} from '../store/dataSlice';
 import ListTab from '../components/ListTab';
-import {FlatList} from 'react-native-gesture-handler';
+
 
 const MovieTab = ({navigation}) => {
   const [page, setPage] = useState(1);
@@ -91,6 +92,7 @@ const MovieTab = ({navigation}) => {
       </View>
       {/* <FlatList
         data={movieData}
+      
         renderItem={res => {
           return (
             <TouchableOpacity
@@ -102,6 +104,7 @@ const MovieTab = ({navigation}) => {
             </TouchableOpacity>
           );
         }}
+
       /> */}
       <ScrollView
         style={

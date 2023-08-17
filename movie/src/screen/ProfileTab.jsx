@@ -13,6 +13,7 @@ import {useDispatch} from 'react-redux';
 import {userAction} from '../store/userSlice';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
+import MarqueeView from 'react-native-marquee-view';
 
 const ProfileTab = () => {
   const navigation = useNavigation();
@@ -90,6 +91,17 @@ const ProfileTab = () => {
             Email : {activeUser.email}
           </Text>
         </View>
+
+        <MarqueeView
+          style={{
+            backgroundColor: '#465456',
+            width: 350,
+          }}
+          speed={2}>
+          <View style={{backgroundColor: '#f5f5f5'}}>
+            <Text>{"                        "}</Text>
+          </View>
+        </MarqueeView>
 
         {/* <View style={styles.button}>
           <TouchableOpacity
