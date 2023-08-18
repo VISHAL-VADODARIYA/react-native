@@ -20,33 +20,44 @@ const LoginScreen = ({navigation}) => {
   const user = useSelector(state => state.user.user);
   const a = useSelector(state => state.user.activeUser);
   const isLoggedIn = useSelector(state => state.user.flag);
+
+  const [emailMessage, setEmailMessage] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(false);
   console.log(a);
 
   // const [message, setMessage] = useState();
   const dispatch = useDispatch();
-  var activeUser ;
+  var activeUser;
   const LoginHandler = () => {
     // const ky = Object.keys(user);
-    console.log('called');
-    let flag = true;
-    for (let i of user) {
-      if (i.email === userData.email && i.password === userData.password) {
-        flag = false;
-        dispatch(userAction.login(i));
-        console.log(i);
-        activeUser = i;
+
+    if (userData.email === '') {
+      setEmailMessage(true);
+    } else if (userData.email !== '') {
+      setEmailMessage(false);
+    } 
+    if (userData.password === '') {
+      setPasswordMessage(true);
+    } else if (userData.password !== '') {
+      setPasswordMessage(false);
+    } 
+    if(userData.email !== '' && userData.password !== '') {
+      let flag = true;
+      for (let i of user) {
+        if (i.email === userData.email && i.password === userData.password) {
+          flag = false;
+          dispatch(userAction.login(i));
+          activeUser = i;
+        }
       }
-    }
-    if (flag) {
-      // setMessage('inccorect Detail');
-      Alert.alert('Login Failed', 'incorrect Detail', [{}]);
-    } else {
-      // setMessage('');
-      setUserData({email: '', password: ''});
+      if (flag) {
+        Alert.alert('Login Failed', 'incorrect Detail', [{}]);
+        setUserData({email: '', password: ''});
+      } 
     }
   };
-  
-  console.log(a.id)
+
+  console.log(a.id);
   const activeUser2 = useSelector(state => state.user.activeUser);
   console.log(activeUser2);
 
@@ -70,22 +81,34 @@ const LoginScreen = ({navigation}) => {
             <TextInput
               style={{flex: 1, flexDirection: 'row'}}
               placeholder="Email ID"
+              autoCapitalize='none'
               value={userData.email}
               onChangeText={text => {
                 setUserData({...userData, email: text});
               }}></TextInput>
           </View>
+          {emailMessage && (
+            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
+              Enter Valid Email
+            </Text>
+          )}
           <View style={styles.inputField}>
             <Icon name="lock" size={20} color="#215F8E" />
             <TextInput
               style={{flex: 1, flexDirection: 'row'}}
               secureTextEntry={true}
+              autoCapitalize='none'
               placeholder="Password"
               value={userData.password}
               onChangeText={text => {
                 setUserData({...userData, password: text});
               }}></TextInput>
           </View>
+          {passwordMessage && (
+            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
+              Enter Valid Password
+            </Text>
+          )}
           <View style={styles.button}>
             <TouchableOpacity
               onPress={() => {

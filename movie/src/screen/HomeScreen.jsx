@@ -13,6 +13,7 @@ import TvTab from './TvTab';
 import SearchScreen from './ForYou';
 import {useColorScheme} from 'react-native';
 import PersonsTab from './PersonsTab';
+import SearchTab from './SearchTab';
 
 const HomeScreen = () => {
   const Drawer = createDrawerNavigator();
@@ -113,6 +114,18 @@ const MainScreen = () => {
         }}
         name="TV"
         component={TvTab}
+      />
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'TV',
+          tabBarLabelPosition: 'beside-icon',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => (
+            <FaIconm name="search" size={25} color={color} />
+          ),
+        }}
+        name="Search"
+        component={SearchTab}
       />
       <Tab.Screen
         options={{

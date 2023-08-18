@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Linking,
   useColorScheme,
+  StyleSheet,
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
@@ -20,14 +21,19 @@ const SeasonsScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView
-      style={{flex: 1, backgroundColor: isDarkTheme ? '#555' : '#fff'}}>
+      style={[
+        styles.container,
+        {backgroundColor: isDarkTheme ? '#555' : '#fff'},
+      ]}>
       <View
-        style={{
-          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
-          flexDirection: 'row',
-        }}>
+        style={[
+          styles.header,
+          {
+            backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
+          },
+        ]}>
         <TouchableOpacity
-          style={{alignSelf: 'center', paddingLeft: 20}}
+          style={styles.goback}
           onPress={() => {
             navigation.goBack();
           }}>
@@ -37,30 +43,19 @@ const SeasonsScreen = ({route, navigation}) => {
             color={isDarkTheme ? '#fff' : '#215F8E'}
           />
         </TouchableOpacity>
-        <View
-          style={{
-            padding: 15,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            shadowRadius: 2,
-          }}>
+        <View style={styles.titleTextView}>
           <Text
-            style={{
-              fontWeight: 900,
-              fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
-              textAlign: 'center',
-            }}>
+            style={[
+              styles.titleText,
+              {
+                color: isDarkTheme ? '#fff' : '#215F8E',
+              },
+            ]}>
             {e.name}
           </Text>
         </View>
       </View>
-      <View
-        style={{
-          marginHorizontal: 10,
-          marginBottom: 96,
-          justifyContent: 'center',
-        }}>
+      <View style={styles.scrollviewWrap}>
         {e ? (
           <ScrollView showsVerticalScrollIndicator={false} key={`2${e.id}`}>
             <View>
@@ -68,91 +63,58 @@ const SeasonsScreen = ({route, navigation}) => {
                 source={{
                   uri: `https://image.tmdb.org/t/p/original/${e.poster_path}`,
                 }}
-                style={{
-                  marginTop: 20,
-                  marginBottom: 5,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  width: 400,
-                  height: 240,
-                  resizeMode: 'center',
-                }}
+                style={styles.image}
               />
             </View>
 
-            <Text
-              style={{
-                color: isDarkTheme ? '#fff' : '#777',
-                margin: 5,
-                fontSize: 15,
-                marginVertical: 4,
-                textAlign: 'justify',
-              }}>
-              <Text style={{fontWeight: 900, fontSize: 15}}>
-                Release Date :{' '}
-              </Text>
-              {e.air_date}
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: windowWidth - 25,
-              }}>
+            <View style={styles.textheadView}>
               <Text
-                style={{
-                  color: isDarkTheme ? '#fff' : '#777',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
-                <Text style={{fontWeight: 900, fontSize: 15}}>Seasons : </Text>
+                style={[
+                  styles.texthead,
+                  {color: isDarkTheme ? '#fff' : '#777'},
+                ]}>
+                <Text style={[styles.text, {fontWeight: 900}]}>
+                  Release Date :{' '}
+                </Text>
+                {e.air_date}
+              </Text>
+            </View>
+            <View style={styles.textheadView}>
+              <Text
+                style={[
+                  styles.texthead,
+                  {color: isDarkTheme ? '#fff' : '#777'},
+                ]}>
+                <Text style={[styles.text, {fontWeight: 900}]}>Seasons : </Text>
                 {e.season_number}
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: windowWidth - 25,
-              }}>
+            <View style={styles.textheadView}>
               <Text
-                style={{
-                  color: isDarkTheme ? '#fff' : '#777',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
-                <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
-                {e.vote_average.toFixed(1)}/10
+                style={[
+                  styles.texthead,
+                  {color: isDarkTheme ? '#fff' : '#777'},
+                ]}>
+                <Text style={[styles.text, {fontWeight: 900}]}>Rating : </Text>
+                {e.vote_average === 0 ? '6' : `${e.vote_average.toFixed(1)}`}/10
                 <Text
-                  style={{
-                    color: isDarkTheme ? '#fff' : '#215f8e',
-                    fontSize: 20,
-                    alignSelf: 'center',
-                  }}>
+                  style={[
+                    styles.star,
+                    {
+                      color: isDarkTheme ? '#fff' : '#215f8e',
+                    },
+                  ]}>
                   ★
                 </Text>
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: windowWidth - 25,
-              }}>
+            <View style={styles.textheadView}>
               <Text
-                style={{
-                  color: isDarkTheme ? '#fff' : '#777',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                }}>
-                <Text style={{fontWeight: 900, fontSize: 15}}>
+                style={[
+                  styles.texthead,
+                  {color: isDarkTheme ? '#fff' : '#777'},
+                ]}>
+                <Text style={[styles.text, {fontWeight: 900}]}>
                   Total Episode :{' '}
                 </Text>
                 {e.episode_count}
@@ -161,11 +123,7 @@ const SeasonsScreen = ({route, navigation}) => {
           </ScrollView>
         ) : (
           <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignSelf: 'center',
-            }}>
+            style={styles.activity}>
             <ActivityIndicator
               size="large"
               color={isDarkTheme ? '#fff' : '#215f8e'}
@@ -178,3 +136,59 @@ const SeasonsScreen = ({route, navigation}) => {
 };
 
 export default SeasonsScreen;
+
+const styles = StyleSheet.create({
+  container: {flex: 1},
+  header: {flexDirection: 'row'},
+  goback: {alignSelf: 'center', paddingLeft: 20},
+  titleTextView: {
+    padding: 15,
+    flexDirection: 'row',
+    shadowRadius: 2,
+    width: windowWidth - 50,
+    overflow: 'hidden',
+  },
+  titleText: {
+    fontWeight: 900,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  scrollviewWrap: {
+    flex: 1,
+    marginHorizontal: 10,
+    justifyContent: 'center',
+  },
+  image: {
+    marginTop: 20,
+    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 400,
+    height: 240,
+    resizeMode: 'center',
+  },
+  texthead: {
+    margin: 5,
+    fontSize: 15,
+    marginVertical: 4,
+    textAlign: 'justify',
+  },
+  textheadView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: windowWidth - 25,
+  },
+  text: {fontSize: 15},
+  star: {
+    fontSize: 20,
+    alignSelf: 'center',
+  },
+  activity:{
+    flex:1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  }
+});

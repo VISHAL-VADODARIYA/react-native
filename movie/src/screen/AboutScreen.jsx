@@ -14,15 +14,19 @@ const AboutScreen = ({navigation}) => {
   const isDarkTheme = theme === 'dark';
   return (
     <SafeAreaView
-      style={{flex: 1, backgroundColor: isDarkTheme ? '#555' : '#fff'}}>
-      {/* <View style={styles.shadow}> */}
+      style={[
+        styles.container,
+        {backgroundColor: isDarkTheme ? '#555' : '#fff'},
+      ]}>
       <View
-        style={{
-          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
-          flexDirection: 'row',
-        }}>
+        style={[
+          styles.header,
+          {
+            backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
+          },
+        ]}>
         <TouchableOpacity
-          style={{alignSelf: 'center', paddingLeft: 20}}
+          style={styles.goback}
           onPress={() => {
             navigation.openDrawer();
           }}>
@@ -32,35 +36,29 @@ const AboutScreen = ({navigation}) => {
             color={isDarkTheme ? '#fff' : '#215F8E'}
           />
         </TouchableOpacity>
-        <View
-          style={{
-            padding: 15,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            shadowRadius: 2,
-          }}>
+        <View style={styles.headerTextView}>
           <Text
-            style={{
-              fontWeight: 900,
-              fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
-              textAlign: 'center',
-            }}>
+            style={[
+              styles.headerText,
+              {
+                color: isDarkTheme ? '#fff' : '#215F8E',
+              },
+            ]}>
             About Us
           </Text>
         </View>
       </View>
-      {/* </View> */}
-      <View
-        style={{margin: 10, justifyContent: 'space-between', alignItems: 'center'}}>
-        <Text style={{color: isDarkTheme ? '#fff' : '#777'}}>
-          this is movie listing with authentication which is shows movie data.
+
+      <View style={styles.mainView}>
+        <Text
+          style={[styles.textJustify, {color: isDarkTheme ? '#fff' : '#777'}]}>
+          This is movie listing with authentication which is shows movie data.
           which if fetch from api and show here in list formate.
         </Text>
-        <Text></Text>
-        <Text style={{color: isDarkTheme ? '#fff' : '#777'}}>
-          created by vishal Vadodariya
+
+        <Text
+          style={[styles.textJustify, {color: isDarkTheme ? '#fff' : '#777'}]}>
+          Created by Vishal Vadodariya
         </Text>
       </View>
     </SafeAreaView>
@@ -68,19 +66,28 @@ const AboutScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  main: {
+  container: {flex: 1},
+  header: {flexDirection: 'row'},
+  goback: {alignSelf: 'center', paddingLeft: 20},
+  headerText: {
+    fontWeight: 900,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  headerTextView: {
     padding: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowRadius: 2,
-    backgroundColor: '#fff',
   },
-  // shadow: {
-  //   shadowColor: '#171717',
-  //   shadowOffset: {width: -2, height: 4},
-  //   shadowOpacity: 0.2,
-  //   shadowRadius: 3,
-  // },
+  mainView: {
+    flex: 1,
+    margin: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  textJustify: {textAlign: 'justify'},
 });
 
 export default AboutScreen;

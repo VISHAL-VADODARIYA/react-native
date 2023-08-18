@@ -71,18 +71,21 @@ const SubDetail = ({route, navigation}) => {
   }, []);
   return (
     <SafeAreaView
-      style={{
-        flex: 1,
-        paddingBottom: 10,
-        backgroundColor: isDarkTheme ? '#555' : '#fff',
-      }}>
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkTheme ? '#555' : '#fff',
+        },
+      ]}>
       <View
-        style={{
-          backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
-          flexDirection: 'row',
-        }}>
+        style={[
+          styles.header,
+          {
+            backgroundColor: isDarkTheme ? '#333' : '#B3C6D6',
+          },
+        ]}>
         <TouchableOpacity
-          style={{alignSelf: 'center', paddingLeft: 20}}
+          style={styles.goback}
           onPress={() => {
             navigation.goBack();
           }}>
@@ -92,30 +95,19 @@ const SubDetail = ({route, navigation}) => {
             color={isDarkTheme ? '#fff' : '#215F8E'}
           />
         </TouchableOpacity>
-        <View
-          style={{
-            padding: 15,
-            flexDirection: 'row',
-            shadowRadius: 2,
-            width: windowWidth - 50,
-            overflow: 'hidden',
-          }}>
+        <View style={styles.titleTextView}>
           <Text
-            style={{
-              fontWeight: 900,
-              fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
-              textAlign: 'center',
-            }}>
+            style={[
+              styles.titleText,
+              {
+                color: isDarkTheme ? '#fff' : '#215F8E',
+              },
+            ]}>
             {data ? (movie ? data.title : data.name) : ''}
           </Text>
         </View>
       </View>
-      <View
-        style={{
-          marginHorizontal: 10,
-          justifyContent: 'center',
-        }}>
+      <View style={styles.scrollviewWrap}>
         {data ? (
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
@@ -126,49 +118,42 @@ const SubDetail = ({route, navigation}) => {
                     data.backdrop_path ? data.backdrop_path : data.poster_path
                   }`,
                 }}
-                style={{
-                  marginTop: 20,
-                  marginBottom: 5,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  width: 400,
-                  height: 240,
-                  resizeMode: `${data.backdrop_path ? 'stretch' : 'contain'}`,
-                }}
+                style={[
+                  styles.image,
+                  {
+                    resizeMode: `${data.backdrop_path ? 'stretch' : 'contain'}`,
+                  },
+                ]}
               />
               {data.tagline && (
                 <Text
-                  style={{
-                    textAlign: 'center',
-                    color: isDarkTheme ? '#fff' : '#215f8e',
-                    marginVertical: 10,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.taglineText,
+                    {
+                      color: isDarkTheme ? '#fff' : '#215f8e',
+                    },
+                  ]}>
                   {data.tagline}
                 </Text>
               )}
             </View>
 
-            <Text
-              style={[
-                {
-                  color: isDarkTheme ? '#fff' : '#666',
-                  margin: 5,
-                  fontSize: 15,
-                  marginVertical: 4,
-                },
-              ]}>
-              <Text style={{fontWeight: 900, fontSize: 15}}>Overview : </Text>
-              {data.overview}
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: windowWidth - 25,
-              }}>
+            {/* overview */}
+            {data.overview && (
+              <Text
+                style={[
+                  styles.overview,
+                  {
+                    color: isDarkTheme ? '#fff' : '#666',
+                  },
+                ]}>
+                <Text style={{fontWeight: 900, fontSize: 15}}>Overview : </Text>
+                {data.overview}
+              </Text>
+            )}
+
+            {/* rating row */}
+            <View style={styles.ratingRow}>
               <Text
                 style={[
                   {
@@ -179,11 +164,12 @@ const SubDetail = ({route, navigation}) => {
                 <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
                 {data.vote_average.toFixed(1)}/10
                 <Text
-                  style={{
-                    color: isDarkTheme ? '#fff' : '#215f8e',
-                    fontSize: 20,
-                    alignSelf: 'center',
-                  }}>
+                  style={[
+                    styles.star,
+                    {
+                      color: isDarkTheme ? '#fff' : '#215f8e',
+                    },
+                  ]}>
                   ★
                 </Text>
               </Text>
@@ -194,135 +180,112 @@ const SubDetail = ({route, navigation}) => {
                   })
                 }>
                 <Text
-                  style={{
-                    color: isDarkTheme ? '#fff' : '#215f8e',
-                    margin: 5,
-                    fontSize: 15,
-                    marginVertical: 4,
-                    fontWeight: 900,
-                  }}>
+                  style={[
+                    styles.seeMore,
+                    {
+                      color: isDarkTheme ? '#fff' : '#215f8e',
+                    },
+                  ]}>
                   See More
                 </Text>
               </TouchableOpacity>
             </View>
 
-            <View>
-              <Text
-                style={[
-                  {
-                    color: isDarkTheme ? '#fff' : '#666',
-                  },
-                  styles.listTitle,
-                ]}>
-                Genres :
-              </Text>
-              <View
-                style={{
-                  width: windowWidth - 40,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  flexBasis: 'auto',
-                  marginLeft: 18,
-                }}>
-                {data.genres.map(e => {
-                  return (
-                    <Text
-                      key={e.id}
-                      style={{
-                        color: isDarkTheme ? '#215f8e' : '#fff',
-                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
-                        paddingVertical: 2,
-                        paddingHorizontal: 5,
-                        borderRadius: 5,
-                        overflow: 'hidden',
-                        margin: 2,
-                        fontSize: 15,
-                        marginVertical: 4,
-                      }}>
-                      {e.name}
-                    </Text>
-                  );
-                })}
+            {/* genres */}
+            {data.genres.length > 0 && (
+              <View>
+                <Text
+                  style={[
+                    {
+                      color: isDarkTheme ? '#fff' : '#666',
+                    },
+                    styles.listTitle,
+                  ]}>
+                  Genres :
+                </Text>
+                <View style={styles.listView}>
+                  {data.genres.map(e => {
+                    return (
+                      <Text
+                        key={e.id}
+                        style={[
+                          styles.listText,
+                          {
+                            color: isDarkTheme ? '#215f8e' : '#fff',
+                            backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
+                          },
+                        ]}>
+                        {e.name}
+                      </Text>
+                    );
+                  })}
+                </View>
               </View>
-            </View>
-            <View>
-              <Text
-                style={[
-                  {
-                    color: isDarkTheme ? '#fff' : '#666',
-                  },
-                  styles.listTitle,
-                ]}>
-                Language :
-              </Text>
-              <View
-                style={{
-                  width: windowWidth - 40,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  flexBasis: 'auto',
-                  marginLeft: 18,
-                }}>
-                {data.spoken_languages.map(e => {
-                  return (
-                    <Text
-                      key={e.iso_639_1}
-                      style={{
-                        color: isDarkTheme ? '#215f8e' : '#fff',
-                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
-                        paddingVertical: 2,
-                        paddingHorizontal: 5,
-                        borderRadius: 5,
-                        overflow: 'hidden',
-                        margin: 2,
-                        fontSize: 15,
-                        marginVertical: 4,
-                      }}>
-                      {e.english_name}
-                    </Text>
-                  );
-                })}
+            )}
+
+            {/* Language */}
+            {data.spoken_languages.length > 0 && (
+              <View>
+                <Text
+                  style={[
+                    {
+                      color: isDarkTheme ? '#fff' : '#666',
+                    },
+                    styles.listTitle,
+                  ]}>
+                  Language :
+                </Text>
+                <View style={styles.listView}>
+                  {data.spoken_languages.map(e => {
+                    return (
+                      <Text
+                        key={e.iso_639_1}
+                        style={[
+                          styles.listText,
+                          {
+                            color: isDarkTheme ? '#215f8e' : '#fff',
+                            backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
+                          },
+                        ]}>
+                        {e.english_name}
+                      </Text>
+                    );
+                  })}
+                </View>
               </View>
-            </View>
-            <View>
-              <Text
-                style={[
-                  {
-                    color: isDarkTheme ? '#fff' : '#666',
-                  },
-                  styles.listTitle,
-                ]}>
-                Production Company :
-              </Text>
-              <View
-                style={{
-                  width: windowWidth - 40,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  flexBasis: 'auto',
-                  marginHorizontal: 18,
-                }}>
-                {data.production_companies.map(e => {
-                  return (
-                    <Text
-                      key={e.id}
-                      style={{
-                        color: isDarkTheme ? '#215f8e' : '#fff',
-                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
-                        paddingVertical: 2,
-                        paddingHorizontal: 5,
-                        borderRadius: 5,
-                        overflow: 'hidden',
-                        margin: 2,
-                        fontSize: 15,
-                        marginVertical: 4,
-                      }}>
-                      {e.name}
-                    </Text>
-                  );
-                })}
+            )}
+
+            {/* production companies */}
+            {data.production_companies.length > 0 && (
+              <View style={data.original_name ? '' : {marginBottom: 15}}>
+                <Text
+                  style={[
+                    {
+                      color: isDarkTheme ? '#fff' : '#666',
+                    },
+                    styles.listTitle,
+                  ]}>
+                  Production Company :
+                </Text>
+                <View style={styles.listView}>
+                  {data.production_companies.map(e => {
+                    return (
+                      <Text
+                        key={e.id}
+                        style={[
+                          styles.listText,
+                          {
+                            color: isDarkTheme ? '#215f8e' : '#fff',
+                            backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
+                          },
+                        ]}>
+                        {e.name}
+                      </Text>
+                    );
+                  })}
+                </View>
               </View>
-            </View>
+            )}
             {data.original_name && (
               <>
                 <View>
@@ -335,39 +298,25 @@ const SubDetail = ({route, navigation}) => {
                     ]}>
                     Type :{' '}
                   </Text>
-                  <View
-                    style={{
-                      width: windowWidth - 40,
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      flexBasis: 'auto',
-                      marginHorizontal: 18,
-                      marginBottom: 10,
-                    }}>
+                  <View style={styles.listView}>
                     <Text
-                      style={{
-                        color: isDarkTheme ? '#215f8e' : '#fff',
-                        backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
-                        paddingVertical: 2,
-                        paddingHorizontal: 5,
-                        borderRadius: 5,
-                        overflow: 'hidden',
-                        margin: 2,
-                        fontSize: 15,
-                        marginVertical: 4,
-                      }}>
+                      style={[
+                        styles.listText,
+                        {
+                          color: isDarkTheme ? '#215f8e' : '#fff',
+                          backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
+                        },
+                      ]}>
                       {data.type}
                     </Text>
                   </View>
                 </View>
 
                 <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    width: windowWidth - 25,
-                  }}>
+                  style={[
+                    styles.latestComingView,
+                    {borderColor: isDarkTheme ? '#fff' : '#666'},
+                  ]}>
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('Episode', {
@@ -378,14 +327,12 @@ const SubDetail = ({route, navigation}) => {
                       });
                     }}>
                     <Text
-                      style={{
-                        color: isDarkTheme ? '#fff' : '#215f8e',
-                        margin: 5,
-                        fontSize: 15,
-                        marginVertical: 4,
-                        alignSelf: 'center',
-                        fontWeight: 900,
-                      }}>
+                      style={[
+                        styles.latestComingText,
+                        {
+                          color: isDarkTheme ? '#fff' : '#215f8e',
+                        },
+                      ]}>
                       Latest Episode
                     </Text>
                   </TouchableOpacity>
@@ -399,20 +346,18 @@ const SubDetail = ({route, navigation}) => {
                       });
                     }}>
                     <Text
-                      style={{
-                        color: isDarkTheme ? '#fff' : '#215f8e',
-                        margin: 5,
-                        fontSize: 15,
-                        marginVertical: 4,
-                        alignSelf: 'center',
-                        fontWeight: 900,
-                      }}>
+                      style={[
+                        styles.latestComingText,
+                        {
+                          color: isDarkTheme ? '#fff' : '#215f8e',
+                        },
+                      ]}>
                       Coming Soon Episode
                     </Text>
                   </TouchableOpacity>
                 </View>
 
-                <View style={{marginBottom: 20}}>
+                <View style={styles.seasonView}>
                   <Text
                     style={[
                       {
@@ -432,29 +377,20 @@ const SubDetail = ({route, navigation}) => {
                         onPress={() =>
                           navigation.navigate('SeasonsScreen', {e: e})
                         }>
-                        <View style={{marginRight: 10, marginBottom: 40}}>
+                        <View style={styles.seasonTouchableView}>
                           <Image
                             source={{
                               uri: `https://image.tmdb.org/t/p/original/${e.poster_path}`,
                             }}
-                            style={{
-                              marginTop: 5,
-                              flexDirection: 'row',
-                              justifyContent: 'center',
-                              borderRadius: 5,
-                              alignSelf: 'center',
-                              width: 90,
-                              height: 130,
-                            }}
+                            style={styles.seasonImage}
                           />
                           <Text
-                            style={{
-                              color: isDarkTheme ? '#fff' : '#777',
-                              margin: 5,
-                              fontSize: 15,
-                              marginVertical: 4,
-                              textAlign: 'center',
-                            }}>
+                            style={[
+                              styles.seasonText,
+                              {
+                                color: isDarkTheme ? '#fff' : '#777',
+                              },
+                            ]}>
                             {e.name}
                           </Text>
                         </View>
@@ -466,13 +402,8 @@ const SubDetail = ({route, navigation}) => {
             )}
           </ScrollView>
         ) : (
-          <View
-            style={{
-              paddingTop: windowHeight / 2.2,
-              justifyContent: 'center',
-              alignSelf: 'center',
-            }}>
-            <Text style={{textAlign: 'center'}}>
+          <View style={styles.activityView}>
+            <Text style={styles.activityText}>
               <ActivityIndicator
                 size="large"
                 color={isDarkTheme ? '#fff' : '#215f8e'}
@@ -486,12 +417,123 @@ const SubDetail = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {flex: 1, paddingBottom: 10},
+  header: {flexDirection: 'row'},
+  goback: {alignSelf: 'center', paddingLeft: 20},
+  titleTextView: {
+    padding: 15,
+    flexDirection: 'row',
+    shadowRadius: 2,
+    width: windowWidth - 50,
+    overflow: 'hidden',
+  },
+  titleText: {
+    fontWeight: 900,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  scrollviewWrap: {
+    flex: 1,
+    marginHorizontal: 10,
+    justifyContent: 'center',
+  },
+  image: {
+    marginTop: 20,
+    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 400,
+    height: 240,
+  },
+  taglineText: {
+    textAlign: 'center',
+    marginVertical: 10,
+    fontWeight: 'bold',
+  },
+  overview: {
+    margin: 5,
+    fontSize: 15,
+    marginVertical: 4,
+  },
+  ratingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: windowWidth - 25,
+  },
   listTitle: {
     fontWeight: 900,
     margin: 5,
     fontSize: 15,
     marginVertical: 4,
   },
+  star: {
+    fontSize: 20,
+    alignSelf: 'center',
+  },
+  seeMore: {
+    margin: 5,
+    fontSize: 15,
+    marginVertical: 4,
+    fontWeight: 900,
+  },
+  listView: {
+    width: windowWidth - 40,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flexBasis: 'auto',
+    marginLeft: 18,
+  },
+  listText: {
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    borderRadius: 5,
+    overflow: 'hidden',
+    margin: 2,
+    fontSize: 15,
+    marginVertical: 4,
+  },
+  latestComingView: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginVertical: 10,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    paddingVertical: 5,
+    width: windowWidth - 25,
+  },
+  latestComingText: {
+    margin: 5,
+    fontSize: 15,
+    marginVertical: 4,
+    alignSelf: 'center',
+    fontWeight: 900,
+  },
+  seasonView: {marginBottom: 20},
+  seasonImage: {
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 5,
+    alignSelf: 'center',
+    width: 90,
+    height: 130,
+  },
+  seasonText: {
+    margin: 5,
+    fontSize: 15,
+    marginVertical: 4,
+    textAlign: 'center',
+  },
+  seasonTouchableView: {marginRight: 10},
+  activityView: {
+    paddingTop: windowHeight / 2.2,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  activityText: {textAlign: 'center'},
 });
 
 export default SubDetail;

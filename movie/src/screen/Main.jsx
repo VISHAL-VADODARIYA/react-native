@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {userAction} from '../store/userSlice';
-import {ImageBackground, Text, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import AppStack from '../navigation/AppStack';
 import AuthStack from '../navigation/AuthStack';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
@@ -26,7 +26,9 @@ const Main = () => {
         if (active !== null) {
           dispatch(userAction.setActiveUser(JSON.parse(active)));
         }
-        setisLoading(false);
+        setTimeout(() => {
+          setisLoading(false);
+        }, 1500);
       } catch (e) {
         console.log(e);
       }
@@ -39,38 +41,16 @@ const Main = () => {
 
   if (isLoading) {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {/* <ActivityIndicator size={'large'}></ActivityIndicator> */}
-
+      <View style={styles.container}>
         <ImageBackground
           // source={require('../assets/images/output-onlinepngtools.png')}
           source={{
             uri: 'https://www.internationalshowtimes.com/img/International_Showtimes_API_Movie_Guide_Data_Grid.jpg',
           }}
-          style={{
-            height: windowHeight,
-            width: windowWidth,
-          }}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignContent: 'center',
-            }}>
-            <View
-              style={{
-                opacity: 0.8,
-                backgroundColor: '#215f8e',
-                paddingVertical: 60,
-              }}>
-              <Text style={{color: '#fff', fontSize: 50, textAlign: 'center'}}>
-                Movies
-              </Text>
+          style={styles.image}>
+          <View style={styles.mainView}>
+            <View style={styles.subView}>
+              <Text style={styles.text}>Movies</Text>
             </View>
           </View>
         </ImageBackground>
@@ -82,3 +62,26 @@ const Main = () => {
 };
 
 export default Main;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    height: windowHeight,
+    width: windowWidth,
+  },
+  mainView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  subView: {
+    opacity: 0.8,
+    backgroundColor: '#215f8e',
+    paddingVertical: 60,
+  },
+  text: {color: '#fff', fontSize: 50, textAlign: 'center'},
+});

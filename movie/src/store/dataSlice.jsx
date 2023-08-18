@@ -4,6 +4,7 @@ const initialState = {
   movie: [],
   tv:[],
   person:[],
+  search:[]
 };
 
 const dataSlice = createSlice({
@@ -21,6 +22,10 @@ const dataSlice = createSlice({
     fetchPersonData(state, action) {
       state.person.push(...action.payload)
       state.person.reverse()
+    },
+    fetchSearchData(state, action) {
+      state.search.push(...action.payload)
+      state.search.reverse()
     }
     
   },

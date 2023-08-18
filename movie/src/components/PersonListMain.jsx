@@ -1,20 +1,9 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-  ActivityIndicator,
-  Image,
-  ImageBackground,
-  useColorScheme,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, useColorScheme} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {windowWidth} from '../utils/Dimensions';
 
-const PersonList = ({res, main}) => {
+const PersonList = ({res, movie}) => {
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
   return (
@@ -22,39 +11,27 @@ const PersonList = ({res, main}) => {
       style={[styles.list, {borderColor: isDarkTheme ? '#fff' : '#215f8e'}]}>
       <Image
         source={{
-          uri: `https://image.tmdb.org/t/p/original/${
-            main ? res.poster_path : res.profile_path
-          }`,
+          uri: `https://image.tmdb.org/t/p/original/${res.profile_path}`,
         }}
-        style={{
-          marginTop: 5,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          borderRadius: 5,
-          alignSelf: 'center',
-          width: 90,
-          height: 110,
-        }}
+        style={styles.image}
       />
-      <View
-        style={{
-          width: windowWidth - 140,
-          marginLeft: 10,
-          marginTop: 2,
-        }}>
-        <Text style={{fontSize: 18, color: isDarkTheme ? '#fff' : '#215F8E'}}>
+      <View style={styles.textView}>
+        <Text
+          style={[styles.titleText, {color: isDarkTheme ? '#fff' : '#215F8E'}]}>
           {res.name}
         </Text>
-        <View style={{marginVertical: 10}}>
-          <Text style={{fontSize: 13, color: isDarkTheme ? '#eaeaea' : '#777'}}>
+        <View style={styles.textWarp}>
+          <Text
+            style={[styles.text, {color: isDarkTheme ? '#eaeaea' : '#777'}]}>
             Gender : {res.gender === 2 ? 'Male' : 'Female'}
           </Text>
-          <Text style={{fontSize: 13, color: isDarkTheme ? '#eaeaea' : '#777'}}>
+          <Text
+            style={[styles.text, {color: isDarkTheme ? '#eaeaea' : '#777'}]}>
             Famous for : {res.known_for_department}
           </Text>
         </View>
       </View>
-      <View style={{alignSelf: 'center', opacity: 0.8}}>
+      <View style={styles.arrow}>
         <Icon
           name="arrow-forward-ios"
           size={20}
@@ -77,10 +54,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomWidth: 0.5,
     borderRightWidth: 0.5,
-
     margin: 5,
     padding: 5,
     borderRadius: 5,
   },
+  image: {
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 5,
+    alignSelf: 'center',
+    width: 90,
+    height: 110,
+  },
+  textView: {
+    width: windowWidth - 140,
+    marginLeft: 10,
+    marginTop: 2,
+  },
+  textWarp: {marginVertical: 10},
+  text: {fontSize: 13},
+  titleText: {fontSize: 18},
+  arrow: {alignSelf: 'center', opacity: 0.8},
 });
 export default PersonList;

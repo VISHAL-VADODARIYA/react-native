@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
+  NativeEventEmitter,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {useDispatch} from 'react-redux';
 import {userAction} from '../store/userSlice';
@@ -18,32 +19,66 @@ import Icon from 'react-native-vector-icons/dist/Entypo';
 const RegisterScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({name: '', email: '', password: ''});
-  const [message, setMessage] = useState('');
+  const [nameMessage, setNameMessage] = useState(false);
+  const [emailMessage, setEmailMessage] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(false);
   const [CPHMessage, setCPHMessage] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [buttonDisable, setButtonDisable] = useState(true);
 
-  const registerHandler = () => {
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email)) {
-      setMessage('email is invalid');
-      Alert.alert('Registration Failed', 'email is invalid', [{}]);
+    const nameHandler = text => {
+    setUserData({...userData, name: text});
+    if (userData.name.trim().length < 3) {
+      setNameMessage(true);
     } else {
-      if (userData.password.trim().length < 6 && CPHMessage !== '') {
-        setMessage('password length should be 6 or more');
-        Alert.alert(
-          'Registration Failed',
-          'password length should be 6 or more',
-          [{}],
-        );
-      } else {
-        dispatch(userAction.register({...userData, id: uuid.v4()}));
-        navigation.navigate('Login');
-      }
+      setNameMessage(false);
     }
   };
+  const emailHandler = text => {
+    setUserData({...userData, email: text});
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email)) {
+      setEmailMessage(true);
+    } else {
+      setEmailMessage(false);
+    }
+  };
+  const passwordHandler = text => {
+    setUserData({...userData, password: text});
+    if (userData.password.trim().length < 6) {
+      setPasswordMessage(true);
+    } else {
+      setPasswordMessage(false);
+    }
+  };
+
   const confirmPasswordHandler = text => {
-    if (text != userData.password) {
-      setCPHMessage("password doesn't match");
+    setConfirmPassword(text);
+    if (text !== userData.password) {
+      setCPHMessage("Password doesn't match");
     } else {
       setCPHMessage('');
+    }
+  };
+  useEffect(() => {
+    if (
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email) &&
+      userData.password.trim().length >= 6 &&
+      userData.name.trim().length >= 3 &&
+      userData.password === confirmPassword
+    ) {
+      setButtonDisable(false);
+    }
+  }, [nameMessage, emailMessage, passwordMessage, CPHMessage]);
+
+  const registerHandler = () => {
+    if (
+      nameMessage === false &&
+      emailMessage === false &&
+      passwordMessage === false
+    ) {
+      console.log('hello clicked');
+      dispatch(userAction.register({...userData, id: uuid.v4()}));
+      navigation.navigate('Login');
     }
   };
   // const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
@@ -54,50 +89,56 @@ const RegisterScreen = ({navigation}) => {
           uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqy5ytbJuBCv9t55-A_ZxR22_FufHk9dI8fw&usqp=CAU',
         }}
         resizeMode="cover"
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-        }}>
+        style={styles.imageBackground}>
         <View style={styles.main}>
           <View>
             <Text style={styles.text}>Register</Text>
           </View>
           <View style={styles.inputField}>
             <Icon name="user" size={20} color="#215F8E" />
-
             <TextInput
-              style={{flex: 1, flexDirection: 'row'}}
+              style={styles.textinput}
               placeholder="Name"
-              onChangeText={text =>
-                setUserData({...userData, name: text})
-              }></TextInput>
+              onChangeText={nameHandler}></TextInput>
           </View>
+          {nameMessage && (
+            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
+              Name must be at least 3 characters
+            </Text>
+          )}
           <View style={styles.inputField}>
             <Icon name="email" size={20} color="#215F8E" />
 
             <TextInput
-              style={{flex: 1, flexDirection: 'row'}}
+              style={styles.textinput}
               placeholder="Email ID"
-              onChangeText={text =>
-                setUserData({...userData, email: text})
-              }></TextInput>
+              onChangeText={emailHandler}></TextInput>
           </View>
+          {emailMessage && (
+            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
+              Invalid Email
+            </Text>
+          )}
           <View style={styles.inputField}>
             <Icon name="lock" size={20} color="#215F8E" />
 
             <TextInput
-              style={{flex: 1, flexDirection: 'row'}}
+              style={styles.textinput}
               placeholder="Password"
               secureTextEntry={true}
-              onChangeText={text =>
-                setUserData({...userData, password: text})
-              }></TextInput>
+              onChangeText={passwordHandler}></TextInput>
           </View>
+          {passwordMessage && (
+            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
+              password length should be 6 or more
+            </Text>
+          )}
+
           <View style={styles.inputField}>
             <Icon name="lock" size={20} color="#215F8E" />
 
             <TextInput
-              style={{flex: 1, flexDirection: 'row'}}
+              style={styles.textinput}
               placeholder="Confirm Password"
               secureTextEntry={true}
               onChangeText={text => {
@@ -106,18 +147,16 @@ const RegisterScreen = ({navigation}) => {
           </View>
           {CPHMessage && (
             <View>
-              <Text style={{marginVertical: 5, marginLeft: 5, color: '#666'}}>
+              <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
                 {CPHMessage}
               </Text>
             </View>
           )}
           <View style={styles.button}>
-            <TouchableOpacity onPress={() => {}}>
-              <Text
-                style={{color: '#fff', textAlign: 'center'}}
-                onPress={registerHandler}>
-                Register
-              </Text>
+            <TouchableOpacity
+              disabled={buttonDisable}
+              onPress={registerHandler}>
+              <Text style={{color: '#fff', textAlign: 'center'}}>Register</Text>
             </TouchableOpacity>
           </View>
           {/* <View style={{marginVertical: 10}}>
@@ -141,6 +180,10 @@ const RegisterScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  imageBackground: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   main: {
     opacity: 1,
     padding: 15,
@@ -158,6 +201,7 @@ const styles = StyleSheet.create({
     margin: 5,
     flexDirection: 'row',
   },
+  textinput: {flex: 1, flexDirection: 'row'},
   text: {
     fontSize: 30,
     textAlign: 'center',

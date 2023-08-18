@@ -6,8 +6,8 @@ import SubDetail from '../components/SubDetail';
 import SeasonsScreen from '../components/SeasonsScreen';
 import ProfileTab from '../screen/ProfileTab';
 import Episode from '../components/Episode';
-import SubListOfPerson from '../components/SubListOfPerson';
-import SubListOfPersonDetail from '../components/SubListOfPersonDetail';
+import PersonSubList from '../components/PersonSubList';
+import PersonSubListDetail from '../components/PersonSubListDetail';
 
 const Stack = createStackNavigator();
 
@@ -18,8 +18,8 @@ const AppStack = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="SubScreen" component={SubDetail} />
         <Stack.Screen name="SeasonsScreen" component={SeasonsScreen} />
-        <Stack.Screen name="SubListPerson" component={SubListOfPerson} />
-        <Stack.Screen name="SubListPersonDetail" component={SubListOfPersonDetail} />
+        <Stack.Screen name="SubListPerson" component={PersonSubList} />
+        <Stack.Screen name="SubListPersonDetail" component={PersonSubListDetail} />
         <Stack.Screen name="Profile" component={ProfileTab} />
         <Stack.Screen name="Episode" component={Episode} />
       </Stack.Navigator>

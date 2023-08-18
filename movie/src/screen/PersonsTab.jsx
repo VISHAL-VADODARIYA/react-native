@@ -14,7 +14,7 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {dataAction} from '../store/dataSlice';
 import ListTab from '../components/ListTab';
-import PersonList from '../components/PersonList';
+import PersonList from '../components/PersonListMain';
 import {FA5Style} from 'react-native-vector-icons/dist/lib/create-icon-set-from-fontawesome5';
 
 const PersonsTab = ({navigation}) => {
