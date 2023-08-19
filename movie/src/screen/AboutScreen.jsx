@@ -56,6 +56,14 @@ const AboutScreen = ({navigation}) => {
           which if fetch from api and show here in list formate.
         </Text>
 
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('NoInternet');
+          }}>
+          <Text style={{fontSize:20,color:'#575757'}}>
+          check Internet
+          </Text>
+        </TouchableOpacity>
+
         <Text
           style={[styles.textJustify, {color: isDarkTheme ? '#fff' : '#777'}]}>
           Created by Vishal Vadodariya

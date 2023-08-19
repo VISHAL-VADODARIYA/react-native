@@ -8,6 +8,7 @@ import ProfileTab from '../screen/ProfileTab';
 import Episode from '../components/Episode';
 import PersonSubList from '../components/PersonSubList';
 import PersonSubListDetail from '../components/PersonSubListDetail';
+import NoInternet from '../screen/NoInternet';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const AppStack = () => {
         <Stack.Screen name="SubListPersonDetail" component={PersonSubListDetail} />
         <Stack.Screen name="Profile" component={ProfileTab} />
         <Stack.Screen name="Episode" component={Episode} />
+        <Stack.Screen name="NoInternet" component={NoInternet} />
       </Stack.Navigator>
     </NavigationContainer>
   );

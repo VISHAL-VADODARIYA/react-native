@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 import {dataAction} from '../store/dataSlice';
 import ListTab from '../components/ListTab';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MovieTab = ({navigation}) => {
   const [page, setPage] = useState(1);
@@ -59,17 +59,26 @@ const MovieTab = ({navigation}) => {
 
   useEffect(() => {
     fetchData();
+    AsyncStorage.setItem('Movie', JSON.stringify(movieData));
   }, [page]);
 
   return (
     <SafeAreaView>
-      <View style={{flexDirection: 'row', backgroundColor: isDarkTheme ?'#333' :'white'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: isDarkTheme ? '#333' : 'white',
+        }}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.openDrawer();
           }}>
-          <Icon name="menu" size={24} color={isDarkTheme ? '#fff':"#215F8E"} />
+          <Icon
+            name="menu"
+            size={24}
+            color={isDarkTheme ? '#fff' : '#215F8E'}
+          />
         </TouchableOpacity>
         <View
           style={{
@@ -83,7 +92,7 @@ const MovieTab = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: isDarkTheme ?'#fff':'#215F8E',
+              color: isDarkTheme ? '#fff' : '#215F8E',
               textAlign: 'center',
             }}>
             Movie

@@ -47,7 +47,7 @@ const SearchTab = ({navigation}) => {
   console.log(searchMovie);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor:isDarkTheme?'#555':'white'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -85,15 +85,44 @@ const SearchTab = ({navigation}) => {
       </View>
       <View style={styles.textInputView}>
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput,{borderColor: isDarkTheme?'white':'#215F8E'}]}
           onChangeText={text => setSearchMovie(text)}
           placeholder="Search Movie"
         />
-        <TouchableOpacity style={styles.searchButton} onPress={fetchData}>
-          <Text style={styles.searchButtonText}>Search</Text>
+        <TouchableOpacity style={[styles.searchButton,{backgroundColor:isDarkTheme?'white':'#215F8E'}]} onPress={fetchData}>
+          <Text style={[styles.searchButtonText,{color:isDarkTheme?'#333':'white'}]}>Search</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.mainView}>
+      <View style={{flex:1,backgroundColor:'#555'}}>
+      <FlatList
+        keyExtractor={item => item.id}
+        data={searchData}
+        renderItem={({item}) =>
+          searchData !== [] ? (
+            <TouchableOpacity
+              style={{flex: 1}}
+              key={item.id}
+              onPress={() => {
+                navigation.navigate('SubScreen', {res: item, movie: true});
+              }}>
+              <View>
+                <Image
+                  source={{
+                    uri: `https://image.tmdb.org/t/p/original${item.poster_path}`,
+                  }}
+                  style={styles.image}
+                />
+                <Text style={{color: '#565656', textAlign: 'center'}}>
+                  {item.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : <Text style={{flex:1,textAlign:'center'}}>Movie Not Found</Text>
+        }
+        numColumns={3}
+      />
+      </View>
+      {/* <ScrollView style={styles.mainView}>
         {searchData &&
           searchData?.map(res => {
             return (
@@ -112,7 +141,7 @@ const SearchTab = ({navigation}) => {
               </TouchableOpacity>
             );
           })}
-      </ScrollView>
+      </ScrollView> */}
       {/* <View style={styles.mainView}>
       <FlatList
         data={searchData}
@@ -177,18 +206,19 @@ export default SearchTab;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
-  textInputView: {flexDirection: 'row', width: windowWidth},
+  textInputView: {flexDirection: 'row', width: windowWidth,margin:5},
   textInput: {
-    width: windowWidth - 100,
+    width: windowWidth - 120,
     borderWidth: 1,
     marginHorizontal: 10,
     paddingHorizontal: 5,
     paddingVertical: 10,
     borderRadius: 10,
-    borderColor: '#215F8E',
+    
   },
   searchButton: {
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical:10,
     borderRadius: 10,
     backgroundColor: '#215e8f',
     textAlign: 'center',
@@ -204,7 +234,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 110,
   },
-  mainView: { flexDirection: 'column'},
+  mainView: {flexDirection: 'column'},
   listView: {
     borderBottomWidth: 0.5,
     borderRightWidth: 0.5,
@@ -214,6 +244,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '30%', // Each column takes half of the screen width
   },
+
+  //vaidika ma'am e mane login form no task aapyo j nathi ane aa result ma to tena mark ganya hse n sir, pachi last ma mane j ochu salary madse aavi rite thyu to
 
   //   column: {
   //     width: '50%',

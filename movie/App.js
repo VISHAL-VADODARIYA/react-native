@@ -4,16 +4,20 @@
  *
  * @format
  */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
 import store from './src/store/store';
 import Main from './src/screen/Main';
+import NoInternetConnection from './src/components/NoInternetConnection';
+import NoInternet from './src/screen/NoInternet';
 
 function App() {
+  const [isConnected, setIsConnected] = useState();
+  useEffect(() => {
+    NoInternetConnection(setIsConnected);
+  }, [NoInternetConnection]);
   return (
-    <Provider store={store}>
-      <Main />
-    </Provider>
+    <Provider store={store}>{isConnected ? <Main /> : <NoInternet />}</Provider>
   );
 }
 

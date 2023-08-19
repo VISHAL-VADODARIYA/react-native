@@ -24,7 +24,7 @@ const dataSlice = createSlice({
       state.person.reverse()
     },
     fetchSearchData(state, action) {
-      state.search.push(...action.payload)
+      state.search = action.payload
       state.search.reverse()
     }
     

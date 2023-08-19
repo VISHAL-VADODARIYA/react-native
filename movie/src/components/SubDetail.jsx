@@ -455,6 +455,7 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 15,
     marginVertical: 4,
+    textAlign:'justify'
   },
   ratingRow: {
     flexDirection: 'row',
