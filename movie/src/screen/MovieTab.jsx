@@ -59,11 +59,11 @@ const MovieTab = ({navigation}) => {
 
   useEffect(() => {
     fetchData();
-    AsyncStorage.setItem('Movie', JSON.stringify(movieData));
+    // AsyncStorage.setItem('Movie', JSON.stringify(movieData));
   }, [page]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: isDarkTheme ? '#333' : 'white'}}>
       <View
         style={{
           flexDirection: 'row',

@@ -9,6 +9,9 @@ import {
   TextInput,
   Image,
   FlatList,
+  ActivityIndicator,
+  Switch,
+  Checkbox,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,12 +21,18 @@ import {windowHeight, windowWidth} from '../utils/Dimensions';
 import {dataAction} from '../store/dataSlice';
 
 const SearchTab = ({navigation}) => {
-  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const searchData = useSelector(state => state.data.search);
+
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
-  const [searchMovie, setSearchMovie] = useState();
+
+  const [page, setPage] = useState(1);
+  const [movieTvSwitch, setMovieTvSwitch] = useState(true);
+
+  const [newSearch, setNewSearch] = useState(0);
+  const [searchMovie, setSearchMovie] = useState([]);
+  const [defaultSearch, setDefaultSearch] = useState(0);
 
   const fetchData = async () => {
     var myHeaders = new Headers();
@@ -37,17 +46,51 @@ const SearchTab = ({navigation}) => {
       redirect: 'follow',
     };
     let response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${searchMovie}&include_adult=false&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/${
+        movieTvSwitch ? 'movie' : 'tv'
+      }?query=${
+        searchMovie.length !== 0 && searchMovie
+      }&include_adult=false&language=en-US&page=${page}`,
       requestOptions,
     );
     response = await response.json();
-    dispatch(dataAction.fetchSearchData(response.results));
+    newSearch === 0
+      ? dispatch(dataAction.fetchSearchData(response.results))
+      : dispatch(dataAction.fetchNewSearchData(response.results));
+    setDefaultSearch(1);
   };
-  console.log(searchData);
-  console.log(searchMovie);
+  useEffect(() => {
+    fetchData();
+  }, [page]);
+  const renderLoader = () => {
+    return (
+      <View style={styles.renderLoader}>
+        <ActivityIndicator
+          size={'large'}
+          color={isDarkTheme ? '#fff' : '#215E8F'}
+        />
+      </View>
+    );
+  };
+
+  const loadMoreItem = () => {
+    console.log('Loading');
+    setPage(page + 1);
+    setNewSearch(0);
+  };
+
+  const switchHandler = () => {
+    setMovieTvSwitch(!movieTvSwitch);
+  };
+
+  const searchFieldHandler = e => {
+    setSearchMovie(e);
+    setNewSearch(1);
+    e.trim() === '' ? setDefaultSearch(0) : '';
+  };
 
   return (
-    <SafeAreaView style={{backgroundColor:isDarkTheme?'#555':'white'}}>
+    <SafeAreaView style={{backgroundColor: isDarkTheme ? '#333' : 'white'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -83,121 +126,148 @@ const SearchTab = ({navigation}) => {
           </Text>
         </View>
       </View>
-      <View style={styles.textInputView}>
+
+      <View
+        style={[
+          styles.textInputView,
+          {
+            backgroundColor: isDarkTheme ? '#555' : '#fff',
+            borderBottomColor: isDarkTheme ? '#fff' : '#215F8E',
+          },
+        ]}>
         <TextInput
-          style={[styles.textInput,{borderColor: isDarkTheme?'white':'#215F8E'}]}
-          onChangeText={text => setSearchMovie(text)}
-          placeholder="Search Movie"
+          style={[
+            styles.textInput,
+            {
+              borderColor: isDarkTheme ? 'white' : '#215F8E',
+              color: isDarkTheme ? '#fff' : '#333',
+            },
+          ]}
+          autoCapitalize="none"
+          onChangeText={text => searchFieldHandler(text.trim())}
+          placeholder="Search Movie or TV"
+          placeholderTextColor={isDarkTheme ? '#fff' : '#333'}
         />
-        <TouchableOpacity style={[styles.searchButton,{backgroundColor:isDarkTheme?'white':'#215F8E'}]} onPress={fetchData}>
-          <Text style={[styles.searchButtonText,{color:isDarkTheme?'#333':'white'}]}>Search</Text>
+        <TouchableOpacity
+          style={[
+            styles.searchButton,
+            {backgroundColor: isDarkTheme ? 'white' : '#215F8E'},
+          ]}
+          onPress={fetchData}>
+          <Text
+            style={[
+              styles.searchButtonText,
+              {color: isDarkTheme ? '#333' : 'white'},
+            ]}>
+            Search
+          </Text>
         </TouchableOpacity>
       </View>
-      <View style={{flex:1,backgroundColor:'#555'}}>
-      <FlatList
-        keyExtractor={item => item.id}
-        data={searchData}
-        renderItem={({item}) =>
-          searchData !== [] ? (
-            <TouchableOpacity
-              style={{flex: 1}}
-              key={item.id}
-              onPress={() => {
-                navigation.navigate('SubScreen', {res: item, movie: true});
-              }}>
-              <View>
-                <Image
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/original${item.poster_path}`,
-                  }}
-                  style={styles.image}
-                />
-                <Text style={{color: '#565656', textAlign: 'center'}}>
-                  {item.name}
+
+      {/* tv movie switch */}
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          backgroundColor: isDarkTheme ? '#555' : '#fff',
+        }}>
+        <Text
+          style={{
+            fontSize: 18,
+            color: isDarkTheme ? '#fff' : '#333',
+            alignSelf: 'center',
+            marginRight: 10,
+          }}>
+          TV
+        </Text>
+        <Switch
+          value={movieTvSwitch}
+          // onValueChange={(e)=>switchHandler(e)}
+          activeText={'Movie'}
+          trackColor={{
+            false: isDarkTheme ? '#222' : '#dbdbdb',
+            true: isDarkTheme ? '#333' : '#dbdbdb',
+          }}
+          inActiveText={'TV'}
+          borderColor={'393939'}
+          thumbColor={isDarkTheme ? '#fff' : '#215F8E'}
+          changeValueImmediately={true}
+          onChange={switchHandler}
+        />
+        <Text
+          style={{
+            fontSize: 18,
+            color: isDarkTheme ? '#fff' : '#333',
+            alignSelf: 'center',
+            marginLeft: 10,
+          }}>
+          Movie
+        </Text>
+      </View>
+
+      <View
+        style={{
+          height: windowHeight - 210,
+          backgroundColor: isDarkTheme ? '#555' : '#fff',
+        }}>
+        {defaultSearch !== 0 && (
+          <>
+            {searchData.length === 0 ? (
+              <View style={styles.notFoundView}>
+                <View style={styles.searchOffIconWrapView}>
+                  <Icon
+                    name="search-off"
+                    size={40}
+                    color={isDarkTheme ? '#fff' : '215F8E'}
+                  />
+                </View>
+
+                <Text
+                  style={[
+                    styles.notFoundText,
+                    {
+                      color: isDarkTheme ? '#fff' : '#333',
+                    },
+                  ]}>
+                  Not Found
                 </Text>
               </View>
-            </TouchableOpacity>
-          ) : <Text style={{flex:1,textAlign:'center'}}>Movie Not Found</Text>
-        }
-        numColumns={3}
-      />
-      </View>
-      {/* <ScrollView style={styles.mainView}>
-        {searchData &&
-          searchData?.map(res => {
-            return (
-              <TouchableOpacity onPress={() => {}} style={styles.listView}>
-                <View key={res.id}>
-                  <Image
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/original${res.poster_path}`,
-                    }}
-                    style={styles.image}
-                  />
-                  <Text style={{color: 'black', textAlign: 'center'}}>
-                    {res.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-      </ScrollView> */}
-      {/* <View style={styles.mainView}>
-      <FlatList
-        data={searchData}
-        renderItem={res => {
-          return (
-            <View style={styles.column}>
-              <Image
-                source={{
-                  uri: `https://image.tmdb.org/t/p/original${res.poster_path}`,
-                }}
-                style={styles.image}
+            ) : (
+              <FlatList
+                keyExtractor={item => item.id}
+                data={searchData}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    style={{flex: 1}}
+                    key={item.id}
+                    onPress={() => {
+                      navigation.navigate('SubScreen', {
+                        res: item,
+                        movie: true,
+                      });
+                    }}>
+                    <View>
+                      <Image
+                        source={{
+                          uri: `https://image.tmdb.org/t/p/original${item.poster_path}`,
+                        }}
+                        style={styles.image}
+                      />
+                      <Text style={{color: '#565656', textAlign: 'center'}}>
+                        {item.name}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+                numColumns={3}
+                ListFooterComponent={renderLoader}
+                onEndReached={loadMoreItem}
+                onEndReachedThreshold={0}
               />
-              <Text style={styles.name}>{res.title}</Text>
-            </View>
-          );
-        }}
-        keyExtractor={res => res.id}
-        numColumns={2}
-      />
-      </View> */}
-      {/* <ScrollView
-        style={
-          isDarkTheme ? {backgroundColor: '#555'} : {backgroundColor: 'white'}
-        }
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            tintColor="#215f8e"
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }>
-        {movieData ? (
-          movieData.map(res => {
-            return (
-              <TouchableOpacity
-                key={res.id}
-                onPress={() => {
-                  navigation.navigate('SubScreen', {res: res, movie: true});
-                }}>
-                <ListTab res={res} movie={true} />
-              </TouchableOpacity>
-            );
-          })
-        ) : (
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignContent: 'center',
-            }}>
-            <ActivityIndicator size="large" color="#215F8E" />
-          </View>
+            )}
+          </>
         )}
-      </ScrollView> */}
+      </View>
     </SafeAreaView>
   );
 };
@@ -206,7 +276,12 @@ export default SearchTab;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
-  textInputView: {flexDirection: 'row', width: windowWidth,margin:5},
+  textInputView: {
+    flexDirection: 'row',
+    width: windowWidth,
+    paddingVertical: 10,
+    borderBottomWidth: 0.5,
+  },
   textInput: {
     width: windowWidth - 120,
     borderWidth: 1,
@@ -214,17 +289,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 10,
     borderRadius: 10,
-    
   },
   searchButton: {
     paddingHorizontal: 20,
-    paddingVertical:10,
+    paddingVertical: 10,
     borderRadius: 10,
     backgroundColor: '#215e8f',
     textAlign: 'center',
     alignSelf: 'center',
   },
-  searchButtonText: {color: '#fff', fontSize: 15},
+  searchButtonText: {color: '#fff', fontSize: 15, fontWeight: 500},
   image: {
     marginTop: 5,
     flexDirection: 'row',
@@ -243,6 +317,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 1,
     width: '30%', // Each column takes half of the screen width
+  },
+  renderLoader: {
+    marginVertical: 16,
+    alignItems: 'center',
+  },
+  notFoundText: {textAlign: 'center', fontSize: 20},
+  searchOffIconWrapView: {alignSelf: 'center'},
+  notFoundView: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
 
   //vaidika ma'am e mane login form no task aapyo j nathi ane aa result ma to tena mark ganya hse n sir, pachi last ma mane j ochu salary madse aavi rite thyu to

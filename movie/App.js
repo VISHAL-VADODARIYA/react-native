@@ -12,7 +12,7 @@ import NoInternetConnection from './src/components/NoInternetConnection';
 import NoInternet from './src/screen/NoInternet';
 
 function App() {
-  const [isConnected, setIsConnected] = useState();
+  const [isConnected, setIsConnected] = useState(false);
   useEffect(() => {
     NoInternetConnection(setIsConnected);
   }, [NoInternetConnection]);

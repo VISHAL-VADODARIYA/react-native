@@ -127,9 +127,9 @@ const MainScreen = () => {
         name="Search"
         component={SearchTab}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         options={{
-          tabBarLabel: 'TV',
+          tabBarLabel: 'Actor',
           tabBarLabelPosition: 'beside-icon',
           tabBarShowLabel: false,
           tabBarIcon: ({color}) => (
@@ -138,7 +138,7 @@ const MainScreen = () => {
         }}
         name="Person"
         component={PersonsTab}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

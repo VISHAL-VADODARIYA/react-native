@@ -16,7 +16,7 @@ const AboutScreen = ({navigation}) => {
     <SafeAreaView
       style={[
         styles.container,
-        {backgroundColor: isDarkTheme ? '#555' : '#fff'},
+        {backgroundColor: isDarkTheme ? '#333' : '#fff'},
       ]}>
       <View
         style={[
@@ -49,20 +49,20 @@ const AboutScreen = ({navigation}) => {
         </View>
       </View>
 
-      <View style={styles.mainView}>
+      <View style={[styles.mainView,{backgroundColor: isDarkTheme ? '#555' : '#fff'}]}>
         <Text
           style={[styles.textJustify, {color: isDarkTheme ? '#fff' : '#777'}]}>
           This is movie listing with authentication which is shows movie data.
           which if fetch from api and show here in list formate.
         </Text>
 
-        <TouchableOpacity onPress={() => {
+        {/* <TouchableOpacity onPress={() => {
             navigation.navigate('NoInternet');
           }}>
           <Text style={{fontSize:20,color:'#575757'}}>
           check Internet
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <Text
           style={[styles.textJustify, {color: isDarkTheme ? '#fff' : '#777'}]}>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    margin: 10,
+    padding: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
   },

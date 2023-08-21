@@ -17,13 +17,42 @@ import {windowHeight, windowWidth} from '../utils/Dimensions';
 
 const SubDetail = ({route, navigation}) => {
   const {res, movie} = route.params;
+
   const [data, setData] = useState();
+  const [overviewTextShown, setOverviewTextShown] = useState(false);
+
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
+
+  console.log(res.id);
+  console.log(data);
   // const [imageData, setImageData] = useState();
   // const [image, setImage] = useState();
 
-  const dataFetch = async () => {
+  // const dataFetch = async () => {
+  //   var myHeaders = new Headers();
+  //   myHeaders.append(
+  //     'Authorization',
+  //     'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MDdhM2YzNTQ4N2IxYTdjY2U5MTE2ZDE3ZGFlMjE4MSIsInN1YiI6IjY0OGFhN2Q3NTU5ZDIyMDBlMjA0N2ZkYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bw50vVBFpg0ML9x64owYF_wnyHLtT1TpTBr8gfaY70E',
+  //   );
+
+  //   var requestOptions = {
+  //     method: 'GET',
+  //     headers: myHeaders,
+  //     redirect: 'follow',
+  //   };
+
+  //   const response = await fetch(
+  //     `https://api.themoviedb.org/3/${movie ? 'movie' : 'tv'}/${
+  //       res.id
+  //     }?language=en-US`,
+  //     requestOptions,
+  //   );
+  //   const datagg = await response.json();
+  //   setData(datagg);
+  // };
+
+  function dataFetch() {
     var myHeaders = new Headers();
     myHeaders.append(
       'Authorization',
@@ -36,39 +65,21 @@ const SubDetail = ({route, navigation}) => {
       redirect: 'follow',
     };
 
-    const response = await fetch(
-      `https://api.themoviedb.org/3/${movie ? 'movie' : 'tv'}/${res.id}`,
+    fetch(
+      `https://api.themoviedb.org/3/${movie ? 'movie' : 'tv'}/${
+        res.id
+      }?language=en-US`,
       requestOptions,
-    ).catch(e => console.log(e));
-    setData(await response.json());
-
-    // IMAGE SLIDER //
-    // const options = {
-    //   method: 'GET',
-    //   headers: {
-    //     accept: 'application/json',
-    //     Authorization:
-    //       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MDdhM2YzNTQ4N2IxYTdjY2U5MTE2ZDE3ZGFlMjE4MSIsInN1YiI6IjY0OGFhN2Q3NTU5ZDIyMDBlMjA0N2ZkYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bw50vVBFpg0ML9x64owYF_wnyHLtT1TpTBr8gfaY70E',
-    //   },
-    // };
-
-    // await fetch(`https://api.themoviedb.org/3/movie/${res.id}/images`, options)
-    //   .then(responseImage => responseImage.json())
-    //   .then(response => {setImageData(response)})
-    //   .catch(err => console.error(err));
-    // let imageArr = []
-    // imageData?.backdrops.map(e => {
-    //   imageArr.push(`https://image.tmdb.org/t/p/original${e.file_path}`)
-    // });
-    // // imageArr = imageArr.splice(5,imageArr.length)
-
-    // setImage(imageArr)
-    // console.log(image.length);
-  };
-
-  useEffect(() => {
-    dataFetch();
-  }, []);
+    )
+      .then(response => response.json())
+      .then(result => setData(result))
+      .catch(error => console.log('error', error));
+  }
+  dataFetch();
+  // useEffect(() => {
+  //   dataFetch();
+  // }, []);
+  console.log(data?.adult);
   return (
     <SafeAreaView
       style={[
@@ -103,7 +114,7 @@ const SubDetail = ({route, navigation}) => {
                 color: isDarkTheme ? '#fff' : '#215F8E',
               },
             ]}>
-            {data ? (movie ? data.title : data.name) : ''}
+            {data && data?.adult}
           </Text>
         </View>
       </View>
@@ -141,6 +152,7 @@ const SubDetail = ({route, navigation}) => {
             {/* overview */}
             {data.overview && (
               <Text
+                numberOfLines={overviewTextShown ? 3 : null}
                 style={[
                   styles.overview,
                   {
@@ -149,30 +161,35 @@ const SubDetail = ({route, navigation}) => {
                 ]}>
                 <Text style={{fontWeight: 900, fontSize: 15}}>Overview : </Text>
                 {data.overview}
+                <Text onPress={setOverviewTextShown(!overviewTextShown)}>
+                  ReadMore
+                </Text>
               </Text>
             )}
 
             {/* rating row */}
             <View style={styles.ratingRow}>
-              <Text
-                style={[
-                  {
-                    color: isDarkTheme ? '#fff' : '#666',
-                  },
-                  styles.listTitle,
-                ]}>
-                <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
-                {data.vote_average.toFixed(1)}/10
+              {data.vote_average !== 0 && (
                 <Text
                   style={[
-                    styles.star,
                     {
-                      color: isDarkTheme ? '#fff' : '#215f8e',
+                      color: isDarkTheme ? '#fff' : '#666',
                     },
+                    styles.listTitle,
                   ]}>
-                  ★
+                  <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
+                  {data.vote_average}/10
+                  <Text
+                    style={[
+                      styles.star,
+                      {
+                        color: isDarkTheme ? '#fff' : '#215f8e',
+                      },
+                    ]}>
+                    ★
+                  </Text>
                 </Text>
-              </Text>
+              )}
               <TouchableOpacity
                 onPress={() =>
                   Linking.canOpenURL(data.homepage).then(() => {
@@ -192,14 +209,14 @@ const SubDetail = ({route, navigation}) => {
             </View>
 
             {/* genres */}
-            {data.genres.length > 0 && (
+            {data.genres?.length > 0 && (
               <View>
                 <Text
                   style={[
+                    styles.listTitle,
                     {
                       color: isDarkTheme ? '#fff' : '#666',
                     },
-                    styles.listTitle,
                   ]}>
                   Genres :
                 </Text>
@@ -224,7 +241,7 @@ const SubDetail = ({route, navigation}) => {
             )}
 
             {/* Language */}
-            {data.spoken_languages.length > 0 && (
+            {data.spoken_languages?.length > 0 && (
               <View>
                 <Text
                   style={[
@@ -256,7 +273,7 @@ const SubDetail = ({route, navigation}) => {
             )}
 
             {/* production companies */}
-            {data.production_companies.length > 0 && (
+            {data.production_companies?.length > 0 && (
               <View style={data.original_name ? '' : {marginBottom: 15}}>
                 <Text
                   style={[
@@ -455,7 +472,7 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 15,
     marginVertical: 4,
-    textAlign:'justify'
+    textAlign: 'justify',
   },
   ratingRow: {
     flexDirection: 'row',

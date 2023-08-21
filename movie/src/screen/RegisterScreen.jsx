@@ -8,6 +8,7 @@ import {
   Alert,
   ImageBackground,
   NativeEventEmitter,
+  useColorScheme,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 
@@ -26,7 +27,13 @@ const RegisterScreen = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [buttonDisable, setButtonDisable] = useState(true);
 
-    const nameHandler = text => {
+
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
+
+  // const urlDark =
+
+  const nameHandler = text => {
     setUserData({...userData, name: text});
     if (userData.name.trim().length < 3) {
       setNameMessage(true);
@@ -83,63 +90,114 @@ const RegisterScreen = ({navigation}) => {
   };
   // const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        {backgroundColor: isDarkTheme ? '#555' : '#E8EFF7'},
+      ]}>
       <ImageBackground
         source={{
-          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqy5ytbJuBCv9t55-A_ZxR22_FufHk9dI8fw&usqp=CAU',
+          uri: isDarkTheme
+            ? 'https://images.unsplash.com/photo-1574790335676-2a2bb9d70d08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80'
+            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqy5ytbJuBCv9t55-A_ZxR22_FufHk9dI8fw&usqp=CAU',
         }}
         resizeMode="cover"
         style={styles.imageBackground}>
-        <View style={styles.main}>
+        <View
+          style={[
+            styles.main,
+            {backgroundColor: isDarkTheme ? '#555' : '#E8EFF7'},
+          ]}>
           <View>
-            <Text style={styles.text}>Register</Text>
+            <Text
+              style={[styles.text, {color: isDarkTheme ? '#fff' : '#215F8E'}]}>
+              Register
+            </Text>
           </View>
-          <View style={styles.inputField}>
-            <Icon name="user" size={20} color="#215F8E" />
+          <View
+            style={[
+              styles.inputField,
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Icon
+              name="user"
+              size={20}
+              color={isDarkTheme ? '#fff' : '#215F8E'}
+            />
             <TextInput
-              style={styles.textinput}
+              style={[styles.textinput, {color: isDarkTheme ? '#fff' : '#333'}]}
               placeholder="Name"
+              placeholderTextColor={isDarkTheme ? '#fff' : '#333'}
+              autoCapitalize="none"
               onChangeText={nameHandler}></TextInput>
           </View>
           {nameMessage && (
-            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
+            <Text style={styles.validateMessage}>
               Name must be at least 3 characters
             </Text>
           )}
-          <View style={styles.inputField}>
-            <Icon name="email" size={20} color="#215F8E" />
+          <View
+            style={[
+              styles.inputField,
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Icon
+              name="email"
+              size={20}
+              color={isDarkTheme ? '#fff' : '#215F8E'}
+            />
 
             <TextInput
-              style={styles.textinput}
+              style={[styles.textinput, {color: isDarkTheme ? '#fff' : '#333'}]}
               placeholder="Email ID"
+              placeholderTextColor={isDarkTheme ? '#fff' : '#333'}
+              autoCapitalize="none"
               onChangeText={emailHandler}></TextInput>
           </View>
           {emailMessage && (
-            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
-              Invalid Email
-            </Text>
+            <Text style={styles.validateMessage}>Invalid Email</Text>
           )}
-          <View style={styles.inputField}>
-            <Icon name="lock" size={20} color="#215F8E" />
+          <View
+            style={[
+              styles.inputField,
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Icon
+              name="lock"
+              size={20}
+              color={isDarkTheme ? '#fff' : '#215F8E'}
+            />
 
             <TextInput
-              style={styles.textinput}
+              style={[styles.textinput, {color: isDarkTheme ? '#fff' : '#333'}]}
               placeholder="Password"
+              placeholderTextColor={isDarkTheme ? '#fff' : '#333'}
+              autoCapitalize="none"
               secureTextEntry={true}
               onChangeText={passwordHandler}></TextInput>
           </View>
           {passwordMessage && (
-            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
+            <Text style={styles.validateMessage}>
               password length should be 6 or more
             </Text>
           )}
 
-          <View style={styles.inputField}>
-            <Icon name="lock" size={20} color="#215F8E" />
+          <View
+            style={[
+              styles.inputField,
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Icon
+              name="lock"
+              size={20}
+              color={isDarkTheme ? '#fff' : '#215F8E'}
+            />
 
             <TextInput
-              style={styles.textinput}
+              style={[styles.textinput, {color: isDarkTheme ? '#fff' : '#333'}]}
               placeholder="Confirm Password"
+              placeholderTextColor={isDarkTheme ? '#fff' : '#333'}
+              autoCapitalize="none"
               secureTextEntry={true}
               onChangeText={text => {
                 confirmPasswordHandler(text);
@@ -147,28 +205,44 @@ const RegisterScreen = ({navigation}) => {
           </View>
           {CPHMessage && (
             <View>
-              <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
-                {CPHMessage}
-              </Text>
+              <Text style={styles.validateMessage}>{CPHMessage}</Text>
             </View>
           )}
-          <View style={styles.button}>
-            <TouchableOpacity
-              disabled={buttonDisable}
-              onPress={registerHandler}>
-              <Text style={{color: '#fff', textAlign: 'center'}}>Register</Text>
-            </TouchableOpacity>
-          </View>
-          {/* <View style={{marginVertical: 10}}>
-        <Text style={{alignItems: 'center'}}>{message}</Text>
-      </View> */}
-          <View style={styles.signup}>
-            <Text style={{fontSize: 15}}>Already You have Account? </Text>
+
+          <TouchableOpacity
+            disabled={buttonDisable}
+            onPress={registerHandler}
+            style={[
+              styles.button,
+              {backgroundColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Text
+              style={[
+                styles.buttonText,
+                {
+                  color: isDarkTheme ? '#333' : '#fff',
+                },
+              ]}>
+              Register
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.signin}>
+            <Text
+              style={[
+                styles.dontHaveText,
+                {color: isDarkTheme ? '#fff' : '#333'},
+              ]}>
+              Already You have Account?{' '}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Login');
               }}>
-              <Text style={{fontSize: 15, color: '#215F8E', fontWeight: 800}}>
+              <Text
+                style={[
+                  styles.goToLoginText,
+                  {color: isDarkTheme ? '#fff' : '#215F8E'},
+                ]}>
                 Login
               </Text>
             </TouchableOpacity>
@@ -180,6 +254,7 @@ const RegisterScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {flex: 1},
   imageBackground: {
     flex: 1,
     justifyContent: 'center',
@@ -196,17 +271,17 @@ const styles = StyleSheet.create({
   inputField: {
     alignItems: 'center',
     paddingHorizontal: 10,
+    paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBlockColor: '#888',
     margin: 5,
     flexDirection: 'row',
   },
-  textinput: {flex: 1, flexDirection: 'row'},
+  textinput: {flex: 1, flexDirection: 'row', paddingLeft: 10},
   text: {
     fontSize: 30,
+    marginVertical: 5,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#215F8E',
   },
   button: {
     backgroundColor: '#215F8E',
@@ -215,10 +290,22 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 5,
   },
-  signup: {
+  buttonText: {
+    textAlign: 'center',
+    flexDirection: 'row',
+    fontWeight: 600,
+    fontSize: 15,
+  },
+  signin: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  dontHaveText: {fontSize: 15},
+  goToLoginText: {
+    fontSize: 15,
+    fontWeight: 800,
+  },
+  validateMessage: {marginVertical: 5, marginLeft: 5, color: '#f00'},
 });
 
 export default RegisterScreen;

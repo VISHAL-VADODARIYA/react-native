@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   useColorScheme,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import {
   DrawerContentScrollView,

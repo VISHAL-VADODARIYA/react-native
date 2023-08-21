@@ -53,14 +53,22 @@ const TvTab = ({navigation}) => {
   }, [page]);
 
   return (
-    <SafeAreaView>
-      <View style={{ flexDirection: 'row',backgroundColor:isDarkTheme ?'#333' :'white'}}>
+    <SafeAreaView style={{backgroundColor: isDarkTheme ? '#333' : '#fff'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: isDarkTheme ? '#333' : 'white',
+        }}>
         <TouchableOpacity
           style={{alignSelf: 'center', paddingLeft: 20}}
           onPress={() => {
             navigation.openDrawer();
           }}>
-          <Icon name="menu" size={24} color={isDarkTheme ? '#fff':"#215F8E"} />
+          <Icon
+            name="menu"
+            size={24}
+            color={isDarkTheme ? '#fff' : '#215F8E'}
+          />
         </TouchableOpacity>
         <View
           style={{
@@ -74,7 +82,7 @@ const TvTab = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: isDarkTheme ?'#fff':'#215F8E',
+              color: isDarkTheme ? '#fff' : '#215F8E',
               textAlign: 'center',
             }}>
             Tv

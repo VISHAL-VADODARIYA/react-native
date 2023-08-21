@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
+  useColorScheme,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
@@ -16,13 +17,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({navigation}) => {
   const [userData, setUserData] = useState({email: '', password: ''});
+  const [emailMessage, setEmailMessage] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(false);
+
   // console.log(userData);
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
+
   const user = useSelector(state => state.user.user);
   const a = useSelector(state => state.user.activeUser);
   const isLoggedIn = useSelector(state => state.user.flag);
 
-  const [emailMessage, setEmailMessage] = useState(false);
-  const [passwordMessage, setPasswordMessage] = useState(false);
   console.log(a);
 
   // const [message, setMessage] = useState();
@@ -35,13 +40,13 @@ const LoginScreen = ({navigation}) => {
       setEmailMessage(true);
     } else if (userData.email !== '') {
       setEmailMessage(false);
-    } 
+    }
     if (userData.password === '') {
       setPasswordMessage(true);
     } else if (userData.password !== '') {
       setPasswordMessage(false);
-    } 
-    if(userData.email !== '' && userData.password !== '') {
+    }
+    if (userData.email !== '' && userData.password !== '') {
       let flag = true;
       for (let i of user) {
         if (i.email === userData.email && i.password === userData.password) {
@@ -53,7 +58,7 @@ const LoginScreen = ({navigation}) => {
       if (flag) {
         Alert.alert('Login Failed', 'incorrect Detail', [{}]);
         setUserData({email: '', password: ''});
-      } 
+      }
     }
   };
 
@@ -62,42 +67,68 @@ const LoginScreen = ({navigation}) => {
   console.log(activeUser2);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        {backgroundColor: isDarkTheme ? '#555' : '#E8EFF7'},
+      ]}>
       <ImageBackground
         source={{
-          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqy5ytbJuBCv9t55-A_ZxR22_FufHk9dI8fw&usqp=CAU',
+          uri: isDarkTheme
+            ? 'https://images.unsplash.com/photo-1574790335676-2a2bb9d70d08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80'
+            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqy5ytbJuBCv9t55-A_ZxR22_FufHk9dI8fw&usqp=CAU',
         }}
         resizeMode="cover"
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-        }}>
-        <View style={styles.main}>
+        style={styles.backgroundImage}>
+        <View
+          style={[
+            styles.main,
+            {backgroundColor: isDarkTheme ? '#555' : '#E8EFF7'},
+          ]}>
           <View>
-            <Text style={styles.text}>Login</Text>
+            <Text
+              style={[styles.text, {color: isDarkTheme ? '#fff' : '#215F8E'}]}>
+              Login
+            </Text>
           </View>
-          <View style={styles.inputField}>
-            <Icon name="email" size={20} color="#215F8E" />
+          <View
+            style={[
+              styles.inputField,
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Icon
+              name="email"
+              size={20}
+              color={isDarkTheme ? '#fff' : '#215F8E'}
+            />
             <TextInput
-              style={{flex: 1, flexDirection: 'row'}}
+              style={[styles.textInput, {color: isDarkTheme ? '#fff' : '#333'}]}
               placeholder="Email ID"
-              autoCapitalize='none'
+              placeholderTextColor={isDarkTheme ? '#fff' : '#333'}
+              autoCapitalize="none"
               value={userData.email}
               onChangeText={text => {
                 setUserData({...userData, email: text});
               }}></TextInput>
           </View>
           {emailMessage && (
-            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
-              Enter Valid Email
-            </Text>
+            <Text style={styles.validateMessage}>Enter Valid Email</Text>
           )}
-          <View style={styles.inputField}>
-            <Icon name="lock" size={20} color="#215F8E" />
+          <View
+            style={[
+              styles.inputField,
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Icon
+              name="lock"
+              size={20}
+              color={isDarkTheme ? '#fff' : '#215F8E'}
+            />
             <TextInput
-              style={{flex: 1, flexDirection: 'row'}}
+              style={[styles.textInput, {color: isDarkTheme ? '#fff' : '#333'}]}
+              placeholderTextColor={isDarkTheme ? '#fff' : '#333'}
               secureTextEntry={true}
-              autoCapitalize='none'
+              autoCapitalize="none"
               placeholder="Password"
               value={userData.password}
               onChangeText={text => {
@@ -105,37 +136,45 @@ const LoginScreen = ({navigation}) => {
               }}></TextInput>
           </View>
           {passwordMessage && (
-            <Text style={{marginVertical: 5, marginLeft: 5, color: '#f00'}}>
-              Enter Valid Password
-            </Text>
+            <Text style={styles.validateMessage}>Enter Valid Password</Text>
           )}
-          <View style={styles.button}>
-            <TouchableOpacity
-              onPress={() => {
-                LoginHandler();
-              }}>
-              <Text
-                style={{
-                  color: '#fff',
-                  textAlign: 'center',
-                  flexDirection: 'row',
-                }}>
-                Login
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {/* {message && (
-        <View>
-          <Text>{message}</Text>
-        </View>
-      )} */}
+
+          <TouchableOpacity
+            onPress={() => {
+              LoginHandler();
+            }}
+            style={[
+              styles.button,
+              {backgroundColor: isDarkTheme ? '#fff' : '#215F8E'},
+            ]}>
+            <Text
+              style={[
+                styles.buttonText,
+                {
+                  color: isDarkTheme ? '#333' : '#fff',
+                },
+              ]}>
+              Login
+            </Text>
+          </TouchableOpacity>
+
           <View style={styles.signup}>
-            <Text style={{fontSize: 15}}>You Don't Have Account ? </Text>
+            <Text
+              style={[
+                styles.dontHaveText,
+                {color: isDarkTheme ? '#fff' : '#333'},
+              ]}>
+              You Don't Have Account ?{' '}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Register');
               }}>
-              <Text style={{fontSize: 15, color: '#215F8E', fontWeight: 800}}>
+              <Text
+                style={[
+                  styles.goToRegisterText,
+                  {color: isDarkTheme ? '#fff' : '#215F8E'},
+                ]}>
                 Register
               </Text>
             </TouchableOpacity>
@@ -146,29 +185,34 @@ const LoginScreen = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
+  container: {flex: 1},
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   main: {
     opacity: 1,
     padding: 15,
     marginTop: -150,
-    backgroundColor: '#E8EFF7',
     paddingVertical: 30,
     margin: 10,
     borderRadius: 10,
   },
+  text: {
+    fontSize: 30,
+    marginVertical: 5,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
   inputField: {
     alignItems: 'center',
     paddingHorizontal: 10,
+    paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBlockColor: '#888',
     margin: 5,
     flexDirection: 'row',
   },
-  text: {
-    fontSize: 30,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#215F8E',
-  },
+  textInput: {flex: 1, flexDirection: 'row', paddingLeft: 10},
   button: {
     backgroundColor: '#215F8E',
     marginVertical: 20,
@@ -176,9 +220,21 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 5,
   },
+  buttonText: {
+    textAlign: 'center',
+    flexDirection: 'row',
+    fontWeight: 600,
+    fontSize: 15,
+  },
   signup: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  dontHaveText: {fontSize: 15},
+  goToRegisterText: {
+    fontSize: 15,
+    fontWeight: 800,
+  },
+  validateMessage: {marginVertical: 5, marginLeft: 5, color: '#f00'},
 });
 export default LoginScreen;

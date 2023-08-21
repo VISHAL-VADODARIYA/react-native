@@ -23,7 +23,7 @@ const ProfileTab = () => {
 
   return (
     <SafeAreaView
-      style={{flex: 1, backgroundColor: isDarkTheme ? '#555' : '#fff'}}>
+      style={{flex: 1, backgroundColor: isDarkTheme ? '#333' : '#fff'}}>
       {/* {loggedIn && ( */}
       <View
         style={{
@@ -59,7 +59,8 @@ const ProfileTab = () => {
           </Text>
         </View>
       </View>
-      <View style={styles.main}>
+      <View
+        style={[styles.main, {backgroundColor: isDarkTheme ? '#555' : '#fff'}]}>
         <View style={styles.userView}>
           <Image
             style={[
@@ -99,7 +100,7 @@ const ProfileTab = () => {
           }}
           speed={2}>
           <View style={{backgroundColor: '#f5f5f5'}}>
-            <Text>{"                        "}</Text>
+            <Text>{'                        '}</Text>
           </View>
         </MarqueeView>
 
@@ -118,8 +119,8 @@ const ProfileTab = () => {
 };
 const styles = StyleSheet.create({
   main: {
-    marginHorizontal: 20,
-    justifyContent: 'space-between',
+    flex: 1,
+    paddingHorizontal: 20,
   },
   titleText: {
     padding: 15,
