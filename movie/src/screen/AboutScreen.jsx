@@ -33,7 +33,7 @@ const AboutScreen = ({navigation}) => {
           <Icon
             name="menu"
             size={24}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View style={styles.headerTextView}>
@@ -41,7 +41,7 @@ const AboutScreen = ({navigation}) => {
             style={[
               styles.headerText,
               {
-                color: isDarkTheme ? '#fff' : '#215F8E',
+                color: isDarkTheme ? '#fff' : '#215E8F',
               },
             ]}>
             About Us
@@ -49,11 +49,17 @@ const AboutScreen = ({navigation}) => {
         </View>
       </View>
 
-      <View style={[styles.mainView,{backgroundColor: isDarkTheme ? '#555' : '#fff'}]}>
+      <View
+        style={[
+          styles.mainView,
+          {backgroundColor: isDarkTheme ? '#555' : '#fff'},
+        ]}>
         <Text
           style={[styles.textJustify, {color: isDarkTheme ? '#fff' : '#777'}]}>
-          This is movie listing with authentication which is shows movie data.
-          which if fetch from api and show here in list formate.
+          This is movie & tv serial listing with authentication which is shows
+          movie or tv serial name and all the detail about it. which if fetch
+          from api and show here in list format and also here search
+          functionality is available.
         </Text>
 
         {/* <TouchableOpacity onPress={() => {
@@ -91,7 +97,8 @@ const styles = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     justifyContent: 'space-between',
     alignItems: 'center',
   },

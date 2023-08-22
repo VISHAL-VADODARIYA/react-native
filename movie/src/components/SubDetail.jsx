@@ -18,14 +18,14 @@ import {windowHeight, windowWidth} from '../utils/Dimensions';
 const SubDetail = ({route, navigation}) => {
   const {res, movie} = route.params;
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [overviewTextShown, setOverviewTextShown] = useState(false);
 
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
 
   console.log(res.id);
-  console.log(data);
+
   // const [imageData, setImageData] = useState();
   // const [image, setImage] = useState();
 
@@ -52,19 +52,18 @@ const SubDetail = ({route, navigation}) => {
   //   setData(datagg);
   // };
 
-  function dataFetch() {
+  useEffect(() => {
+    console.log('in useEffect');
     var myHeaders = new Headers();
     myHeaders.append(
       'Authorization',
       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MDdhM2YzNTQ4N2IxYTdjY2U5MTE2ZDE3ZGFlMjE4MSIsInN1YiI6IjY0OGFhN2Q3NTU5ZDIyMDBlMjA0N2ZkYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bw50vVBFpg0ML9x64owYF_wnyHLtT1TpTBr8gfaY70E',
     );
-
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow',
     };
-
     fetch(
       `https://api.themoviedb.org/3/${movie ? 'movie' : 'tv'}/${
         res.id
@@ -72,14 +71,13 @@ const SubDetail = ({route, navigation}) => {
       requestOptions,
     )
       .then(response => response.json())
-      .then(result => setData(result))
+      .then(result => {
+        setData(result);
+        console.log(result);
+      })
       .catch(error => console.log('error', error));
-  }
-  dataFetch();
-  // useEffect(() => {
-  //   dataFetch();
-  // }, []);
-  console.log(data?.adult);
+  }, []);
+
   return (
     <SafeAreaView
       style={[
@@ -103,7 +101,7 @@ const SubDetail = ({route, navigation}) => {
           <Icon
             name="arrow-left"
             size={20}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View style={styles.titleTextView}>
@@ -111,10 +109,10 @@ const SubDetail = ({route, navigation}) => {
             style={[
               styles.titleText,
               {
-                color: isDarkTheme ? '#fff' : '#215F8E',
+                color: isDarkTheme ? '#fff' : '#215E8F',
               },
             ]}>
-            {data && data?.adult}
+            {data && (movie ? data?.title : data?.name)}
           </Text>
         </View>
       </View>
@@ -141,7 +139,7 @@ const SubDetail = ({route, navigation}) => {
                   style={[
                     styles.taglineText,
                     {
-                      color: isDarkTheme ? '#fff' : '#215f8e',
+                      color: isDarkTheme ? '#fff' : '#215E8F',
                     },
                   ]}>
                   {data.tagline}
@@ -152,7 +150,7 @@ const SubDetail = ({route, navigation}) => {
             {/* overview */}
             {data.overview && (
               <Text
-                numberOfLines={overviewTextShown ? 3 : null}
+                // numberOfLines={overviewTextShown ? 3 : undefined}
                 style={[
                   styles.overview,
                   {
@@ -161,9 +159,9 @@ const SubDetail = ({route, navigation}) => {
                 ]}>
                 <Text style={{fontWeight: 900, fontSize: 15}}>Overview : </Text>
                 {data.overview}
-                <Text onPress={setOverviewTextShown(!overviewTextShown)}>
+                {/* <Text onPress={setOverviewTextShown(!overviewTextShown)}>
                   ReadMore
-                </Text>
+                </Text> */}
               </Text>
             )}
 
@@ -183,7 +181,7 @@ const SubDetail = ({route, navigation}) => {
                     style={[
                       styles.star,
                       {
-                        color: isDarkTheme ? '#fff' : '#215f8e',
+                        color: isDarkTheme ? '#fff' : '#215E8F',
                       },
                     ]}>
                     ★
@@ -200,7 +198,7 @@ const SubDetail = ({route, navigation}) => {
                   style={[
                     styles.seeMore,
                     {
-                      color: isDarkTheme ? '#fff' : '#215f8e',
+                      color: isDarkTheme ? '#fff' : '#215E8F',
                     },
                   ]}>
                   See More
@@ -228,8 +226,8 @@ const SubDetail = ({route, navigation}) => {
                         style={[
                           styles.listText,
                           {
-                            color: isDarkTheme ? '#215f8e' : '#fff',
-                            backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
+                            color: isDarkTheme ? '#215E8F' : '#fff',
+                            backgroundColor: isDarkTheme ? '#fff' : '#215E8F',
                           },
                         ]}>
                         {e.name}
@@ -260,7 +258,7 @@ const SubDetail = ({route, navigation}) => {
                         style={[
                           styles.listText,
                           {
-                            color: isDarkTheme ? '#215f8e' : '#fff',
+                            color: isDarkTheme ? '#215E8F' : '#fff',
                             backgroundColor: isDarkTheme ? '#fff' : '#215f8e',
                           },
                         ]}>

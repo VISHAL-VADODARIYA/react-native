@@ -17,7 +17,12 @@ function App() {
     NoInternetConnection(setIsConnected);
   }, [NoInternetConnection]);
   return (
-    <Provider store={store}>{isConnected ? <Main /> : <NoInternet />}</Provider>
+    <Provider store={store}>
+      {/* {isConnected ?  */}
+      <Main />
+       {/* : <NoInternet />
+       } */}
+      </Provider>
   );
 }
 

@@ -87,19 +87,19 @@ const LoginScreen = ({navigation}) => {
           ]}>
           <View>
             <Text
-              style={[styles.text, {color: isDarkTheme ? '#fff' : '#215F8E'}]}>
+              style={[styles.text, {color: isDarkTheme ? '#fff' : '#215E8F'}]}>
               Login
             </Text>
           </View>
           <View
             style={[
               styles.inputField,
-              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Icon
               name="email"
               size={20}
-              color={isDarkTheme ? '#fff' : '#215F8E'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
             <TextInput
               style={[styles.textInput, {color: isDarkTheme ? '#fff' : '#333'}]}
@@ -117,12 +117,12 @@ const LoginScreen = ({navigation}) => {
           <View
             style={[
               styles.inputField,
-              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Icon
               name="lock"
               size={20}
-              color={isDarkTheme ? '#fff' : '#215F8E'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
             <TextInput
               style={[styles.textInput, {color: isDarkTheme ? '#fff' : '#333'}]}
@@ -145,7 +145,7 @@ const LoginScreen = ({navigation}) => {
             }}
             style={[
               styles.button,
-              {backgroundColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {backgroundColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Text
               style={[
@@ -173,7 +173,7 @@ const LoginScreen = ({navigation}) => {
               <Text
                 style={[
                   styles.goToRegisterText,
-                  {color: isDarkTheme ? '#fff' : '#215F8E'},
+                  {color: isDarkTheme ? '#fff' : '#215E8F'},
                 ]}>
                 Register
               </Text>
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   textInput: {flex: 1, flexDirection: 'row', paddingLeft: 10},
   button: {
-    backgroundColor: '#215F8E',
+    backgroundColor: '#215E8F',
     marginVertical: 20,
     padding: 15,
     borderRadius: 5,

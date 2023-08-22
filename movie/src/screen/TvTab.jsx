@@ -7,6 +7,8 @@ import {
   ActivityIndicator,
   RefreshControl,
   useColorScheme,
+  StyleSheet,
+  FlatList,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
@@ -14,9 +16,13 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {dataAction} from '../store/dataSlice';
 import ListTab from '../components/ListTab';
+import {windowHeight} from '../utils/Dimensions';
+import NoInternetConnection from '../components/NoInternetConnection';
 
 const TvTab = ({navigation}) => {
   const [page, setPage] = useState(1);
+  const [isConnected, setIsConnected] = useState(false);
+
   const dispatch = useDispatch();
   const tvData = useSelector(state => state.data.tv);
   const theme = useColorScheme();
@@ -38,18 +44,37 @@ const TvTab = ({navigation}) => {
       .catch(err => console.error(err));
   };
 
-  const [refreshing, setRefreshing] = useState(false);
+  // const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setPage(page + 1);
-      setRefreshing(false);
-    }, 2000);
+  // const onRefresh = () => {
+  //   setRefreshing(true);
+  //   setTimeout(() => {
+  //     setPage(page + 1);
+  //     setRefreshing(false);
+  //   }, 2000);
+  // };
+
+  const renderLoader = () => {
+    return (
+      <View style={styles.renderLoader}>
+        <ActivityIndicator
+          size={'large'}
+          color={isDarkTheme ? '#fff' : '#215E8F'}
+        />
+      </View>
+    );
+  };
+
+  const loadMoreItem = () => {
+    setPage(page + 1);
   };
 
   useEffect(() => {
-    fetchData();
+    NoInternetConnection(setIsConnected);
+  }, [NoInternetConnection]);
+
+  useEffect(() => {
+    if (isConnected) fetchData();
   }, [page]);
 
   return (
@@ -67,7 +92,7 @@ const TvTab = ({navigation}) => {
           <Icon
             name="menu"
             size={24}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View
@@ -82,14 +107,71 @@ const TvTab = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215E8F',
               textAlign: 'center',
             }}>
             Tv
           </Text>
         </View>
       </View>
-      <ScrollView
+      {!isConnected && (
+        <View
+          style={{
+            backgroundColor: '#555',
+            paddingVertical: 4,
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontWeight: 600,
+              fontSize: 15,
+            }}>
+            No Connection
+          </Text>
+        </View>
+      )}
+      {tvData ? (
+        <View
+          style={[
+            styles.flatlistView,
+            {backgroundColor: isDarkTheme ? '#555' : 'white'},
+          ]}>
+          <FlatList
+            keyExtractor={item => item.id}
+            data={tvData}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => {
+                  navigation.navigate('SubScreen', {res: item, movie: true});
+                }}>
+                <ListTab res={item} movie={false} />
+              </TouchableOpacity>
+            )}
+            numColumns={1}
+            initialNumToRender={20}
+            ListFooterComponent={renderLoader}
+            onEndReached={loadMoreItem}
+            onEndReachedThreshold={0}
+          />
+        </View>
+      ) : (
+        <View
+          style={{
+            // flex: 1,
+
+            height: windowHeight - 120,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator
+            size="large"
+            color={isDarkTheme ? '#fff' : '#215E8F'}
+          />
+        </View>
+      )}
+      {/* <ScrollView
         style={[
           {marginBottom: 50},
           isDarkTheme ? {backgroundColor: '#555'} : {backgroundColor: 'white'},
@@ -97,7 +179,7 @@ const TvTab = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            tintColor="#215f8e"
+            tintColor="#215E8F"
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
@@ -122,12 +204,22 @@ const TvTab = ({navigation}) => {
               justifyContent: 'center',
               alignContent: 'center',
             }}>
-            <ActivityIndicator size="large" color="#215F8E" />
+            <ActivityIndicator size="large" color="#215E8F" />
           </View>
         )}
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };
 
 export default TvTab;
+
+const styles = StyleSheet.create({
+  renderLoader: {
+    marginVertical: 16,
+    alignItems: 'center',
+  },
+  flatlistView: {
+    marginBottom: 100,
+  },
+});

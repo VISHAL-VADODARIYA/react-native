@@ -27,7 +27,6 @@ const RegisterScreen = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [buttonDisable, setButtonDisable] = useState(true);
 
-
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
 
@@ -110,19 +109,19 @@ const RegisterScreen = ({navigation}) => {
           ]}>
           <View>
             <Text
-              style={[styles.text, {color: isDarkTheme ? '#fff' : '#215F8E'}]}>
+              style={[styles.text, {color: isDarkTheme ? '#fff' : '#215E8F'}]}>
               Register
             </Text>
           </View>
           <View
             style={[
               styles.inputField,
-              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Icon
               name="user"
               size={20}
-              color={isDarkTheme ? '#fff' : '#215F8E'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
             <TextInput
               style={[styles.textinput, {color: isDarkTheme ? '#fff' : '#333'}]}
@@ -139,12 +138,12 @@ const RegisterScreen = ({navigation}) => {
           <View
             style={[
               styles.inputField,
-              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Icon
               name="email"
               size={20}
-              color={isDarkTheme ? '#fff' : '#215F8E'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
 
             <TextInput
@@ -160,12 +159,12 @@ const RegisterScreen = ({navigation}) => {
           <View
             style={[
               styles.inputField,
-              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Icon
               name="lock"
               size={20}
-              color={isDarkTheme ? '#fff' : '#215F8E'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
 
             <TextInput
@@ -185,12 +184,12 @@ const RegisterScreen = ({navigation}) => {
           <View
             style={[
               styles.inputField,
-              {borderBottomColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {borderBottomColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Icon
               name="lock"
               size={20}
-              color={isDarkTheme ? '#fff' : '#215F8E'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
 
             <TextInput
@@ -214,7 +213,7 @@ const RegisterScreen = ({navigation}) => {
             onPress={registerHandler}
             style={[
               styles.button,
-              {backgroundColor: isDarkTheme ? '#fff' : '#215F8E'},
+              {backgroundColor: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             <Text
               style={[
@@ -241,7 +240,7 @@ const RegisterScreen = ({navigation}) => {
               <Text
                 style={[
                   styles.goToLoginText,
-                  {color: isDarkTheme ? '#fff' : '#215F8E'},
+                  {color: isDarkTheme ? '#fff' : '#215E8F'},
                 ]}>
                 Login
               </Text>
@@ -284,7 +283,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: '#215F8E',
+    backgroundColor: '#215E8F',
     marginVertical: 20,
     padding: 15,
     borderRadius: 5,

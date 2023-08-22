@@ -68,7 +68,7 @@ const CustomDrawer = props => {
       <View
         style={[
           styles.logoutView,
-          {borderTopColor: isDarkTheme ? '#fff' : '#215f8e'},
+          {borderTopColor: isDarkTheme ? '#fff' : '#215E8F'},
         ]}>
         <TouchableOpacity
           onPress={() => {
@@ -79,12 +79,12 @@ const CustomDrawer = props => {
             <Ionicons
               name="exit-outline"
               size={24}
-              color={isDarkTheme ? '#fff' : '#215f8e'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
             <Text
               style={[
                 styles.logoutText,
-                {color: isDarkTheme ? '#fff' : '#215f8e'},
+                {color: isDarkTheme ? '#fff' : '#215E8F'},
               ]}>
               Log out
             </Text>

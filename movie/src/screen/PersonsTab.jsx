@@ -72,7 +72,7 @@ const PersonsTab = ({navigation}) => {
           <Icon
             name="menu"
             size={24}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View
@@ -87,7 +87,7 @@ const PersonsTab = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215E8F',
               textAlign: 'center',
             }}>
             Person
@@ -102,7 +102,7 @@ const PersonsTab = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            tintColor="#215f8e"
+            tintColor="#215E8F"
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
@@ -147,7 +147,7 @@ const PersonsTab = ({navigation}) => {
               justifyContent: 'center',
               alignContent: 'center',
             }}>
-            <ActivityIndicator size="large" color="#215F8E" />
+            <ActivityIndicator size="large" color="#215E8F" />
           </View>
         )}
       </ScrollView>

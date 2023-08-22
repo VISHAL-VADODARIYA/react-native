@@ -40,7 +40,7 @@ const SeasonsScreen = ({route, navigation}) => {
           <Icon
             name="arrow-left"
             size={20}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View style={styles.titleTextView}>
@@ -48,7 +48,7 @@ const SeasonsScreen = ({route, navigation}) => {
             style={[
               styles.titleText,
               {
-                color: isDarkTheme ? '#fff' : '#215F8E',
+                color: isDarkTheme ? '#fff' : '#215E8F',
               },
             ]}>
             {e.name}
@@ -101,7 +101,7 @@ const SeasonsScreen = ({route, navigation}) => {
                   style={[
                     styles.star,
                     {
-                      color: isDarkTheme ? '#fff' : '#215f8e',
+                      color: isDarkTheme ? '#fff' : '#215E8F',
                     },
                   ]}>
                   ★
@@ -122,11 +122,10 @@ const SeasonsScreen = ({route, navigation}) => {
             </View>
           </ScrollView>
         ) : (
-          <View
-            style={styles.activity}>
+          <View style={styles.activity}>
             <ActivityIndicator
               size="large"
-              color={isDarkTheme ? '#fff' : '#215f8e'}
+              color={isDarkTheme ? '#fff' : '#215E8F'}
             />
           </View>
         )}
@@ -185,10 +184,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
   },
-  activity:{
-    flex:1,
+  activity: {
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignSelf: 'center',
-  }
+  },
 });

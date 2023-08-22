@@ -13,7 +13,7 @@ const dataSlice = createSlice({
   reducers: {
     fetchMovieData(state, action) {
       state.movie.push(...action.payload);
-      state.movie.reverse();
+      // state.movie.reverse();
     },
     fetchTvData(state, action) {
       state.tv.push(...action.payload);
@@ -27,9 +27,8 @@ const dataSlice = createSlice({
       state.search.push(...action.payload);
     },
     fetchNewSearchData(state, action) {
-      state.search = action.payload
-
-    }
+      state.search = action.payload;
+    },
   },
 });
 export const dataAction = dataSlice.actions;

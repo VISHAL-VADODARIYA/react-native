@@ -38,7 +38,7 @@ const ProfileTab = () => {
           <Icon
             name="arrow-left"
             size={24}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View
@@ -52,7 +52,7 @@ const ProfileTab = () => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215E8F',
               textAlign: 'center',
             }}>
             Profile
@@ -66,7 +66,7 @@ const ProfileTab = () => {
             style={[
               styles.user,
               {
-                borderColor: isDarkTheme ? '#fff' : '#215F8E',
+                borderColor: isDarkTheme ? '#fff' : '#215E8F',
               },
             ]}
             source={{
@@ -78,7 +78,7 @@ const ProfileTab = () => {
           <Text
             style={[
               styles.userData,
-              {color: isDarkTheme ? '#fff' : '#215F8E'},
+              {color: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             Name : {activeUser.name}
           </Text>
@@ -87,13 +87,13 @@ const ProfileTab = () => {
           <Text
             style={[
               styles.userData,
-              {color: isDarkTheme ? '#fff' : '#215F8E'},
+              {color: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             Email : {activeUser.email}
           </Text>
         </View>
 
-        <MarqueeView
+        {/* <MarqueeView
           style={{
             backgroundColor: '#465456',
             width: 350,
@@ -102,7 +102,7 @@ const ProfileTab = () => {
           <View style={{backgroundColor: '#f5f5f5'}}>
             <Text>{'                        '}</Text>
           </View>
-        </MarqueeView>
+        </MarqueeView> */}
 
         {/* <View style={styles.button}>
           <TouchableOpacity
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     borderRadius: 5,
-    backgroundColor: '#215F8E',
+    backgroundColor: '#215E8F',
     padding: 15,
   },
 });

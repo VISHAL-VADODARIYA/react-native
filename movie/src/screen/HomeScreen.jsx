@@ -29,8 +29,8 @@ const HomeScreen = () => {
         drawerStyle: isDarkTheme
           ? {backgroundColor: '#333'}
           : {backgroundColor: '#fff'},
-        drawerActiveBackgroundColor: isDarkTheme ? '#fff' : '#215F8E',
-        drawerActiveTintColor: isDarkTheme ? '#215F8E' : '#fff',
+        drawerActiveBackgroundColor: isDarkTheme ? '#fff' : '#215E8F',
+        drawerActiveTintColor: isDarkTheme ? '#215E8F' : '#fff',
         drawerInactiveTintColor: isDarkTheme ? '#fff' : '#333',
         drawerLabelStyle: {marginLeft: -25},
       }}>
@@ -76,7 +76,7 @@ const MainScreen = () => {
         headerShown: false,
         tabBarStyle: isDarkTheme
           ? {backgroundColor: '#333'}
-          : {backgroundColor: '#215F8E'},
+          : {backgroundColor: '#215E8F'},
         tabBarActiveTintColor: '#FFBF13',
         tabBarInactiveTintColor: '#E8EFF7',
       }}>

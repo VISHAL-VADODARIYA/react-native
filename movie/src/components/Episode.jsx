@@ -38,14 +38,14 @@ const Episode = ({route, navigation}) => {
           <Icon
             name="arrow-left"
             size={20}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View style={styles.viewHeaderTextView}>
           <Text
             style={[
               styles.viewHeaderText,
-              {color: isDarkTheme ? '#fff' : '#215F8E'},
+              {color: isDarkTheme ? '#fff' : '#215E8F'},
             ]}>
             {data && data.name}
           </Text>
@@ -98,7 +98,7 @@ const Episode = ({route, navigation}) => {
                 <Text
                   style={[
                     styles.starText,
-                    {color: isDarkTheme ? '#fff' : '#215f8e'},
+                    {color: isDarkTheme ? '#fff' : '#215E8F'},
                   ]}>
                   ★
                 </Text>

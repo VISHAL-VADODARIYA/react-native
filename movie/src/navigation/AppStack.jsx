@@ -20,7 +20,10 @@ const AppStack = () => {
         <Stack.Screen name="SubScreen" component={SubDetail} />
         <Stack.Screen name="SeasonsScreen" component={SeasonsScreen} />
         <Stack.Screen name="SubListPerson" component={PersonSubList} />
-        <Stack.Screen name="SubListPersonDetail" component={PersonSubListDetail} />
+        <Stack.Screen
+          name="SubListPersonDetail"
+          component={PersonSubListDetail}
+        />
         <Stack.Screen name="Profile" component={ProfileTab} />
         <Stack.Screen name="Episode" component={Episode} />
         <Stack.Screen name="NoInternet" component={NoInternet} />

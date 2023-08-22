@@ -8,7 +8,7 @@ const ListTab = ({res, movie}) => {
   const isDarkTheme = theme === 'dark';
   return (
     <View
-      style={[styles.list, {borderColor: isDarkTheme ? '#fff' : '#215f8e'}]}>
+      style={[styles.list, {borderColor: isDarkTheme ? '#fff' : '#215E8F'}]}>
       <Image
         source={{
           uri: `https://image.tmdb.org/t/p/original/${res.poster_path}`,
@@ -17,7 +17,7 @@ const ListTab = ({res, movie}) => {
       />
       <View style={styles.textView}>
         <Text
-          style={[styles.titleText, {color: isDarkTheme ? '#fff' : '#215F8E'}]}>
+          style={[styles.titleText, {color: isDarkTheme ? '#fff' : '#215E8F'}]}>
           {movie ? res.title : res.name}
         </Text>
         <View style={styles.textWarp}>
@@ -35,7 +35,7 @@ const ListTab = ({res, movie}) => {
         <Icon
           name="arrow-forward-ios"
           size={20}
-          color={isDarkTheme ? '#fff' : '#215F8E'}
+          color={isDarkTheme ? '#fff' : '#215E8F'}
         />
       </View>
     </View>

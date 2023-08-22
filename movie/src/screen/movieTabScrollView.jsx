@@ -8,10 +8,8 @@ import {
   RefreshControl,
   useColorScheme,
   FlatList,
-  StyleSheet,
-  Animated,
 } from 'react-native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
@@ -19,13 +17,9 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {dataAction} from '../store/dataSlice';
 import ListTab from '../components/ListTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NoInternetConnection from '../components/NoInternetConnection';
-import {windowHeight} from '../utils/Dimensions';
 
 const MovieTab = ({navigation}) => {
   const [page, setPage] = useState(1);
-  const [isConnected, setIsConnected] = useState(false);
-
   const dispatch = useDispatch();
   const movieData = useSelector(state => state.data.movie);
   const theme = useColorScheme();
@@ -53,39 +47,20 @@ const MovieTab = ({navigation}) => {
     dispatch(dataAction.fetchMovieData(response.results));
   };
 
-  // const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  // const onRefresh = () => {
-  //   setRefreshing(true);
-  //   setTimeout(() => {
-  //     setPage(page + 1);
-  //     setRefreshing(false);
-  //   }, 2000);
-  // };
-
-  const renderLoader = () => {
-    return (
-      <View style={styles.renderLoader}>
-        <ActivityIndicator
-          size={'large'}
-          color={isDarkTheme ? '#fff' : '#215E8F'}
-        />
-      </View>
-    );
-  };
-
-  const loadMoreItem = () => {
-    setPage(page + 1);
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setPage(page + 1);
+      setRefreshing(false);
+    }, 2000);
   };
 
   useEffect(() => {
-    NoInternetConnection(setIsConnected);
-  }, [NoInternetConnection]);
-
-  useEffect(() => {
-    if (isConnected) fetchData();
+    fetchData();
     // AsyncStorage.setItem('Movie', JSON.stringify(movieData));
-  }, [page, isConnected]);
+  }, [page]);
 
   return (
     <SafeAreaView style={{backgroundColor: isDarkTheme ? '#333' : 'white'}}>
@@ -124,71 +99,30 @@ const MovieTab = ({navigation}) => {
           </Text>
         </View>
       </View>
-      {!isConnected && (
-        <View
-          style={{
-            backgroundColor: '#555',
-            paddingVertical: 4,
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 600,
-              fontSize: 15,
-            }}>
-            No Connection
-          </Text>
-        </View>
-      )}
-      {movieData ? (
-        <View
-          style={[
-            styles.flatlistView,
-            {backgroundColor: isDarkTheme ? '#555' : 'white'},
-          ]}>
-          <FlatList
-            keyExtractor={item => item.id}
-            data={movieData}
-            renderItem={({item}) => (
+      {/* <FlatList
+          data={movieData}
+        
+          renderItem={res => {
+            return (
               <TouchableOpacity
-                key={item.id}
+                key={res.id}
                 onPress={() => {
-                  navigation.navigate('SubScreen', {res: item, movie: true});
+                  navigation.navigate('SubScreen', {res: res, movie: true});
                 }}>
-                <ListTab res={item} movie={true} />
+                <ListTab res={res} movie={true} />
               </TouchableOpacity>
-            )}
-            numColumns={1}
-            initialNumToRender={25}
-            ListFooterComponent={renderLoader}
-            onEndReached={loadMoreItem}
-            onEndReachedThreshold={0}
-          />
-        </View>
-      ) : (
-        <View
-          style={{
-            // flex: 1,
-
-            height: windowHeight - 120,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <ActivityIndicator
-            size="large"
-            color={isDarkTheme ? '#fff' : '#215E8F'}
-          />
-        </View>
-      )}
-      {/* <ScrollView
+            );
+          }}
+  
+        /> */}
+      <ScrollView
         style={
           isDarkTheme ? {backgroundColor: '#555'} : {backgroundColor: 'white'}
         }
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            tintColor="#215E8F"
+            tintColor="#215f8e"
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
@@ -216,20 +150,9 @@ const MovieTab = ({navigation}) => {
             <ActivityIndicator size="large" color="#215E8F" />
           </View>
         )}
-      </ScrollView> */}
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default MovieTab;
-
-const styles = StyleSheet.create({
-  renderLoader: {
-    marginVertical: 16,
-    alignItems: 'center',
-  },
-  flatlistView: {
-    // height:windowHeight-120,
-    marginBottom: 100,
-  },
-});

@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
 import {dataAction} from '../store/dataSlice';
+import NoInternetConnection from '../components/NoInternetConnection';
 
 const SearchTab = ({navigation}) => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const SearchTab = ({navigation}) => {
 
   const [page, setPage] = useState(1);
   const [movieTvSwitch, setMovieTvSwitch] = useState(true);
-
+  const [isConnected, setIsConnected] = useState(false);
   const [newSearch, setNewSearch] = useState(0);
   const [searchMovie, setSearchMovie] = useState([]);
   const [defaultSearch, setDefaultSearch] = useState(0);
@@ -48,9 +49,7 @@ const SearchTab = ({navigation}) => {
     let response = await fetch(
       `https://api.themoviedb.org/3/search/${
         movieTvSwitch ? 'movie' : 'tv'
-      }?query=${
-        searchMovie.length !== 0 && searchMovie
-      }&include_adult=false&language=en-US&page=${page}`,
+      }?query=${searchMovie}&include_adult=false&language=en-US&page=${page}`,
       requestOptions,
     );
     response = await response.json();
@@ -59,9 +58,16 @@ const SearchTab = ({navigation}) => {
       : dispatch(dataAction.fetchNewSearchData(response.results));
     setDefaultSearch(1);
   };
+
   useEffect(() => {
-    fetchData();
-  }, [page]);
+    NoInternetConnection(setIsConnected);
+  }, [NoInternetConnection]);
+
+  useEffect(() => {
+    if (searchMovie.length !== 0 && isConnected) fetchData();
+    // AsyncStorage.setItem('Movie', JSON.stringify(movieData));
+  }, [page, isConnected]);
+
   const renderLoader = () => {
     return (
       <View style={styles.renderLoader}>
@@ -74,13 +80,13 @@ const SearchTab = ({navigation}) => {
   };
 
   const loadMoreItem = () => {
-    console.log('Loading');
     setPage(page + 1);
     setNewSearch(0);
   };
 
   const switchHandler = () => {
     setMovieTvSwitch(!movieTvSwitch);
+    setNewSearch(1);
   };
 
   const searchFieldHandler = e => {
@@ -104,7 +110,7 @@ const SearchTab = ({navigation}) => {
           <Icon
             name="menu"
             size={24}
-            color={isDarkTheme ? '#fff' : '#215F8E'}
+            color={isDarkTheme ? '#fff' : '#215E8F'}
           />
         </TouchableOpacity>
         <View
@@ -119,27 +125,44 @@ const SearchTab = ({navigation}) => {
             style={{
               fontWeight: 900,
               fontSize: 18,
-              color: isDarkTheme ? '#fff' : '#215F8E',
+              color: isDarkTheme ? '#fff' : '#215E8F',
               textAlign: 'center',
             }}>
             Search
           </Text>
         </View>
       </View>
+      {!isConnected && (
+        <View
+          style={{
+            backgroundColor: '#555',
+            paddingVertical: 4,
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontWeight: 600,
+              fontSize: 15,
+            }}>
+            No Connection
+          </Text>
+        </View>
+      )}
 
       <View
         style={[
           styles.textInputView,
           {
             backgroundColor: isDarkTheme ? '#555' : '#fff',
-            borderBottomColor: isDarkTheme ? '#fff' : '#215F8E',
+            borderBottomColor: isDarkTheme ? '#fff' : '#215E8F',
           },
         ]}>
         <TextInput
           style={[
             styles.textInput,
             {
-              borderColor: isDarkTheme ? 'white' : '#215F8E',
+              borderColor: isDarkTheme ? 'white' : '#215E8F',
               color: isDarkTheme ? '#fff' : '#333',
             },
           ]}
@@ -151,7 +174,7 @@ const SearchTab = ({navigation}) => {
         <TouchableOpacity
           style={[
             styles.searchButton,
-            {backgroundColor: isDarkTheme ? 'white' : '#215F8E'},
+            {backgroundColor: isDarkTheme ? 'white' : '#215E8F'},
           ]}
           onPress={fetchData}>
           <Text
@@ -169,6 +192,9 @@ const SearchTab = ({navigation}) => {
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
+          paddingVertical: 5,
+          borderBottomWidth: 0.5,
+          borderBottomColor: isDarkTheme ? '#fff' : '#215E8F',
           backgroundColor: isDarkTheme ? '#555' : '#fff',
         }}>
         <Text
@@ -190,7 +216,7 @@ const SearchTab = ({navigation}) => {
           }}
           inActiveText={'TV'}
           borderColor={'393939'}
-          thumbColor={isDarkTheme ? '#fff' : '#215F8E'}
+          thumbColor={isDarkTheme ? '#fff' : '#215E8F'}
           changeValueImmediately={true}
           onChange={switchHandler}
         />
@@ -205,69 +231,76 @@ const SearchTab = ({navigation}) => {
         </Text>
       </View>
 
-      <View
-        style={{
-          height: windowHeight - 210,
-          backgroundColor: isDarkTheme ? '#555' : '#fff',
-        }}>
-        {defaultSearch !== 0 && (
-          <>
-            {searchData.length === 0 ? (
-              <View style={styles.notFoundView}>
-                <View style={styles.searchOffIconWrapView}>
-                  <Icon
-                    name="search-off"
-                    size={40}
-                    color={isDarkTheme ? '#fff' : '215F8E'}
-                  />
-                </View>
+      {searchData && (
+        <View
+          style={{
+            height: windowHeight - 200,
+            backgroundColor: isDarkTheme ? '#555' : '#fff',
+          }}>
+          {defaultSearch !== 0 && (
+            <>
+              {searchData.length === 0 ? (
+                <View style={styles.notFoundView}>
+                  <View style={styles.searchOffIconWrapView}>
+                    <Icon
+                      name="search-off"
+                      size={40}
+                      color={isDarkTheme ? '#fff' : '215E8F'}
+                    />
+                  </View>
 
-                <Text
-                  style={[
-                    styles.notFoundText,
-                    {
-                      color: isDarkTheme ? '#fff' : '#333',
-                    },
-                  ]}>
-                  Not Found
-                </Text>
-              </View>
-            ) : (
-              <FlatList
-                keyExtractor={item => item.id}
-                data={searchData}
-                renderItem={({item}) => (
-                  <TouchableOpacity
-                    style={{flex: 1}}
-                    key={item.id}
-                    onPress={() => {
-                      navigation.navigate('SubScreen', {
-                        res: item,
-                        movie: true,
-                      });
-                    }}>
-                    <View>
-                      <Image
-                        source={{
-                          uri: `https://image.tmdb.org/t/p/original${item.poster_path}`,
-                        }}
-                        style={styles.image}
-                      />
-                      <Text style={{color: '#565656', textAlign: 'center'}}>
-                        {item.name}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                )}
-                numColumns={3}
-                ListFooterComponent={renderLoader}
-                onEndReached={loadMoreItem}
-                onEndReachedThreshold={0}
-              />
-            )}
-          </>
-        )}
-      </View>
+                  <Text
+                    style={[
+                      styles.notFoundText,
+                      {
+                        color: isDarkTheme ? '#fff' : '#333',
+                      },
+                    ]}>
+                    Not Found
+                  </Text>
+                </View>
+              ) : (
+                <FlatList
+                  keyExtractor={item => item.id}
+                  data={searchData}
+                  renderItem={({item}) => (
+                    <TouchableOpacity
+                      style={{flex: 1}}
+                      key={item.id}
+                      onPress={() => {
+                        navigation.navigate('SubScreen', {
+                          res: item,
+                          movie: true,
+                        });
+                      }}>
+                      <View>
+                        <Image
+                          source={{
+                            uri: `https://image.tmdb.org/t/p/original${item.poster_path}`,
+                          }}
+                          style={styles.image}
+                        />
+                        <Text
+                          style={{
+                            paddingHorizontal: 5,
+                            color: isDarkTheme ? '#fff' : '#333',
+                            textAlign: 'center',
+                          }}>
+                          {movieTvSwitch ? item?.title : item?.name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  numColumns={3}
+                  ListFooterComponent={renderLoader}
+                  onEndReached={loadMoreItem}
+                  onEndReachedThreshold={0}
+                />
+              )}
+            </>
+          )}
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -283,16 +316,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
   },
   textInput: {
-    width: windowWidth - 120,
+    width: windowWidth - 110,
     borderWidth: 1,
     marginHorizontal: 10,
     paddingHorizontal: 5,
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderRadius: 10,
   },
   searchButton: {
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15,
     borderRadius: 10,
     backgroundColor: '#215e8f',
     textAlign: 'center',

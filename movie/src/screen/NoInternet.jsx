@@ -13,7 +13,9 @@ const NoInternet = () => {
         {backgroundColor: isDarkTheme ? '#333' : '#215E8F'},
       ]}>
       <Icon name="wifi" size={100} color={isDarkTheme ? 'white' : 'white'} />
-      <Text style={[styles.message,{color:isDarkTheme?'white':'white'}]}>No Internet Connection</Text>
+      <Text style={[styles.message, {color: isDarkTheme ? 'white' : 'white'}]}>
+        No Internet Connection
+      </Text>
     </SafeAreaView>
   );
 };
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   message: {
-    fontWeight:'900',
+    fontWeight: '900',
     fontSize: 20,
     marginTop: 20,
   },
