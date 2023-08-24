@@ -17,11 +17,11 @@ const dataSlice = createSlice({
     },
     fetchTvData(state, action) {
       state.tv.push(...action.payload);
-      state.tv.reverse();
+      // state.tv.reverse();
     },
     fetchPersonData(state, action) {
       state.person.push(...action.payload);
-      state.person.reverse();
+      // state.person.reverse();
     },
     fetchSearchData(state, action) {
       state.search.push(...action.payload);
