@@ -14,13 +14,14 @@ import {RootState} from './ReduxStore/Store';
 import Icon from 'react-native-vector-icons/Entypo';
 import Ico from 'react-native-vector-icons/MaterialIcons';
 
-const Ui = () => {
+const Ui = ({edit}:{edit:(data:Data)=>void}) => {
   const selector = useSelector((state: RootState) => state.data.data);
 
   const RenderTaskData = ({item}: {item: Data}) => {
     const dispatch = useDispatch();
     const EditHandler = (id: string) => {
       const selectedById = selector.find((e: Data) => e.id === id);
+      edit(selectedById)
     };
     const DeleteHandler = (id: string) => {
       dispatch(dataAction.delete(id));
@@ -29,13 +30,13 @@ const Ui = () => {
       <View style={styles.movieItem}>
         <View>
           <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.releaseYear}> {item.discription}</Text>
+          <Text style={styles.discription}> {item.discription}</Text>
         </View>
         <View>
           <TouchableOpacity
             key={item.id}
             style={styles.editButton}
-            onPress={()=>EditHandler(item.id)}>
+            onPress={() => EditHandler(item.id)}>
             <Text style={styles.Text}>
               <Icon name="edit" size={18} color="#fff" />
             </Text>
@@ -54,7 +55,6 @@ const Ui = () => {
   };
   return (
     <View style={styles.container}>
-      <AddToDo />
       {selector && (
         <FlatList
           data={selector}
@@ -68,23 +68,24 @@ const Ui = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 16,
+    padding: 10,
   },
   movieItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
     padding: 12,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#c9ccd1',
     borderRadius: 8,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    color:'#0e4e75'
   },
-  releaseYear: {
+  discription: {
     marginTop: 4,
+    marginLeft:-3,
     color: '#666',
   },
   editButton: {

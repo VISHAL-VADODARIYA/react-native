@@ -27,7 +27,24 @@ const DataSlice = createSlice({
   initialState,
   reducers: {
     add(state: AllData, action: PayloadAction<Data>) {
-      state.data.push(action.payload);
+      const existing = state.data.find(
+        (item: Data) => item.id === action.payload.id,
+      );
+      if (existing) {
+        state.data = state.data.map(item => {
+          if (item.id === action.payload.id) {
+            console.warn(action.payload, item, 'called');
+            return {
+              ...item,
+              ...action.payload,
+            };
+          } else {
+            return item;
+          }
+        });
+      } else {
+        state.data.push(action.payload);
+      }
     },
     delete(state: AllData, action: PayloadAction<string>) {
       const newItems = state.data.filter(item => item.id !== action.payload);
@@ -36,17 +53,7 @@ const DataSlice = createSlice({
     update(
       state: AllData,
       action: PayloadAction<{data: UpdateData; id: string}>,
-    ) {
-      state.data.map(item => {
-        if (item.id === action.payload.id) {
-          return {
-            ...item,
-            ...action.payload.data,
-          };
-        }
-        return item;
-      });
-    },
+    ) {},
   },
 });
 export const dataAction = DataSlice.actions;
