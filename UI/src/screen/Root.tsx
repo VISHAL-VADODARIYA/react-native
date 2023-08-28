@@ -2,6 +2,7 @@
 
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import List from '../Components/List';
 
 const Root = () => {
   return (
@@ -9,6 +10,7 @@ const Root = () => {
       <View>
         <Text style={styles.todoTitle}>TO DO</Text>
       </View>
+      <List />
     </SafeAreaView>
   );
 };
