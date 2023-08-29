@@ -21,7 +21,7 @@ const HomeScreen = () => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={{opacity: showTaskForm ? 0.5 : 1}}>
         <View style={styles.titleTextView}>
           <Text style={styles.titleText}>To Do</Text>
         </View>
@@ -37,7 +37,8 @@ const HomeScreen = () => {
             onPress={TaskFormHandler}
             style={styles.taskTextView}>
             <Text style={styles.taskText}>
-              <FontAwesome name="plus-circle" size={20} color="#fff" /> Add Task
+              <FontAwesome name="plus-circle" size={20} color="#fff" /> 
+              Add Task
             </Text>
           </TouchableOpacity>
         )}

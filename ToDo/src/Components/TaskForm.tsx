@@ -43,11 +43,12 @@ const TaskForm = () => {
           <View style={{flexDirection: 'row'}}>
             <RadioButton.Group
               onValueChange={value => handleRadioPress(value)}
-              value={selectedValue}>
+              value={selectedValue}
+              >
               <View style={styles.radioButtonContainer}>
-                <RadioButton.Item label="Option 1" value="option1" />
-                <RadioButton.Item label="Option 2" value="option2" />
-                <RadioButton.Item label="Option 3" value="option3" />
+                <RadioButton.Item label="High" value="high" />
+                <RadioButton.Item label="Medium" value="medium" />
+                <RadioButton.Item label="Low" value="low" />
               </View>
             </RadioButton.Group>
           </View>
@@ -100,6 +101,6 @@ const styles = StyleSheet.create({
     color: Color.gray,
   },
   radioButtonContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
 });
