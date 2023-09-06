@@ -160,7 +160,7 @@ const MovieTab = ({navigation}) => {
               </TouchableOpacity>
             )}
             numColumns={1}
-            initialNumToRender={25}
+            initialNumToRender={5}
             ListFooterComponent={renderLoader}
             onEndReached={loadMoreItem}
             onEndReachedThreshold={0}
@@ -171,7 +171,7 @@ const MovieTab = ({navigation}) => {
           style={{
             // flex: 1,
 
-            height: windowHeight - 120,
+            height: windowHeight - 100,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -230,6 +230,8 @@ const styles = StyleSheet.create({
   },
   flatlistView: {
     // height:windowHeight-120,
+    // flex:1,
+    height:windowHeight-100,
     marginBottom: 100,
   },
 });

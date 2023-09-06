@@ -52,6 +52,14 @@ const SubDetail = ({route, navigation}) => {
   //   setData(datagg);
   // };
 
+  // if (!data) {
+  //   return (
+  //     <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+  //       <ActivityIndicator size={large} color={'#215F8E'} />
+  //     </View>
+  //   );
+  // }
+
   useEffect(() => {
     console.log('in useEffect');
     var myHeaders = new Headers();
@@ -176,7 +184,7 @@ const SubDetail = ({route, navigation}) => {
                     styles.listTitle,
                   ]}>
                   <Text style={{fontWeight: 900, fontSize: 15}}>Rating : </Text>
-                  {data.vote_average}/10
+                  {data.vote_average?.toFixed(1)}/10
                   <Text
                     style={[
                       styles.star,

@@ -161,7 +161,7 @@ const TvTab = ({navigation}) => {
           style={{
             // flex: 1,
 
-            height: windowHeight - 120,
+            height: windowHeight - 100,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   flatlistView: {
+    height:windowHeight-100,
     marginBottom: 100,
   },
 });
