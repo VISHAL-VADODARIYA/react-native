@@ -49,7 +49,7 @@ const SearchTab = ({navigation}) => {
     let response = await fetch(
       `https://api.themoviedb.org/3/search/${
         movieTvSwitch ? 'movie' : 'tv'
-      }?query=${searchMovie}&include_adult=false&language=en-US&page=${page}`,
+      }?query=${searchMovie.trim()}&include_adult=false&language=en-US&page=${page}`,
       requestOptions,
     );
     response = await response.json();
@@ -64,7 +64,7 @@ const SearchTab = ({navigation}) => {
   }, [NoInternetConnection]);
 
   useEffect(() => {
-    if (searchMovie.length !== 0 && isConnected) fetchData();
+    if (searchMovie.length !== 0 && isConnected && !searchMovie.trim()) fetchData();
     // AsyncStorage.setItem('Movie', JSON.stringify(movieData));
   }, [page, isConnected]);
 
