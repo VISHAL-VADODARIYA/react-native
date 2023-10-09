@@ -33,11 +33,11 @@ const HomeScreen = ({navigation}) => {
         <Transction />
       </View>
 
-      {/* <TouchableOpacity
+      <TouchableOpacity
         className="absolute bottom-20 bg-blue-600 px-3 py-1 rounded-full "
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.navigate('Entry')}>
         <Text className="text-white font-bold text-2xl">+</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
 
       {/* List of expenses can be displayed here */}
     </SafeAreaView>

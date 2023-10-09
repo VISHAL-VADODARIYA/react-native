@@ -1,7 +1,7 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState={
-    user:[],
+    users:[],
     activeUsers:[],
     flag:false,
 };
