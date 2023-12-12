@@ -5,12 +5,27 @@ import Card from '../components/Card';
 import Transction from '../components/Transction';
 
 const HomeScreen = ({navigation}) => {
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
   return (
     <SafeAreaView className="flex-1">
-      <View style={styles.mainTopBar} className="flx-1 flex-row items-center justify-between mx-3">
+      
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
+      <View style={styles.mainTopBar} onPress={() => setOpen(true)} className="flx-1 flex-row items-center justify-between mx-3">
         <View className="">
-          <Text>Friday ,</Text>
-          <Text className="font-bold">06, October</Text>
+          <Text>{date.getDay} ,</Text>
+          <Text className="font-bold">{date.getDate}, {date.getMonth}</Text>
         </View>
         <View>
           <Text>icon</Text>
